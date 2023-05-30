@@ -1,0 +1,72 @@
+{
+    "name": "Miku",
+    "description": "Miku Nakano Telegram Group Management Bot Created by :- Github.com/PrincesssGirlXD",
+    "repository": "https://github.com/PrincesssGirlXD/MikuNakano",
+    "logo": "https://telegra.ph/file/14b7c7394968791bad226.jpg",
+    "keywords": [
+    "python3",
+    "telegram",
+    "bot",
+    "youtube",
+    "telegram-bot",
+    "pyrogram"
+    ],
+    "repository": "https://github.com/PrincesssGirlXD/MikuNakano",
+    "stack": "container",
+    "env": {
+        "BOT_TOKEN": {
+            "description": "Create Your Bot Token From :- @BotFather",
+            "required": true
+        },
+        "API_ID": {
+            "description": "Create Your Api Id From :- my.telegram.org/apps",
+            "required": true
+        },
+        "API_HASH": {
+            "description": "Create Your Api Hash From :- my.telegram.org/apps",
+            "required": true
+        },
+        "SUDO_USERS_ID": {
+            "description": "Add Id of Sudo/Dev Users Example :- 123456788 103938337 39383848",
+            "required": true
+        },
+        "LOG_GROUP_ID": {
+            "description": "Add Id of Your Logger Group Example :-   -1003737373774",
+            "required": true
+        },
+        "GBAN_LOG_GROUP_ID": {
+            "description": "Add Gban Logger Group/Channel Id Example :-   -1234567890",
+            "required": true
+        },
+        "WELCOME_DELAY_KICK_SEC": {
+            "value": "300",
+            "required": true
+        },
+        "MONGO_URL": {
+            "description": "Get Your MongoDB From Here. https://telegra.ph/How-To-get-Mongodb-URI-04-06",
+            "required": true
+        },
+        "ARQ_API_URL": {
+            "description": "For Music Downloading And Many More Things... Don't change this value",
+            "value": "http://arq.hamker.dev",
+            "required": true
+        },
+        "MESSAGE_DUMP_CHAT": {
+            "description": "Logger Id Where All Useless Messages Will Go.",
+            "required": true
+        },
+        "ARQ_API_KEY": {
+            "description": "Get this from @ARQRobot.",
+            "required": true
+        },
+        "RSS_DELAY": {
+            "description": "Delay in which RSS will send updates in chat",
+            "value": "300",
+            "required": true
+        },
+	"OWNER_ID":{
+		"description": "Id of The Owner",
+		"required":true
+	}
+    }
+}
