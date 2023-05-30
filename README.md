@@ -9,7 +9,7 @@
 <p align="center">
 <a href="https://t.me/x"> <img src="https://img.shields.io/badge/Support-Chat-blue?&logo=telegram" alt="Support Chat" /> </a>
 <a href="https://t.me/x"> <img src="https://img.shields.io/badge/Update-Channel-blue?&logo=telegram" alt="Update Channel" /> </a><br>
-<a href="https://t.me/x"> <img src="https://img.shields.io/badge/YuigaRobot-blue?&logo=telegram" alt="Miku" /> </a><br>
+<a href="https://t.me/x"> <img src="https://img.shields.io/badge/Miku-blue?&logo=telegram" alt="Miku" /> </a><br>
 <a href="https://Github.com/PrincesssGirlXD"> <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" alt="Open Source" /> </a>
 <a href="https://GitHub.com/PrincesssGirlXD/MikuNakano"> <img src="https://img.shields.io/badge/Maintained-Yes-brightgreen.svg" alt="Maintenance" /> </a><br>
 <a href="https://Github.com/PrincesssGirlXD/MikuNakano/blob/main/LICENSE"> <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License" /> </a>
