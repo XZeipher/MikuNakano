@@ -112,7 +112,7 @@ home_keyboard_pm = InlineKeyboardMarkup(
     ]
 )
 
-home_text_pm = f"""
+home_text_pm = """
  {} 
 Hello! {} ,
 I am an Anime themed advance group management bot with a lot of Features 
@@ -121,8 +121,7 @@ I am an Anime themed advance group management bot with a lot of Features 
  Python: {}
  Pyrogram: {}
 
- Keep Your Group Secure From Spammers by Adding me 
-"""
+ Keep Your Group Secure From Spammers by Adding me """
 MIKU_IMG = (
       "https://telegra.ph/file/624831b44a6e36370ec70.jpg",
       "https://telegra.ph/file/b9c7fb4d2dc481104fe49.jpg",
