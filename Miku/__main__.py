@@ -17,16 +17,16 @@ from Miku.utils import paginate_modules
 from Miku.utils.constants import MARKDOWN
 from Miku.utils.dbfunctions import clean_restart_stage
 from Miku.utils import formatter
-from Miku import bot_start_time
+
 StartTime = time.time()
 loop = asyncio.get_event_loop()
-bot_uptime = int(time.time() - bot_start_time)
+
 HELPABLE = {}
-ON_TEXT = f"""
+ON_TEXT = """**
 Miku Nakano  !
-• Python Version: {sys.version}
-• Pyrogram Version: {__version__}
-• UpTime: {formatter.get_readable_time((bot_uptime))}"""
+• Python Version: 3.10.11
+• Pyrogram Version: 2.0.46
+• UpTime: 1 seconds**"""
 
 async def start_bot():
     global HELPABLE
@@ -173,7 +173,7 @@ async def start(_, message):
     if message.chat.type != enums.ChatType.PRIVATE:
         return await message.reply_photo(
             photo=random.choice(MIKU_IMG),
-            caption=f"Hii {message.from_user.mention}, I'm here to help since: {formatter.get_readable_time((bot_uptime))} ",
+            caption=f"Hii {message.from_user.mention}, I'm here to help since: idk ",
             reply_markup=keyboard,
         )
     if len(message.text.split()) > 1:
@@ -198,7 +198,7 @@ async def start(_, message):
     else:
         await message.reply_photo(
             photo=random.choice(PM_PHOTO),
-            caption=home_text_pm.format(BOT_NAME,message.from_user.mention,uptime,sys.version,__version__),
+            caption=home_text_pm,
             reply_markup=home_keyboard_pm,
         )
     return
