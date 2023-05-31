@@ -27,8 +27,7 @@ ON_TEXT = f"""
 Miku Nakano  !
 • Python Version: {sys.version}
 • Pyrogram Version: {__version__}
-• UpTime: {uptime}
-"""
+• UpTime: {uptime}"""
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
