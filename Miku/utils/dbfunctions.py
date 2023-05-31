@@ -2,7 +2,7 @@ import codecs
 import pickle
 from typing import Dict, List, Union
 
-from nezuko import db
+from Miku import db
 
 notesdb = db.notes
 filtersdb = db.filters
