@@ -25,9 +25,9 @@ loop = asyncio.get_event_loop()
 HELPABLE = {}
 ON_TEXT = f"""
 Miku Nakano  !
-• Python Version: {sys.version}
-• Pyrogram Version: {__version__}
-• UpTime: {uptime}"""
+• Python Version: {}
+• Pyrogram Version: {}
+• UpTime: {}"""
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
@@ -98,7 +98,7 @@ async def start_bot():
             )
 
         else:
-            await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=ON_TEXT)
+            await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=ON_TEXT.format(sys.version,__version__,uptime))
     except Exception:
         pass
 
