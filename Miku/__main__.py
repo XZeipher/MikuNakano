@@ -23,10 +23,10 @@ loop = asyncio.get_event_loop()
 
 HELPABLE = {}
 ON_TEXT = """**
-Miku Nakano  !
-• Python Version: 3.10.11
-• Pyrogram Version: 2.0.46
-• UpTime: 1 seconds**"""
+Miku Nakano !
+ Python Version: 3.10.11
+ Pyrogram Version: 2.0.46
+ UpTime: 1 seconds**"""
 
 async def start_bot():
     global HELPABLE
