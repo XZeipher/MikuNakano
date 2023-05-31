@@ -295,14 +295,13 @@ async def help_button(client, query):
 Hey {query.from_user.first_name} your **Miku** is here! 
 I Help Admins To Manage Their Groups! 
 Main commands available :
-  /help: PM's you this message.
-  /privacy: to view the privacy policy, and interact with your data.
-  /help <module name>: PM's you info about that module.
-  /settings:
-   • in PM: will send you your settings for all supported modules.
-   • in a group: will redirect you to pm, with all that chat's settings.
-For all command use / or !
- """
+  /help: PM's you this message.
+  /privacy: to view the privacy policy, and interact with your data.
+  /help <module name>: PM's you info about that module.
+  /settings:
+    in PM: will send you your settings for all supported modules.
+    in a group: will redirect you to pm, with all that chat's settings.
+For all command use / or !"""
     if mod_match:
         module = mod_match.group(1)
         text = (
