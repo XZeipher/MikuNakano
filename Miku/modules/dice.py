@@ -1,7 +1,7 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from nezuko import SUDOERS, app
+from Miku import SUDOERS, app
 
 __MODULE__ = "Dice"
 __HELP__ = """
