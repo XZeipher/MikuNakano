@@ -9,6 +9,7 @@ from Miku.utils.dbfunctions import (
     get_filters_names,
     save_filter,
 )
+from Miku.core.decorators.permissions import adminsOnly
 from Miku.utils.filter_groups import chat_filters_group
 from Miku.utils.functions import extract_text_and_keyb
 
