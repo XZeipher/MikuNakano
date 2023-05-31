@@ -7,11 +7,9 @@ import re
 import sys
 import time
 from contextlib import closing, suppress
-
 from pyrogram import enums, filters, idle , __version__
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from uvloop import install
-
 from Miku import BOT_NAME, BOT_USERNAME, LOG_GROUP_ID, aiohttpsession, app
 from Miku.modules import ALL_MODULES
 from Miku.modules.sudoers import bot_sys_stats
@@ -25,11 +23,11 @@ loop = asyncio.get_event_loop()
 HELPABLE = {}
 ON_TEXT = """
 Miku Nakano  !
-• Python Version: {}
-• Pyrogram Version: {}
-• UpTime: {}"""
+� Python Version: {}
+� Pyrogram Version: {}
+� UpTime: {}"""
 
-async def get_readable_time(seconds: int) -> str:
+def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
     time_list = []
@@ -126,13 +124,13 @@ home_keyboard_pm = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats ðŸ–¥",
+                text="System Stats 🖥",
                 callback_data="stats_callback",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="Add Me To Your Groupâš¡",
+                text="Add Me To Your Group⚡",
                 url=f"http://t.me/{BOT_USERNAME}?startgroup=new",
             )
         ],
@@ -140,13 +138,13 @@ home_keyboard_pm = InlineKeyboardMarkup(
 )
 
 home_text_pm = f"""
- {BOT_NAME} 
-Hello! {message.from_user.mention} ,
+ {} 
+Hello! {} ,
 I am an Anime themed advance group management bot with a lot of Features 
 
- Uptime: {uptime}
- Python: {sys.version}
- Pyrogram: {__version__}
+ Uptime: {}
+ Python: {}
+ Pyrogram: {}
 
  Keep Your Group Secure From Spammers by Adding me 
 """
@@ -187,7 +185,7 @@ keyboard = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats ðŸ’»",
+                text="System Stats 💻",
                 callback_data="stats_callback",
             ),
         ],
@@ -225,7 +223,7 @@ async def start(_, message):
     else:
         await message.reply_photo(
             photo=random.choice(PM_PHOTO),
-            caption=home_text_pm,
+            caption=home_text_pm.format(BOT_NAME,message.from_user.mention,uptime,sys.version,__version__),
             reply_markup=home_keyboard_pm,
         )
     return
@@ -327,8 +325,8 @@ Main commands available :
   /privacy: to view the privacy policy, and interact with your data.
   /help <module name>: PM's you info about that module.
   /settings:
-   • in PM: will send you your settings for all supported modules.
-   • in a group: will redirect you to pm, with all that chat's settings.
+   � in PM: will send you your settings for all supported modules.
+   � in a group: will redirect you to pm, with all that chat's settings.
 For all command use / or !
  """
     if mod_match:
