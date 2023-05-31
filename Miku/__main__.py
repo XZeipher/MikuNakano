@@ -23,11 +23,11 @@ StartTime = time.time()
 loop = asyncio.get_event_loop()
 
 HELPABLE = {}
-ON_TEXT = f"""
+ON_TEXT = """
 Miku Nakano  !
-� Python Version: {}
-� Pyrogram Version: {}
-� UpTime: {}"""
+• Python Version: {}
+• Pyrogram Version: {}
+• UpTime: {}"""
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
@@ -126,13 +126,13 @@ home_keyboard_pm = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 🖥",
+                text="System Stats ðŸ–¥",
                 callback_data="stats_callback",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="Add Me To Your Group⚡",
+                text="Add Me To Your Groupâš¡",
                 url=f"http://t.me/{BOT_USERNAME}?startgroup=new",
             )
         ],
@@ -187,7 +187,7 @@ keyboard = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 💻",
+                text="System Stats ðŸ’»",
                 callback_data="stats_callback",
             ),
         ],
@@ -327,8 +327,8 @@ Main commands available :
   /privacy: to view the privacy policy, and interact with your data.
   /help <module name>: PM's you info about that module.
   /settings:
-   � in PM: will send you your settings for all supported modules.
-   � in a group: will redirect you to pm, with all that chat's settings.
+   • in PM: will send you your settings for all supported modules.
+   • in a group: will redirect you to pm, with all that chat's settings.
 For all command use / or !
  """
     if mod_match:
