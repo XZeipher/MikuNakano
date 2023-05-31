@@ -16,42 +16,17 @@ from Miku.modules.sudoers import bot_sys_stats
 from Miku.utils import paginate_modules
 from Miku.utils.constants import MARKDOWN
 from Miku.utils.dbfunctions import clean_restart_stage
-
+from Miku.utils import formatter
+from Miku import bot_start_time
 StartTime = time.time()
 loop = asyncio.get_event_loop()
-
+bot_uptime = int(time.time() - bot_start_time)
 HELPABLE = {}
-ON_TEXT = """
+ON_TEXT = f"""
 Miku Nakano  !
-• Python Version: {}
-• Pyrogram Version: {}
-• UpTime: {}"""
-
-def get_readable_time(seconds: int) -> str:
-    count = 0
-    ping_time = ""
-    time_list = []
-    time_suffix_list = ["s", "m", "h", "days"]
-
-    while count < 4:
-        count += 1
-        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
-        if seconds == 0 and remainder == 0:
-            break
-        time_list.append(int(result))
-        seconds = int(remainder)
-
-    for x in range(len(time_list)):
-        time_list[x] = str(time_list[x]) + time_suffix_list[x]
-    if len(time_list) == 4:
-        ping_time += time_list.pop() + ", "
-
-    time_list.reverse()
-    ping_time += ":".join(time_list)
-
-    return ping_time
-
-uptime = get_readable_time((time.time() - StartTime))
+• Python Version: {sys.version}
+• Pyrogram Version: {__version__}
+• UpTime: {formatter.get_readable_time((bot_uptime))}"""
 
 async def start_bot():
     global HELPABLE
@@ -198,7 +173,7 @@ async def start(_, message):
     if message.chat.type != enums.ChatType.PRIVATE:
         return await message.reply_photo(
             photo=random.choice(MIKU_IMG),
-            caption=f"Hii {message.from_user.mention}, I'm here to help since: {uptime} ",
+            caption=f"Hii {message.from_user.mention}, I'm here to help since: {formatter.get_readable_time((bot_uptime))} ",
             reply_markup=keyboard,
         )
     if len(message.text.split()) > 1:
