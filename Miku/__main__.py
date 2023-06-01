@@ -75,7 +75,7 @@ async def start_bot():
 
     try:
         print("[INFO]: Sending Connection To Telegram!")
-        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=f"**Miku Nakano !\n� Python Version:** `v{platform.python_version()}`\n**� Pyrogram Version:** `{__version__}`\n**� UpTime:** `{formatter.get_readable_time((bot_uptime))}`",parse_mode=MARKDOWN)
+        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=f"**Miku Nakano !\nPython Version:** `v{platform.python_version()}`\n**Pyrogram Version:** `{__version__}`\n**UpTime:** `{formatter.get_readable_time((bot_uptime))}`",parse_mode=MARKDOWN)
     except Exception as e:
     	print(f"[ERROR]: {e}")
 
@@ -102,13 +102,13 @@ home_keyboard_pm = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 🖥",
+                text="System Stats ðŸ–¥",
                 callback_data="stats_callback",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="Add Me To Your Group⚡",
+                text="Add Me To Your Groupâš¡",
                 url=f"http://t.me/{BOT_USERNAME}?startgroup=new",
             )
         ],
@@ -162,7 +162,7 @@ keyboard = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats 💻",
+                text="System Stats ðŸ’»",
                 callback_data="stats_callback",
             ),
         ],
