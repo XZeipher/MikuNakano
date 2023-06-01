@@ -23,12 +23,14 @@ MESSAGE_DUMP_CHAT = MESSAGE_DUMP_CHAT
 MOD_LOAD = []
 MOD_NOLOAD = []
 bot_start_time = time.time()
-
+BOT_ID = 6106438500
+BOT_NAME = "Miku Nakano 遠ゲ"
+BOT_USERNAME = "MikuNakanoXBot"
+BOT_MENTION = "Miku"
 # MongoDB client
 print("[INFO]: INITIALIZING MONGODB")
 mongo_client = MongoClient(MONGO_URL)
 db = mongo_client.miku
-
 
 async def load_sudoers():
     global SUDOERS
