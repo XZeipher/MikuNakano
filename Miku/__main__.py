@@ -25,9 +25,12 @@ loop = asyncio.get_event_loop()
 HELPABLE = {}
 ON_TEXT = """**
 Miku Nakano !
- Python Version: 3.10.11
- Pyrogram Version: 2.0.46
- UpTime: 1 seconds**"""
+• Python Version: {}
+• Pyrogram Version: {}
+• UpTime: {}**"""
+
+bot_start_time = time.time()
+bot_uptime = int(time.time() - bot_start_time)
 
 async def start_bot():
     global HELPABLE
@@ -64,27 +67,18 @@ async def start_bot():
 
     try:
         print("[INFO]: Sending Connection To Telegram!")
-        if restart_data:
-            await app.edit_message_text(
-                restart_data["chat_id"],
-                restart_data["message_id"],
-                "**Restart Success.**",
-            )
-
-        else:
-            await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=ON_TEXT.format(sys.version,__version__,uptime))
-    except Exception:
-        pass
+        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=ON_TEXT.format(sys.version,__version__,formatter.get_readable_time((bot_uptime))))
+    except Exception as e:
+    	print(f"[ERROR]: {e}")
 
     await idle()
 
     await aiohttpsession.close()
     print("[INFO]: CLOSING AIOHTTP SESSION AND STOPPING BOT")
     await app.stop()
-    print("[INFO]: Bye!")
     for task in asyncio.all_tasks():
         task.cancel()
-    print("[INFO]: Turned off!")
+    print("[INFO]: Turned off tasks!")
 
 
 home_keyboard_pm = InlineKeyboardMarkup(
@@ -113,16 +107,16 @@ home_keyboard_pm = InlineKeyboardMarkup(
     ]
 )
 
-home_text_pm = """
+home_text_pm = """**
  {} 
-Hello! {} ,
-I am an Anime themed advance group management bot with a lot of Features 
+Hola! {} ,
+I am an Anime themed advance group management bot with a lot of Sexy Features 
 
  Uptime: {}
  Python: {}
  Pyrogram: {}
 
- Keep Your Group Secure From Spammers by Adding me """
+ Keep Your Group Secure From Spammers by Adding me **"""
 MIKU_IMG = (
       "https://telegra.ph/file/624831b44a6e36370ec70.jpg",
       "https://telegra.ph/file/b9c7fb4d2dc481104fe49.jpg",
@@ -173,7 +167,7 @@ async def start(_, message):
     if message.chat.type != enums.ChatType.PRIVATE:
         return await message.reply_photo(
             photo=random.choice(MIKU_IMG),
-            caption=f"Hii {message.from_user.mention}, I'm here to help since: idk ",
+            caption=f"Hii {message.from_user.mention}, I'm here to help since: {formatter.get_readable_time((bot_uptime))} ",
             reply_markup=keyboard,
         )
     if len(message.text.split()) > 1:
@@ -198,7 +192,7 @@ async def start(_, message):
     else:
         await message.reply_photo(
             photo=random.choice(PM_PHOTO),
-            caption=home_text_pm,
+            caption=home_text_pm.format(BOT_NAME,message.from_user.mention,sys.version,__version__,formatter.get_readable_time((bot_uptime))),
             reply_markup=home_keyboard_pm,
         )
     return
