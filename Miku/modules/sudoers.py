@@ -6,8 +6,6 @@ import psutil
 from pyrogram import filters
 from pyrogram.errors import FloodWait
 from Miku import (
-    BOT_ID,
-    BOT_NAME,
     GBAN_LOG_GROUP_ID,
     SUDOERS,
     app,
@@ -42,6 +40,9 @@ __HELP__ = """
 /update - To Update And Restart The Bot
 
 """
+
+BOT_ID = 6106438500
+BOT_NAME = "Miku Nakano 遠ゲ"
 
 # Stats Module
 
