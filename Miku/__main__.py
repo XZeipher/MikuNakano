@@ -5,6 +5,7 @@ import asyncio
 import importlib
 import random
 import re
+import platform
 import sys
 import time
 from contextlib import closing, suppress
@@ -23,12 +24,6 @@ StartTime = time.time()
 loop = asyncio.get_event_loop()
 
 HELPABLE = {}
-ON_TEXT = """**
-Miku Nakano !
-• Python Version: {}
-• Pyrogram Version: {}
-• UpTime: {}**"""
-
 bot_start_time = time.time()
 bot_uptime = int(time.time() - bot_start_time)
 
@@ -67,7 +62,7 @@ async def start_bot():
 
     try:
         print("[INFO]: Sending Connection To Telegram!")
-        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=ON_TEXT.format(sys.version,__version__,formatter.get_readable_time((bot_uptime))))
+        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=f"**Miku Nakano !\n• Python Version:** `v{platform.python_version()}`\n**• Pyrogram Version:** `{__version__}`\n**• UpTime:** `{formatter.get_readable_time((bot_uptime))}`",parse_mode=MARKDOWN)
     except Exception as e:
     	print(f"[ERROR]: {e}")
 
