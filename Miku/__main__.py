@@ -12,7 +12,7 @@ from contextlib import closing, suppress
 from pyrogram import enums, filters, idle , __version__
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from uvloop import install
-from Miku import BOT_NAME, BOT_USERNAME, LOG_GROUP_ID, aiohttpsession, app
+
 from Miku.modules import ALL_MODULES
 from Miku.modules.sudoers import bot_sys_stats
 from Miku.utils import paginate_modules
