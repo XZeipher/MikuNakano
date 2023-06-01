@@ -13,7 +13,6 @@ from pyrogram.types import Message
 from pyromod import listen
 from Python_ARQ import ARQ
 from telegraph import Telegraph
-
 from sample_config import *
 
 GBAN_LOG_GROUP_ID = GBAN_LOG_GROUP_ID
@@ -58,21 +57,8 @@ arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 app = Client("miku", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
-print("[INFO]: STARTING BOT CLIENT")
-app.start()
-
-print("[INFO]: GATHERING PROFILE INFO")
-x = app.get_me()
-
-
-BOT_ID = x.id
-BOT_NAME = x.first_name + (x.last_name or "")
-BOT_USERNAME = x.username
-BOT_MENTION = x.mention
-BOT_DC_ID = x.dc_id
-
 telegraph = Telegraph()
-telegraph.create_account(short_name=BOT_USERNAME)
+telegraph.create_account(short_name="MikuNakanoXBot")
 
 
 async def eor(msg: Message, **kwargs):
