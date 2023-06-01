@@ -12,7 +12,7 @@ from contextlib import closing, suppress
 from pyrogram import enums, filters, idle , __version__
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from uvloop import install
-
+from Miku import BOT_NAME, BOT_USERNAME, BOT_MENTION, BOT_ID , LOG_GROUP_ID, aiohttpsession, app
 from Miku.modules import ALL_MODULES
 from Miku.modules.sudoers import bot_sys_stats
 from Miku.utils import paginate_modules
@@ -29,12 +29,7 @@ bot_uptime = int(time.time() - bot_start_time)
 
 async def start_bot():
     global HELPABLE
-    global BOT_ID
-    global BOT_NAME
-    global BOT_USERNAME
-    global BOT_MENTION
-    global BOT_DC_ID
-    
+
     for module in ALL_MODULES:
         imported_module = importlib.import_module(f"Miku.modules.{module}")
         if (
@@ -65,17 +60,9 @@ async def start_bot():
 
     restart_data = await clean_restart_stage()
     await app.start()
-    x = app.get_me()
-    BOT_ID = x.id
-    BOT_NAME = x.first_name + (x.last_name or "")
-    BOT_USERNAME = x.username
-    BOT_MENTION = x.mention
-    BOT_DC_ID = x.dc_id
-
-
     try:
         print("[INFO]: Sending Connection To Telegram!")
-        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=f"**Miku Nakano !\nPython Version:** `v{platform.python_version()}`\n**Pyrogram Version:** `{__version__}`\n**UpTime:** `{formatter.get_readable_time((bot_uptime))}`",parse_mode=MARKDOWN)
+        await app.send_photo(LOG_GROUP_ID,photo="https://telegra.ph/file/378037bc2d59f232c6e8c.jpg", caption=f"**Miku Nakano !\n� Python Version:** `v{platform.python_version()}`\n**� Pyrogram Version:** `{__version__}`\n**� UpTime:** `{formatter.get_readable_time((bot_uptime))}`",parse_mode=MARKDOWN)
     except Exception as e:
     	print(f"[ERROR]: {e}")
 
@@ -102,13 +89,13 @@ home_keyboard_pm = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats ðŸ–¥",
+                text="System Stats 🖥",
                 callback_data="stats_callback",
             ),
         ],
         [
             InlineKeyboardButton(
-                text="Add Me To Your Groupâš¡",
+                text="Add Me To Your Group⚡",
                 url=f"http://t.me/{BOT_USERNAME}?startgroup=new",
             )
         ],
@@ -162,7 +149,7 @@ keyboard = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(
-                text="System Stats ðŸ’»",
+                text="System Stats 💻",
                 callback_data="stats_callback",
             ),
         ],
@@ -364,9 +351,7 @@ For all command use / or !"""
             reply_markup=keyboard,
             disable_web_page_preview=True,
         )
-
     return await client.answer_callback_query(query.id)
-
 
 if __name__ == "__main__":
     install()
