@@ -61,7 +61,7 @@ MODULES = {}
 async def main():
     global IMPORTED,HELPABLE,MODULES
     for module_name in ALL_MODULES:
-        imported_module = importlib.import_module("TeleBot.modules." + module_name)        
+        imported_module = importlib.import_module("Miku.modules." + module_name)        
         try:
            MODULES[unidecode(imported_module.__mod_name__).lower()] = imported_module.__help__
         except Exception as e:
