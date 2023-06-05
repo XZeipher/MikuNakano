@@ -20,6 +20,7 @@ from Miku.utils.constants import MARKDOWN
 from Miku.utils.dbfunctions import clean_restart_stage
 from Miku.utils import formatter
 
+
 StartTime = time.time()
 loop = asyncio.get_event_loop()
 
