@@ -2,7 +2,7 @@ from Miku import app,BOT_USERNAME
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 from pyrogram.errors import BadRequest 
-from Miku.modules.pyrogram_funcs.status import user_admin,user_can_change_info 
+from Miku.modules.pyro.status import user_admin,user_can_change_info 
 from Miku.modules.mongo.rules_db import *
 
 
