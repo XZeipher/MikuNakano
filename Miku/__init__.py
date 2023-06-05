@@ -1,73 +1,101 @@
-# Respect @ImmortalsXKing
-# Don't Fking Remove Credits
-
+import os
+import logging
+import time 
+import sys
 import asyncio
-import time
-from inspect import getfullargspec
-from os import path
-
-from aiohttp import ClientSession
-from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
+import config
 from pyrogram import Client
-from pyrogram.types import Message
-from pyromod import listen
+from rich.table import Table
+from rich.console import Console 
+from aiohttp import ClientSession
 from Python_ARQ import ARQ
-from telegraph import Telegraph
-from sample_config import *
-
-GBAN_LOG_GROUP_ID = GBAN_LOG_GROUP_ID
-SUDOERS = SUDO_USERS_ID
-WELCOME_DELAY_KICK_SEC = WELCOME_DELAY_KICK_SEC
-LOG_GROUP_ID = LOG_GROUP_ID
-MESSAGE_DUMP_CHAT = MESSAGE_DUMP_CHAT
-MOD_LOAD = []
-MOD_NOLOAD = []
-bot_start_time = time.time()
-BOT_ID = 6106438500
-BOT_NAME = "Miku Nakano 遠ゲ"
-BOT_USERNAME = "MikuNakanoXBot"
-BOT_MENTION = "Miku"
-# MongoDB client
-print("[INFO]: INITIALIZING MONGODB")
-mongo_client = MongoClient(MONGO_URL)
-db = mongo_client.miku
-
-async def load_sudoers():
-    global SUDOERS
-    print("[INFO]: LOADING SUDOERS")
-    sudoersdb = db.sudoers
-    sudoers = await sudoersdb.find_one({"sudo": "sudo"})
-    sudoers = [] if not sudoers else sudoers["sudoers"]
-    for user_id in SUDOERS:
-        if user_id not in sudoers:
-            sudoers.append(user_id)
-            await sudoersdb.update_one(
-                {"sudo": "sudo"},
-                {"$set": {"sudoers": sudoers}},
-                upsert=True,
-            )
-    SUDOERS = (SUDOERS + sudoers) if sudoers else SUDOERS
-    print("[INFO]: LOADED SUDOERS")
+from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 
 
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    level=logging.INFO,
+)
+
+LOGGER = logging.getLogger("MIKU")
+
+LOG = Console()
+StartTime = time.time()
 loop = asyncio.get_event_loop()
-loop.run_until_complete(load_sudoers())
-
 aiohttpsession = ClientSession()
+mongo = MongoClient(config.MONGO_DB_URL)
+db = mongo.Miku
 
-arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
+if sys.version_info[0] < 3 and sys.version_info[1] < 6:
+    LOG.print("You Must Have Python3 Version Exiting...")
+    sys.exit(1)
 
-app = Client("miku", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+def get_readable_time(seconds: int) -> str:
+    time_string = ""
+    if seconds < 0:
+        raise ValueError("Input value must be non-negative")
 
-telegraph = Telegraph()
-telegraph.create_account(short_name="MikuNakanoXBot")
+    if seconds < 60:
+        time_string = f"{round(seconds)}s"
+    else:
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        days, hours = divmod(hours, 24)
+        if days > 0:
+            time_string += f"{round(days)}days, "
+        if hours > 0:
+            time_string += f"{round(hours)}h:"
+        time_string += f"{round(minutes)}m:{round(seconds):02d}s"
+
+    return time_string
 
 
-async def eor(msg: Message, **kwargs):
-    func = (
-        (msg.edit_text if msg.from_user.is_self else msg.reply)
-        if msg.from_user
-        else msg.reply
-    )
-    spec = getfullargspec(func.__wrapped__).args
-    return await func(**{k: v for k, v in kwargs.items() if k in spec})
+
+
+MOD_LOAD = []
+MOD_NOLOAD = []    
+BOT_NAME  = ""
+BOT_USERNAME = ""
+BOT_ID = 0
+MENTION_BOT = ""
+UMENTION = ""
+UBOT_ID = 0
+
+arq = ARQ("arq.hamker.dev",config.ARQ_API_KEY, aiohttpsession)
+
+app = Client (
+      "MikuNakano",
+      api_id=config.API_ID,
+      api_hash=config.API_HASH,
+      bot_token=config.BOT_TOKEN
+      )
+
+async def init():
+    global BOT_NAME,BOT_USERNAME,BOT_ID,MENTION_BOT
+    LOG.print("Starting Miku...")
+    LOG.print("Loading Sudo Users...")
+    
+    await app.start()
+    x =  db.sudo.find().to_list(length=None)
+    for i in await x :
+        config.SUDO_USERS.append(i["user_id"])
+    config.SUPREME_USERS.extend(config.SUDO_USERS)
+    msg = "Here List Of Sudo Users"
+    for m in set(config.SUDO_USERS):
+        try:
+            mention = (await app.get_users(int(m))).first_name 
+            msg += f"• {mention}\n"
+        except Exception as e:
+            print(e)
+    LOG.print(f"Loaded Sudo Users. :- \n\n{msg}") 
+    apps = await app.get_me()
+    BOT_ID = apps.id
+    BOT_USERNAME = apps.username  
+    BOT_NAME = apps.first_name
+    MENTION_BOT = apps.mention
+    LOG.print("Successfully Executed Everything.")
+
+    
+    
+loop.run_until_complete(init()) 
