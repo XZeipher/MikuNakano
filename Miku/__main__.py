@@ -138,14 +138,13 @@ async def group_start(_, message):
            chat_id,    
            photo=random.choice(PM_PHOTO),
            caption=strings.PM_START_TEXT.format(BOT_NAME,mention,uptime,platform.python_version(),pyrover),
-           reply_markup=InlineKeyboardMarkup(strings.START_BUTTONS),
-           parse_mode=ParseMode.MARKDOWN,                   
-            )
+           reply_markup=InlineKeyboardMarkup(strings.START_BUTTONS)
+           )
                         
             
     else:
         await message.reply_photo(
-                config.START_IMG,
+                random.choice(MIKU_IMG),
                 caption="**Hii {}, I'm here to help since:** `{}`".format(message.from_user.mention,uptime),
                 reply_markup=InlineKeyboardMarkup(strings.GRP_START)
             )
