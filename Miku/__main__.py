@@ -69,13 +69,11 @@ async def start_bot():
     	print(f"[ERROR]: {e}")
 
     await idle()
-
-    await aiohttpsession.close()
-    print("[INFO]: CLOSING AIOHTTP SESSION AND STOPPING BOT")
+    await aiohttpsession.close()    
     await app.stop()
     for task in asyncio.all_tasks():
         task.cancel()
-    print("[INFO]: Turned off tasks!")
+    print("[INFO]: Task Completed!")
 
 
 home_keyboard_pm = InlineKeyboardMarkup(
@@ -105,15 +103,15 @@ home_keyboard_pm = InlineKeyboardMarkup(
 )
 
 home_text_pm = """
- {} 
+{} {} {}
 Hola! {} ,
-I am an Anime themed advance group management bot with a lot of Sexy Features 
-
+I am an Anime themed advance group management bot with a lot of Sexy Features {}
+{}
  Uptime: {}
  Python: {}
  Pyrogram: {}
-
- Keep Your Group Secure From Spammers by Adding me """
+{}
+ Keep Your Group Secure From Spammers by Adding me {}"""
 MIKU_IMG = (
       "https://telegra.ph/file/624831b44a6e36370ec70.jpg",
       "https://telegra.ph/file/b9c7fb4d2dc481104fe49.jpg",
@@ -189,7 +187,7 @@ async def start(_, message):
     else:
         await message.reply_photo(
             photo=random.choice(PM_PHOTO),
-            caption=home_text_pm.format(BOT_NAME,message.from_user.mention,sys.version,__version__,formatter.get_readable_time((bot_uptime))),
+            caption=home_text_pm.format("",BOT_NAME,"",message.from_user.mention,"","",platform.python_version(),__version__,"ok","",""),
             reply_markup=home_keyboard_pm,
         )
     return
