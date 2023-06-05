@@ -22,7 +22,7 @@ SUPPORT_SEND_MSG = """
 **UpTime:** `{}`
 """
 
-LOG_MSG = "Miku Started 🍦🍦🍦🍦"
+LOG_MSG = "Miku Starting 🍦🍦🍦🍦"
 
 HELP_STRINGS = f"""**
 Click on below buttons to access commands of {BOT_NAME}.**
@@ -34,7 +34,7 @@ START_BUTTONS = [
         InlineKeyboardButton(text="**Support 💕**", url=f"t.me/{SUPPORT_CHAT}")
     ], 
     [
-       InlineKeyboardButton("**System Stats 🖥",callback_data="Friday_st")
+       InlineKeyboardButton("**System Stats 🖥**",callback_data="Friday_st")
     ],
     [
         InlineKeyboardButton(
@@ -43,5 +43,13 @@ START_BUTTONS = [
         ),
     ],     
 ]
-
+GRP_START = [
+    [
+        InlineKeyboardButton(text="**Updates 💌**", url=f"t.me/{UPDATES_CHANNEL}"),
+        InlineKeyboardButton(text="**Support 💕**", url=f"t.me/{SUPPORT_CHAT}")
+    ], 
+    [
+       InlineKeyboardButton("**System Stats 🖥**",callback_data="Friday_st")
+    ],
+]
 BACK_BTN = [[InlineKeyboardButton("🔙",callback_data="friday_back")]]
