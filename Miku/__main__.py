@@ -146,10 +146,7 @@ async def group_start(_, message):
     else:
         await message.reply_photo(
                 config.START_IMG,
-                caption="**Hii {}, I'm here to help since:** `{}`".format(
-                    message.from_user.mention,
-                    uptime
-                )
+                caption="**Hii {}, I'm here to help since:** `{}`".format(message.from_user.mention,uptime),
                 reply_markup=InlineKeyboardMarkup(strings.GRP_START)
             )
                    
