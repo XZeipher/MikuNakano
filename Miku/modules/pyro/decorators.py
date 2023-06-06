@@ -11,7 +11,7 @@ from pyrogram.types import Message
 from config import HANDLERS
 from functools import wraps
 from dotmap import DotMap
-from Miku.lang import get_string
+from lang import get_string
 from Miku.modules.mongo.lang_db import *
 
 DISABLE_COMMANDS = []
