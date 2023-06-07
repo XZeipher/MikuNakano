@@ -146,7 +146,7 @@ async def _demote(_, message):
     
     user_mention = xx.user.mention
     try : 
-        await pgram.promote_chat_member(chat_id,user_id,DEMOTE)
+        await app.promote_chat_member(chat_id,user_id,DEMOTE)
         await message.reply_text(f"**Demoted {user_mention}**")
     except BadRequest as excp:
         await message.reply_text(f"**{excp.message}.**")           
