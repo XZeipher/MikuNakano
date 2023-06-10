@@ -19,16 +19,16 @@ async def check_temp(chat_id, pfp, name, chat_title, user_id, username):
 async def inform(_, msg):
     chat_id = msg.chat.id
     chat_title = msg.chat.title
-    for m in msg.from_user:
-        name = m.first_name
-        username = m.username
-        mention = m.mention
-        user_id = m.id
-        try:
-            user_photo = m.photo.big_file_id
-            pic = await _.download_media(m.photo.big_file_id, file_name=f"pp{user_id}.png")
-        except AttributeError:
-            pic = "./Miku/resources/profilepic.png"
+    m = msg.from_user:
+    name = m.first_name
+    username = m.username
+    mention = m.mention
+    user_id = m.id
+    try:
+        user_photo = m.photo.big_file_id
+        pic = await _.download_media(m.photo.big_file_id, file_name=f"pp{user_id}.png")
+    except AttributeError:
+        pic = "./Miku/resources/profilepic.png"
         welpic = await check_temp(chat_id, pic, name, chat_title, user_id, username)
         await _.send_photo(chat_id, welpic)
         os.remove(welpic)
