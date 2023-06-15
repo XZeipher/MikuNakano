@@ -19,7 +19,7 @@ async def check_temp(chat_id, pfp, name, chat_title, user_id, username):
 async def inform(_, msg):
     chat_id = msg.chat.id
     chat_title = msg.chat.title
-    m = msg.from_user:
+    m = msg.from_user
     name = m.first_name
     username = m.username
     mention = m.mention
