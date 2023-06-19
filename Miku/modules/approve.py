@@ -1,5 +1,5 @@
 from pyrogram import filters,enums
-from Miku import pgram
+from Miku import app
 from config import SUPREME_USERS
 from Miku.modules.pyro.status import user_admin
 from Miku.modules.pyro.extracting_id import extract_user_id
