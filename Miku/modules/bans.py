@@ -272,7 +272,7 @@ async def _kick(_, message):
         return 
     member = await _.get_chat_member(chat_id,user_id)      
     if member.privileges:
-        await message.reply_text(f"**message.from_user.mention} Can't Kick An Admin.**")
+        await message.reply_text(f"**{message.from_user.mention} Can't Kick An Admin.**")
         return 
     try:
         mention = (await app.get_users(user_id)).mention
