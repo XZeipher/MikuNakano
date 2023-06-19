@@ -238,6 +238,7 @@ async def flood_control_func(_, message):
     if not message.chat:
         return
     chat_id = message.chat.id
+    user_id = message.from_user.id
     if not await get_flood(chat_id):
         return
     

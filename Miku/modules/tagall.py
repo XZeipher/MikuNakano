@@ -23,7 +23,8 @@ async def tag_all_users(_,message):
             if message.chat.id not in SPAM_CHATS:
                 break       
             usernum += 1
-            usertxt += f"[](tg://user?id={m.user.id})"
+            alpha = ""
+            usertxt += f"[{alpha}](tg://user?id={m.user.id})"
             if usernum == 5:
                 await replied.reply_text(usertxt)
                 await asyncio.sleep(2)
@@ -46,7 +47,8 @@ async def tag_all_users(_,message):
             if message.chat.id not in SPAM_CHATS:
                 break 
             usernum += 1
-            usertxt += f"[](tg://user?id={m.user.id})"
+            alpha = ""
+            usertxt += f"[{alpha}](tg://user?id={m.user.id})"
             if usernum == 5:
                 await app.send_message(message.chat.id,f'{text}\n{usertxt}')
                 await asyncio.sleep(2)
