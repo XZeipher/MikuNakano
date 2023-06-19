@@ -327,7 +327,7 @@ async def _kick(_, message):
         return 
     member = await _.get_chat_member(chat_id,user_id)      
     if member.privileges:
-        await message.reply_text(f"message.from_user.mention} Can't Mute An Admin.**")
+        await message.reply_text(f"{message.from_user.mention} Can't Mute An Admin.**")
         return 
     user = await _.get_chat_member(chat_id,user_id)   
     if user.status == enums.ChatMemberStatus.RESTRICTED:
@@ -428,22 +428,21 @@ async def _list(_, message):
 
 
 __help__ = """
-**⸢ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs.⸥**
+**Restrictions Commands For Admins.**
 
-「𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦」 :
-═───────◇───────═
-๏ /kickme : ᴘᴜɴᴄʜs ᴛʜᴇ ᴜsᴇʀ ᴡʜᴏ ɪssᴜᴇᴅ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ
-「𝗔𝗗𝗠𝗜𝗡𝗦 𝗢𝗡𝗟𝗬」
-๏ /ban ᴏʀ /dban <ᴜsᴇʀʜᴀɴᴅʟᴇ> : ʙᴀɴs ᴀ ᴜsᴇʀ. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ)
-๏ /sban <ᴜsᴇʀʜᴀɴᴅʟᴇ> : sɪʟᴇɴᴛʟʏ ʙᴀɴ ᴀ ᴜsᴇʀ. ᴅᴇʟᴇᴛᴇs ᴄᴏᴍᴍᴀɴᴅ, ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇ ᴀɴᴅ ᴅᴏᴇsɴ'ᴛ ʀᴇᴘʟʏ. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ)
-๏ /tban <ᴜsᴇʀʜᴀɴᴅʟᴇ> x(m/h/d) : ʙᴀɴs ᴀ ᴜsᴇʀ ғᴏʀ x ᴛɪᴍᴇ. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ). ᴍ = ᴍɪɴᴜᴛᴇs, ʜ = ʜᴏᴜʀs, ᴅ = ᴅᴀʏs.
-๏ /listbans : ʟɪsᴛ ᴏғ ʙᴀɴɴᴇᴅ ᴜsᴇʀs ɪɴ ᴀ ᴄʜᴀᴛ.
-๏ /unban <ᴜsᴇʀʜᴀɴᴅʟᴇ> :  ᴜɴʙᴀɴs a user. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ)
-๏ /punch <ᴜsᴇʀʜᴀɴᴅʟᴇ> :  Punches a user out of the group, (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ)
-๏ /mute or /dmute <ᴜsᴇʀʜᴀɴᴅʟᴇ> : sɪʟᴇɴᴄᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ.
-๏ /tmute <userhandle> x(m/h/d) : ᴍᴜᴛᴇs a ᴜsᴇʀ ғᴏʀ x ᴛɪᴍᴇ. (ᴠɪᴀ ʜᴀɴᴅʟᴇ, ᴏʀ ʀᴇᴘʟʏ). m = ᴍɪɴᴜᴛᴇs, h = ʜᴏᴜʀs, ᴅ = ᴅᴀʏs.
-๏ /unmute <userhandle> : ᴜɴᴍᴜᴛᴇs ᴀ ᴜsᴇʀ. ᴄᴀɴ ᴀʟsᴏ ʙᴇ ᴜsᴇᴅ ᴀs ᴀ ʀᴇᴘʟʏ, ᴍᴜᴛɪɴɢ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴜsᴇʀ. 
-═───────◇───────═
+**Commands**
+
+♠ `/kickme` : kick's out the user who uses this command
+♠ `/ban` : ban's users.
+♠ `/sban <username>` : silently ban's users.
+♠ `/tban <username> (m/h/d)` : ban's user with time example 1m , 1h , 1d.
+♠ `/listbans` : list of banned users in a chat.
+♠ `/unban <username>` :  unban's an user
+♠ `/punch <username>` :  punches an user out of the group
+♠ `/mute` : mute users.
+♠ `/tmute <username> (m/h/d)` : mute user with time example 1m , 1h , 1d.
+♠ `/unmute <username>` : unmute users.
+
 """
-__mod_name__ = "𝙱ᴀɴs"
+__mod_name__ = "Restrictions"
 
