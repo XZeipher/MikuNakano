@@ -4,7 +4,7 @@ from Miku import app
 
 key = "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"
 
-@app.on_message(filters.command("gen") filters.group)
+@app.on_message(filters.command("gen") & filters.group)
 async def gen(client , msg):
     x = await msg.reply_text("**Creating Artificial Image....**")
     text = msg.text.split("/gen")[1]
