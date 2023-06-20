@@ -13,11 +13,11 @@ async def download_youtube_video(client, message):
         start_time = 10
         end_time = start_time + 5
         await x.edit(f"**Downloading:** {yt.title}")
-        video.download(filename="temp")
+        video.download(filename="temp.mp4")
         original_filename = video.default_filename
-        new_filename = original_filename.replace("temp", "")
+        new_filename = original_filename.replace("temp.mp4", "")
         video_file = "alpha.mp4"
-        temp_file = f"temp/{original_filename}"
+        temp_file = f"{original_filename}"
         os.rename(temp_file, video_file)
         await x.delete()
         await message.reply_video(video_file, caption=yt.title)
