@@ -15,11 +15,14 @@ async def download_youtube_video(client, message):
         await x.edit(f"**Downloading:** {yt.title}")
         video.download(filename="temp.mp4")
         original_filename = video.default_filename
-        new_filename = original_filename.replace("temp.mp4", "")
         video_file = "alpha.mp4"
-        temp_file = f"{original_filename}"
-        os.rename(temp_file, video_file)
-        await x.delete()
-        await message.reply_video(video_file, caption=yt.title)
+        temp_file = f"temp.mp4"
+        
+        if os.path.exists(temp_file):
+            os.rename(temp_file, video_file)
+            await x.delete()
+            await message.reply_video(video_file, caption=yt.title)
+        else:
+            await x.edit("**Error: File not found.**")
     except Exception as e:
         print("Error:", str(e))
