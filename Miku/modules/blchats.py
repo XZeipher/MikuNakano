@@ -30,7 +30,7 @@ async def _blacklist_chats(_, message):
             msg += f"• {chat.title} - {chat.id}\n"
         except:
             pass
-    with BytesIO(str.encode(msg)) as output:
+    with BytesIO(msg) as output:
         output.name = "blackchats.txt"
         await message.reply_document(            
             document = output,
