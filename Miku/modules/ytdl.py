@@ -3,7 +3,7 @@ from pyrogram import filters
 import os
 from Miku import app
 
-@app.on_message(filters.command("ytdl") & filters.private)
+@app.on_message(filters.command("ytdl"))
 async def download_youtube_video(client, message):
     video_url = message.text.split("/ytdl")[1]
     x = await message.reply_text("**Processing...**")
