@@ -1,5 +1,6 @@
 aiodns
 aiofiles
+openai
 aiohttp
 aiosignal
 alphabet-detector
