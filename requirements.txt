@@ -1,5 +1,6 @@
 aiodns
 aiofiles
+pytube
 openai
 aiohttp
 aiosignal
