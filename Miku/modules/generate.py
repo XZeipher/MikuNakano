@@ -11,7 +11,8 @@ async def gen(client , msg):
     openai.api_key = key
     response = openai.Image.create(prompt=text, n=1, size="1024x1024")
     image_url = response['data'][0]['url']
-    await x.edit(photo=image_url , caption=f"**Prompt:-**\n{text}")
+    await msg.reply_photo(photo=image_url , caption=f"**Prompt:-**\n{text}")
+    await text.delete()
 
 
 
