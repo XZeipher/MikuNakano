@@ -18,9 +18,9 @@ async def generate(client, message):
     global text
     text = await get_text(message)
     button1 = InlineKeyboardButton("DALL-E", callback_data=f"gen.0.{message.from_user.id}")
-    button2 = InlineKeyboardButton("Dark Sushi", callback_data=f"gen.0.{message.from_user.id}") 
-    button3 = InlineKeyboardButton("Guofeng3", callback_data=f"gen.0.{message.from_user.id}") 
-    button4 = InlineKeyboardButton("Meina Mix", callback_data=f"gen.0.{message.from_user.id}") 
+    button2 = InlineKeyboardButton("Dark Sushi", callback_data=f"gen.1.{message.from_user.id}") 
+    button3 = InlineKeyboardButton("Guofeng3", callback_data=f"gen.2.{message.from_user.id}") 
+    button4 = InlineKeyboardButton("Meina Mix", callback_data=f"gen.3.{message.from_user.id}") 
     keyboard = InlineKeyboardMarkup([[button1, button2 , button3 , button4]])
     await message.reply_text("**Select a model.**", reply_markup=keyboard)
 
