@@ -39,7 +39,7 @@ async def post_(prompt,model):
     payload = json.dumps({
         "key": random.choice(API_KEY),
         "model_id": model,
-        "prompt": text,
+        "prompt": prompt,
         "negtive-prompt": "drawing, extra legs, extra body, extra hand, cartoon, weird face"          
     })
     headers = {
