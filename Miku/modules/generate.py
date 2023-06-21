@@ -1,4 +1,4 @@
- from Miku import app
+from Miku import app
 from pyrogram import *
 from pyrogram.types import *
 import openai
