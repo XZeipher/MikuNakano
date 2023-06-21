@@ -35,7 +35,7 @@ async def generate(client, message):
     button2 = InlineKeyboardButton("Dark Sushi", callback_data="button2") 
     button3 = InlineKeyboardButton("Guofeng3", callback_data="button3") 
     button4 = InlineKeyboardButton("Meina Mix", callback_data="button4") 
-    keyboard = InlineKeyboardMarkup([[button1, button2]] , [[ button3 , button4]])
+    keyboard = InlineKeyboardMarkup([[button1, button2 , button3 , button4]])
     await message.reply_text("**Select a model.**", reply_markup=keyboard)
 
 
