@@ -40,8 +40,17 @@ async def post_(prompt,model):
         "key": random.choice(API_KEY),
         "model_id": model,
         "prompt": prompt,
-        "negtive-prompt": "drawing, extra legs, extra body, extra hand, cartoon, weird face"          
-    })
+        "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), (((tiling))), ((naked)), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), (worst quality, low quality:1.4), monochrome, zombie, (interlocked fingers), disfigured, kitsch, ugly, oversaturated, grain, low-res, Deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, disgusting, poorly drawn, childish, mutilated, mangled, old, surreal, calligraphy, sign, writing, watermark, text, body out of frame, extra legs, extra arms, extra feet, poorly drawn feet, cross-eye, blurry, bad anatomy",
+        "width": "1024",
+        "height": "1024",
+        "samples": "1",
+        "num_inference_steps": "30",
+        "seed": seed,
+        "self_attention":"yes",
+        "guidance_scale": 7.5,
+        "webhook": "None",
+        "track_id": "None"
+        })
     headers = {
         'Content-Type': 'application/json'
     }
@@ -53,3 +62,6 @@ async def post_(prompt,model):
     else:
         output_url = None
     return output_url
+    
+    
+    
