@@ -48,25 +48,23 @@ async def handle_callback(client, callback_query):
         await x.delete()
         await callback_query.message.reply_photo(photo=image_url, caption=f"**Prompt:-**\n{text}")
     elif callback_data == "button2":
-    	x = await callback_query.message.edit_text("**Creating Artificial Image...**")
+        x = await callback_query.message.edit_text("**Creating Artificial Image...**")
         url = "https://stablediffusionapi.com/api/v4/dreambooth"
         payload = json.dumps({
             "key": random.choice(API_KEY),
             "model_id": "dark-sushi-25d",
             "prompt": text,
-            "negtive-prompt": "drawing, extra legs , extra body , extra hand , cartoon , weird face"          
+            "negtive-prompt": "drawing, extra legs, extra body, extra hand, cartoon, weird face"          
         })
         headers = {
           'Content-Type': 'application/json'
         }
         response = requests.post(url, headers=headers, data=payload).json()
         if "output" in response and response["output"]:
-        	output_url = response["output"][0]
+            output_url = response["output"][0]
         elif "future_links" in response and response["future_links"]:
-        	output_url = response["future_links"][0]
+            output_url = response["future_links"][0]
         else:
-        	output_url = None
+            output_url = None
         await x.delete()
         await callback_query.message.reply_photo(photo=output_url, caption=f"**Prompt:-**\n{text}")
-        
-        
