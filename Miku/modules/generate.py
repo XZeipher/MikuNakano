@@ -32,8 +32,10 @@ async def generate(client, message):
     global text
     text = message.text.split("/gen")[1]
     button1 = InlineKeyboardButton("DALL-E", callback_data="button1")
-    button2 = InlineKeyboardButton("Dark Sushi", callback_data="button2")
-    keyboard = InlineKeyboardMarkup([[button1, button2]])
+    button2 = InlineKeyboardButton("Dark Sushi", callback_data="button2") 
+    button3 = InlineKeyboardButton("Guofeng3", callback_data="button3") 
+    button4 = InlineKeyboardButton("Meina Mix", callback_data="button4") 
+    keyboard = InlineKeyboardMarkup([[button1, button2]] , [[ button3 , button4]])
     await message.reply_text("**Select a model.**", reply_markup=keyboard)
 
 
@@ -68,3 +70,47 @@ async def handle_callback(client, callback_query):
             output_url = None
         await x.delete()
         await callback_query.message.reply_photo(photo=output_url, caption=f"**Prompt:-**\n{text}")
+    elif callback_data == "button3":
+        x = await callback_query.message.edit_text("**Creating Artificial Image...**")
+        url = "https://stablediffusionapi.com/api/v4/dreambooth"
+        payload = json.dumps({
+            "key": random.choice(API_KEY),
+            "model_id": "guofeng3",
+            "prompt": text,
+            "negtive-prompt": "drawing, extra legs, extra body, extra hand, cartoon, weird face"          
+        })
+        headers = {
+          'Content-Type': 'application/json'
+        }
+        response = requests.post(url, headers=headers, data=payload).json()
+        if "output" in response and response["output"]:
+            output_url = response["output"][0]
+        elif "future_links" in response and response["future_links"]:
+            output_url = response["future_links"][0]
+        else:
+            output_url = None
+        await x.delete()
+        await callback_query.message.reply_photo(photo=output_url, caption=f"**Prompt:-**\n{text}")
+    elif callback_data == "button4":
+        x = await callback_query.message.edit_text("**Creating Artificial Image...**")
+        url = "https://stablediffusionapi.com/api/v4/dreambooth"
+        payload = json.dumps({
+            "key": random.choice(API_KEY),
+            "model_id": "meinamix",
+            "prompt": text,
+            "negtive-prompt": "drawing, extra legs, extra body, extra hand, cartoon, weird face"          
+        })
+        headers = {
+          'Content-Type': 'application/json'
+        }
+        response = requests.post(url, headers=headers, data=payload).json()
+        if "output" in response and response["output"]:
+            output_url = response["output"][0]
+        elif "future_links" in response and response["future_links"]:
+            output_url = response["future_links"][0]
+        else:
+            output_url = None
+        await x.delete()
+        await callback_query.message.reply_photo(photo=output_url, caption=f"**Prompt:-**\n{text}")
+
+
