@@ -1,4 +1,4 @@
-from Miku import app
+ from Miku import app
 from pyrogram import *
 from pyrogram.types import *
 import openai
@@ -34,8 +34,8 @@ async def generatebtns(client, query):
     if auth_user != query.from_user.id:
         await query.answer("Could you fuck off over there?")
         return
+    x = await query.message.edit_text("**Creating Artificial Image...**")
     if model == 0:
-        x = await query.message.edit_text("**Creating Artificial Image...**")
         openai.api_key = key
         response = openai.Image.create(prompt=text, n=1, size="1024x1024")
         image_url = response['data'][0]['url']
