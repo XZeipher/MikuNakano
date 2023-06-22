@@ -1,5 +1,8 @@
-from typing import Union, List
-import requests, json, random
+from typing import Union
+import requests
+import json
+import random
+import time
 from pyrogram.types import Message
 
 API_KEY = [
@@ -35,7 +38,7 @@ async def get_text(message) -> Union[None, str]:
 
 url = "https://stablediffusionapi.com/api/v4/dreambooth"
 
-async def post_(prompt,model):
+async def post_(prompt, model):
     payload = json.dumps({
         "key": random.choice(API_KEY),
         "model_id": model,
@@ -45,27 +48,26 @@ async def post_(prompt,model):
         "height": "1024",
         "samples": "1",
         "num_inference_steps": "30",
-        "seed": random.randint(1,574165781454),
-        "self_attention":"yes",
+        "seed": random.randint(1, 574165781454),
+        "self_attention": "yes",
         "guidance_scale": 7.5,
         "webhook": "None",
         "track_id": "None"
-        })
+    })
     headers = {
         'Content-Type': 'application/json'
     }
     response = requests.post(url, headers=headers, data=payload)
     data = response.json()
     if 'status' in data:
-    	while data['status'] == 'processing':
+        while data['status'] == 'processing':
             time.sleep(5)
             response = requests.get(data['fetch_result'])
             data = response.json()
         if 'output' in data and len(data['output']) > 0:
-        	output_url =  data['output'][0]
+            output_url = data['output'][0]
         elif 'future_links' in data and len(data['future_links']) > 0:
-        	output_url = data['future_links'][0]
+            output_url = data['future_links'][0]
         else:
-        	output_url = None
+            output_url = None
         return output_url
-            
