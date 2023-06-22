@@ -45,7 +45,7 @@ async def post_(prompt,model):
         "height": "1024",
         "samples": "1",
         "num_inference_steps": "30",
-        "seed": random.randint(1,574165781454)
+        "seed": random.randint(1,574165781454),
         "self_attention":"yes",
         "guidance_scale": 7.5,
         "webhook": "None",
@@ -54,14 +54,18 @@ async def post_(prompt,model):
     headers = {
         'Content-Type': 'application/json'
     }
-    response = requests.post(url, headers=headers, data=payload).json()
-    if "output" in response and response["output"]:
-        output_url = response["output"][0]
-    elif "future_links" in response and response["future_links"]:
-        output_url = response["future_links"][0]
-    else:
-        output_url = None
-    return output_url
-    
-    
-    
+    response = requests.post(url, headers=headers, data=payload)
+    data = response.json()
+    if 'status' in data:
+    	while data['status'] == 'processing':
+            time.sleep(5)
+            response = requests.get(data['fetch_result'])
+            data = response.json()
+        if 'output' in data and len(data['output']) > 0:
+        	output_url =  data['output'][0]
+        elif 'future_links' in data and len(data['future_links']) > 0:
+        	output_url = data['future_links'][0]
+        else:
+        	output_url = None
+        return output_url
+            
