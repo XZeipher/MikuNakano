@@ -45,6 +45,7 @@ async def post_(prompt,model):
         "height": "1024",
         "samples": "1",
         "num_inference_steps": "30",
+        "seed": random.randint(1,574165781454)
         "self_attention":"yes",
         "guidance_scale": 7.5,
         "webhook": "None",
