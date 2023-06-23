@@ -27,7 +27,7 @@ async def privates(client, message):
     await message.reply_text("**You Can't Use This Command At Private\n Use This Command In @MikuNakanoXSupport**")
 
 @app.on_message(filters.command("token") & filters.group)
-def generate_token(client, message):
+async def generate_token(client, message):
     user_id = str(message.from_user.id)
     cusr.execute("SELECT key FROM tokens WHERE user_id = %s", (user_id,))
     existing_token = cusr.fetchone()
