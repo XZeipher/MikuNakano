@@ -34,6 +34,7 @@ async def generate_token(client, message):
     if existing_token:
         token = existing_token[0]
         await message.reply_text(f"**You have already generated a token. Here is your token:** `{token}`")
+        return
     token_bytes = random.randbytes(5)
     token_hex = binascii.hexlify(token_bytes).decode()
     token = f"Miku-Alpha_{token_hex}"
