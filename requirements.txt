@@ -85,7 +85,7 @@ html-telegraph-poster
 html2text
 httpcore
 httplib2==0.20.2
-httpx==0.13.3
+httpx==0.23.0
 humanize
 hyperframe
 hyperlink
