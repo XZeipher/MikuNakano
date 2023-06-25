@@ -52,11 +52,11 @@ IMPORTED = {}
 HELPABLE = {}
 MODULES = {}
 async def main():
-    global IMPORTED,HELPABLE,MODULES
+    global IMPORTED, HELPABLE, MODULES
     for module_name in ALL_MODULES:
-        imported_module = importlib.import_module("Miku.modules." + module_name)        
+        imported_module = importlib.import_module("Miku.modules." + module_name)
         try:
-           MODULES[unidecode(imported_module.__mod_name__).lower()] = imported_module.__help__
+            MODULES[unidecode(imported_module.__mod_name__).lower()] = imported_module.__help__
         except Exception as e:
             print(e)
         if hasattr(imported_module, "__help__") and imported_module.__help__:
@@ -67,28 +67,28 @@ async def main():
     header = Table(show_header=True, header_style="bold yellow")
     header.add_column(strings.LOG_MSG)
     LOG.print(header)
-    await asyncio.sleep(2)       
+    await asyncio.sleep(2)
     LOG.print("Access Modules:- ".format(len(ALL_MODULES)) + "\n")
-    for all_module in ALL_MODULES:    
-        LOG.print(
-                f"Successfully Imported {all_module}.py"
-            )
+    for all_module in ALL_MODULES:
+        LOG.print(f"Successfully Imported {all_module}.py")
+
     print()
-    LOG.print(f"{BOT_NAME} Started. 💕")   
-    try:                    
+    LOG.print(f"{BOT_NAME} Started. ")
+    try:
         await app.send_photo(f"@{config.SUPPORT_CHAT}",
-        photo=random.choice(MIKU_N_IMG),
-        caption=strings.SUPPORT_SEND_MSG.format(platform.python_version(),pyrover,uptime)
-       )
+                             photo=random.choice(MIKU_N_IMG),
+                             caption=strings.SUPPORT_SEND_MSG.format(platform.python_version(), pyrover, uptime)
+                             )
     except Exception as e:
         LOG.print(f"{e}")
-        LOG.print(f"Bot isn't able to send message to @{config.SUPPORT_CHAT} !") 
+        LOG.print(f"Bot isn't able to send message to @{config.SUPPORT_CHAT} !")
     try:
-    	await ubot.send_message(f"@{config.SUPPORT_CHAT}", "**Userbot Started.**")
+        await ubot.send_message(f"@{config.SUPPORT_CHAT}", "**Userbot Started.**")
     except Exception as u:
-    	LOG.print(f"{u}")
+        LOG.print(f"{u}")
         LOG.print(f"Userbot isn't able to send message to @{config.SUPPORT_CHAT} !")
     await idle()
+
       
     
 async def send_help(app,chat, text, keyboard=None):
