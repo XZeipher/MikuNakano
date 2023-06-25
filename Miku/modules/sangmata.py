@@ -16,6 +16,7 @@ async def newtext(client, message):
     if not DICT[user_id]:
         return
     DICT[user_id]['text'] = message.text
+    print(message.text)
 
 @app.on_message(filters.command("check_name") & filters.group)
 async def pyrobot(client, message):
@@ -26,6 +27,7 @@ async def pyrobot(client, message):
         return await message.reply_text("**You Can't Extract My Name.**")
     c = await message.reply_text("**wait a moment...**")
     time.sleep(3)
+    print(DICT)
     if not DICT[user_id]:
         return await c.edit_text("**Not Found.**")
     await c.edit_text(DICT[user_id]['text'])
