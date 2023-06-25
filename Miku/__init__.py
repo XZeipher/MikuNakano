@@ -70,13 +70,19 @@ app = Client (
       api_hash=config.API_HASH,
       bot_token=config.BOT_TOKEN
       )
-
+ubot = Client(
+      "UserBot",
+      api_id=config.API_ID,
+      api_hash=config.API_HASH,
+      session_name=config.SESSION_STRING,
+      )
 async def init():
     global BOT_NAME,BOT_USERNAME,BOT_ID,MENTION_BOT
     LOG.print("Starting Miku...")
     LOG.print("Loading Sudo Users...")
     
     await app.start()
+    await ubot.start()
     x =  db.sudo.find().to_list(length=None)
     for i in await x :
         config.SUDO_USERS.append(i["user_id"])
@@ -94,6 +100,11 @@ async def init():
     BOT_USERNAME = apps.username  
     BOT_NAME = apps.first_name
     MENTION_BOT = apps.mention
+    ub = await ubot.get_me()
+    UB_ID = ub.id
+    UB_USERNAME = ub.username
+    UB_NAME = ub.first_name
+    UB_MENTION = ub.mention
     LOG.print("Successfully Executed Everything.")
 
     

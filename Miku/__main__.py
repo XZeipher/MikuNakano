@@ -16,14 +16,7 @@ from pyrogram.types import (
 from pyrogram.errors import BadRequest,Unauthorized 
 from pyrogram import filters,idle
 from Miku.utils.misc import paginate_modules
-from Miku import (
-    BOT_NAME,
-    BOT_USERNAME,     
-    app,
-    LOG,    
-    StartTime,
-    get_readable_time,
-    )
+from Miku import *
 from fuzzywuzzy import process
 from rich.table import Table
 from pyrogram.enums import ParseMode,ChatType
@@ -89,7 +82,12 @@ async def main():
        )
     except Exception as e:
         LOG.print(f"{e}")
-        LOG.print("Bot isn't able to send message to @{config.SUPPORT_CHAT} !") 
+        LOG.print(f"Bot isn't able to send message to @{config.SUPPORT_CHAT} !") 
+    try:
+    	await ubot.send_message(f"@{config.SUPPORT_CHAT}", "**Userbot Started.**")
+    except Exception as u:
+    	LOG.print(f"{u}")
+        LOG.print(f"Userbot isn't able to send message to @{config.SUPPORT_CHAT} !")
     await idle()
       
     
