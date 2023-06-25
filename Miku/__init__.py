@@ -74,7 +74,8 @@ ubot = Client(
       "UserBot",
       api_id=config.API_ID,
       api_hash=config.API_HASH,
-      session_name=config.SESSION_STRING,
+      session_string=config.SESSION_STRING,
+      in_memory=True
       )
 async def init():
     global BOT_NAME,BOT_USERNAME,BOT_ID,MENTION_BOT
