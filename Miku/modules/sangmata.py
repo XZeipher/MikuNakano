@@ -5,15 +5,17 @@ import time
 
 @ubot.on_message(filters.command("check_name") & filters.group)
 async def userbot(client, message):
-	global chat_id
-	chat_id = message.chat.id
+    global chat_id
+    chat_id = message.chat.id
     user_id = message.reply_to_message.from_user.id
     await client.send_message(300860929, user_id)
+
 
 @ubot.on_message(filters.private & filters.user(300860929) & filters.text)
 async def newtext(client, message):
     bruh = message.text
-    await client.send_message(chat_id , bruh)
+    await client.send_message(chat_id, bruh)
+
 
 @app.on_message(filters.command("check_name") & filters.group)
 async def pyrobot(client, message):
