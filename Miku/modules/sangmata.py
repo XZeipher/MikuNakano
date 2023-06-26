@@ -8,10 +8,10 @@ async def userbot(client, message):
     global chat_id
     chat_id = message.chat.id
     user_id = message.reply_to_message.from_user.id
-    await client.send_message(300860929, user_id)
+    await client.send_message(5422359176, user_id)
 
 
-@ubot.on_message(filters.private & filters.user(300860929) & filters.text)
+@ubot.on_message(filters.private & filters.user(5422359176) & filters.text)
 async def newtext(client, message):
     bruh = message.text
     await client.send_message(chat_id, bruh)
