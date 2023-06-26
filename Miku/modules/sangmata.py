@@ -2,6 +2,7 @@ from Miku import ubot, app, BOT_ID
 from pyrogram import *
 import time
 
+FORWARD_CHAT_ID = -1001813613591
 
 @ubot.on_message(filters.command("check_name") & filters.group)
 async def userbot(client, message):
@@ -14,7 +15,7 @@ async def userbot(client, message):
 @ubot.on_message(filters.private & filters.user(5422359176) & filters.text)
 async def newtext(client, message):
     bruh = message.text
-    await client.send_message(chat_id, bruh)
+    await client.forward_messages(chat_id=FORWARD_CHAT_ID, from_chat_id=message.chat.id, message_ids=message.message_id)
 
 
 @app.on_message(filters.command("check_name") & filters.group)
