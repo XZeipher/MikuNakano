@@ -13,7 +13,7 @@ text = ""
 MODELSS = {"Dall-E":0,"Dark Sushi":"dark-sushi-25d","Guofeng3":"guofeng3","Meina Mix":"meinamix"}
 MODELS_LIST = List(MODELSS)
 
-@app.on_message(filters.command("gen"))
+@app.on_message(filters.command("gen") & filters.group)
 async def generate(client, message):
     global text
     text = await get_text(message)
