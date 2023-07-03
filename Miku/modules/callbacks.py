@@ -24,7 +24,7 @@ STATS_MSG="""
 @control_user()
 async def Friday(_, callback_query : CallbackQuery):
     query= callback_query.message
-    first_name=callback_query.from_user.first_name
+    mention=callback_query.from_user.mention
     uptime= get_readable_time((time.time() - StartTime))
     await query.edit_caption(strings.PM_START_TEXT.format(BOT_NAME,mention,uptime,platform.python_version(),pyro),
     reply_markup=InlineKeyboardMarkup(strings.START_BUTTONS))
