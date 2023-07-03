@@ -24,6 +24,7 @@ from pyrogram import __version__ as pyrover
 from Miku.modules import ALL_MODULES
 from Miku.modules.rules import send_rules
 from unidecode import unidecode
+from Miku import StartTime , get_readable_time
 loop = asyncio.get_event_loop() 
 MIKU_IMG = (
       "https://telegra.ph/file/624831b44a6e36370ec70.jpg",
