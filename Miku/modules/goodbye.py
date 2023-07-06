@@ -32,14 +32,14 @@ async def _left_mem(client,message):
 
     text = [f"Goodbye {first_name}!"]
 
-    s1 = stark[0].size[0] // 2
-    s2 = 290
+    s1 = stark[0].size[0] // 5
+    s2 = 360
     font = ImageFont.truetype("./Miku/resources/SuisseIntl-Regular.ttf", 20)
     s3 = math.ceil(len(stark) / len(text))
 
     for i in range(len(stark)):
         draw = ImageDraw.Draw(stark[i])
-        s4 = (s1 - len(text[i // s3]) * 5, s2)
+        s4 = (s1 - len(text[i // s3]) * 10, s2)
         draw.text(s4, text[i // s3], font=font, anchor=None)
     x =  f"welcome{uuid.uuid4()}.gif"
     stark[0].save(
