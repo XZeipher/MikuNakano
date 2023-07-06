@@ -12,8 +12,43 @@ from bs4 import BeautifulSoup
 from requests import post
 from bing_image_downloader import downloader
 from Miku.modules.pyro.chat_actions import send_action
-from Miku.modules.antinsfw import get_file_id_from_message
 from config import BOT_TOKEN as bot_token
+
+async def get_file_id_from_message(msg):
+    file_id = None
+    message = msg.reply_to_message
+    if not message:
+        return 
+    if message.document:
+        if int(message.document.file_size) > 3145728:
+            return
+        mime_type = message.document.mime_type
+        if mime_type not in ("image/png", "image/jpeg"):
+            return
+        file_id = message.document.file_id
+
+    if message.sticker:
+        if message.sticker.is_animated:
+            if not message.sticker.thumbs:
+                return
+            file_id = message.sticker.thumbs[0].file_id
+        else:
+            file_id = message.sticker.file_id
+
+    if message.photo:
+        file_id = message.photo.file_id
+
+    if message.animation:
+        if not message.animation.thumbs:
+            return
+        file_id = message.animation.thumbs[0].file_id
+
+    if message.video:
+        if not message.video.thumbs:
+            return
+        file_id = message.video.thumbs[0].file_id
+    return file_id
+    
 
 async def Sauce(bot_token, file_id):
     async with aiohttp.ClientSession() as session:
@@ -98,7 +133,7 @@ async def _google(_, message):
             results = soup.find_all("div", attrs={"class": "g"})
             final = f"**Results** :-\n<b>{query}</b>:"
             if not results or len(results) == 0:
-                return await e.reply(
+                return await message.reply(
                     "**No Result Found.**",
                 )
             for x in results:
