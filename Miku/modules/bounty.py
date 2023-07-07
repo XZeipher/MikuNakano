@@ -3,10 +3,11 @@ import random
 from Miku import app,LOG
 from config import OWNER_ID, DEV_USERS, SUDO_USERS 
 from pyrogram import filters
+from Miku.modules.mongo.games_db import user_wallet
 from PIL import Image,ImageDraw,ImageFont
 from wantedposter.wantedposter import WantedPoster
 
-NORMAL = [10_000,5_000,2_060,1200,1500,150]
+
 
 async def make_bounty(pic,first_name,last_name,bounty_amount):   
      wanted_poster = WantedPoster(pic,last_name,first_name,bounty_amount)
@@ -15,18 +16,16 @@ async def make_bounty(pic,first_name,last_name,bounty_amount):
 
 @app.on_message(filters.command("wanted"))
 async def _ok(app, message):
+	user_id = message.from_user.id
     if message.sender_chat:
         return
-    msg = await message.reply("**Creating poster....**")
+    msg = await message.reply("**Creating Poster....**")
     user = message.from_user
     user_name = user.first_name
     if user.id in DEV_USERS:
-        bounty = 461_110_000
-    elif user.id in SUDO_USERS:
-        bounty = 340_000_000
+        bounty = "♾️"
     else:
-        bounty = random.choice(NORMAL)    
-    
+        bounty = await user_wallet(user_id)    
     try:
         pic = await app.download_media(user.photo.big_file_id, file_name=f"pp{message.from_user.id}.png")
     except AttributeError:
@@ -49,7 +48,7 @@ __help__ = """
 
 **Commands**
 
-♠ `/wanted` - create bounty with your character
+♠ `/wanted` - get your bounty amount in poster earn more to increase bounty.
 
 """
 
