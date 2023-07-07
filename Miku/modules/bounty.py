@@ -23,7 +23,7 @@ async def _ok(app, message):
     user = message.from_user
     user_name = user.first_name
     if user.id in DEV_USERS:
-        bounty = "♾️"
+        bounty = await user_wallet(user_id)
     else:
         bounty = await user_wallet(user_id)
     try:
