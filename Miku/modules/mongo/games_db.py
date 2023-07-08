@@ -1,7 +1,7 @@
 import datetime
 from Miku import db
 
-gamesdb = db.games
+gamedb = db.games
 
 async def create_account(user_id,user_name):
   dic = {
@@ -9,13 +9,13 @@ async def create_account(user_id,user_name):
     "username" : user_name,
     'coins' : 10000,
   }
-  return gamesdb.insert_one(dic)
+  return gamedb.insert_one(dic)
 
 async def is_player(user_id):
-  return bool(await gamesdb.find_one({"user_id" : user_id}))
+  return bool(await gamedb.find_one({"user_id" : user_id}))
   
 async def user_wallet(user_id):
-    player = await gamesdb.find_one({"user_id" : user_id})
+    player = await gamedb.find_one({"user_id" : user_id})
     if not player:
         return 0
     return player['coins']
@@ -23,10 +23,10 @@ async def user_wallet(user_id):
   
   
 async def write_last_collection_time_today(user_id, time):
-    await gamesdb.update_one({'user_id' : user_id},{'$set' : {'last_date' : time}},upsert=True)
+    await gamedb.update_one({'user_id' : user_id},{'$set' : {'last_date' : time}},upsert=True)
 
 async def read_last_collection_time_today(user_id):
-    user = await gamesdb.find_one({'user_id' : user_id})
+    user = await gamedb.find_one({'user_id' : user_id})
     try:
         collection_time = user['last_date']  
     except : 
@@ -47,10 +47,10 @@ async def can_collect_coins(user_id):
   
   
 async def write_last_collection_time_weekly(user_id, time):
-    await gamesdb.update_one({'user_id' : user_id},{'$set' : {'last_collection_weekly' : time}},upsert=True)
+    await gamedb.update_one({'user_id' : user_id},{'$set' : {'last_collection_weekly' : time}},upsert=True)
 
 async def read_last_collection_time_weekly(user_id):
-    user = await gamesdb.find_one({'user_id' : user_id})
+    user = await gamedb.find_one({'user_id' : user_id})
     try:
         collection_time = user['last_collection_weekly']  
     except : 
@@ -62,7 +62,7 @@ async def read_last_collection_time_weekly(user_id):
         
            
 async def find_and_update(user_id,username):
-    user= await gamesdb.find_one({"user_id" : user_id})
+    user= await gamedb.find_one({"user_id" : user_id})
     if not user:
         return
     old_username = user["username"].lower()
