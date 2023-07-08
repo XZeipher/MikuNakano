@@ -1,6 +1,8 @@
 aiofiles
 aiohttp
 async-timeout
+python-Levenshtein
+openai
 rich
 asyncio
 base58
