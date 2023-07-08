@@ -1,6 +1,7 @@
 aiofiles
 aiohttp
 async-timeout
+rich
 asyncio
 base58
 bcrypt
