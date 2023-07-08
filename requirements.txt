@@ -106,7 +106,6 @@ requests-toolbelt
 simplejson
 speedtest
 speedtest-cli
-systemd-python
 telegraph
 TgCrypto
 tqdm
