@@ -13,6 +13,7 @@ async def mainwhisper(_, query):
     text = query.query.split(' ')
     user = text[0]
     first = True
+    message = ""
     if not user.startswith('@') and not user.isdigit():
         user = text[-1]
         first = False
@@ -35,8 +36,6 @@ async def mainwhisper(_, query):
             user = f"@{chat.username}" if chat.username else chat.first_name
         except:
             user = user
-
-    message = ' '.join(text[1:]) if first else ' '.join(text[:1])
 
     if len(message) > 200:
         await query.answer([], switch_pm_text='Only text up to 200 characters is allowed!', switch_pm_parameter='ghelp_whisper') 
