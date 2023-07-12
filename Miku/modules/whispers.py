@@ -35,15 +35,33 @@ async def mainwhisper(_, query):
         await query.answer([], switch_pm_text="Only text up to 200 characters is allowed!", switch_pm_parameter="ghelp_whisper")
         return
 
-    answers = [
+    results = []
+
+    # Add loading state result
+    results.append(
         InlineQueryResultArticle(
-            title=f' Send a whisper message to {user}!',
-            description='Only they can see it!',
-            input_message_content=InputTextMessageContent('Generating Whisper message...'),
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(' Show Whisper', callback_data=f'whisper_{shortuuid.uuid()}')]])
+            title="Generating Whisper message...",
+            input_message_content=InputTextMessageContent("Generating Whisper message...")
         )
-    ]
-    await query.answer(answers)
+    )
+
+    # Send the initial loading state result
+    await app.answer_inline_query(query.id, results)
+
+    # Generate the actual whisper result
+    whisper_result = InlineQueryResultArticle(
+        title=f'🤫 Send a whisper message to {user}!',
+        description='Only they can see it!',
+        input_message_content=InputTextMessageContent('Generating Whisper message...'),
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('🤫 Show Whisper', callback_data=f'whisper_{shortuuid.uuid()}')]])
+    )
+
+    # Replace the loading state result with the actual whisper result
+    results[0] = whisper_result
+
+    # Answer the inline query with the results
+    await app.answer_inline_query(query.id, results)
+
 
 @app.on_callback_query()
 async def showwhisper(_, callback_query):
@@ -60,13 +78,13 @@ async def showwhisper(_, callback_query):
     elif user_type == 'username' and callback_query.from_user.username and callback_query.from_user.username.lower() == whisper_data['withuser'].replace('@', '').lower():
         await callback_query.answer(whisper_data['message'], show_alert=True)
         await Whispers.del_whisper(whisper_id)  # Await the call to del_whisper
-        await callback_query.edit_message_text(f"**{whisper_data['withuser']} read the Whisper.**")
+        await app.send_message(callback_query.from_user.id, f"**{whisper_data['withuser']} read the Whisper.**")
     elif user_type == 'id' and callback_query.from_user.id == int(whisper_data['withuser']):
         user = await app.get_users(int(whisper_data['withuser']))
         username = user.username or user.first_name
         await callback_query.answer(whisper_data['message'], show_alert=True)
         await Whispers.del_whisper(whisper_id)  # Await the call to del_whisper
-        await callback_query.edit_message_text(f"**{username} read the whisper.**")
+        await app.send_message(callback_query.from_user.id, f"**{username} read the whisper.**")
     else:
         await callback_query.answer("No one sent you a whisper.", show_alert=True)
 
@@ -75,7 +93,7 @@ __help__ = """
 **Whisper Inline Function For Secret Chats.**
 
 **Commands**
- `@MikuNakanoXSupport your message @username OR UserID`
- `@MikuNakanoXSupport @username OR UserID your message`
+♠️ `@MikuNakanoXSupport your message @username OR UserID`
+♠️ `@MikuNakanoXSupport @username OR UserID your message`
 """
 __mod_name__ = "Whispers"
