@@ -5,7 +5,7 @@ from pyrogram.types import *
 import shortuuid
 
 
-@app.on_inline_query(filters.text)
+@app.on_inline_query()
 async def mainwhisper(_, query):
     if not query.query:
         return await query.answer([], switch_pm_text='Give me a username or ID!', switch_pm_parameter='ghelp_whisper')
@@ -45,7 +45,7 @@ async def mainwhisper(_, query):
         InlineQueryResultArticle(
             title=f' Send a whisper message to {user}!',
             description='Only they can see it!',
-            input_message_content=InputTextMessageContent('A Whisper Message For {user}.\n Only they can see it.'),
+            input_message_content=InputTextMessageContent('Generating Whisper message...'),
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(' Show Whisper', callback_data=f'whisper_{whisperId}')]])
         )
     ]
