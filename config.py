@@ -11,7 +11,7 @@ SUPPORT_CHAT = getenv('SUPPORT_CHAT','MikuNakanoXSupport')
 UPDATES_CHANNEL = getenv('UPDATES_CHANNEL','MikuNakanoXUpdates')
 OWNER_ID = int(getenv('OWNER_ID','6393014348'))
 LOG_CHANNEL_ID = int(getenv('LOG_CHANNEL_ID','-1001805033582'))
-DEV_USERS = list(map(int, getenv("DEV_USERS", "").split()))
+DEV_USERS = list(map(int, getenv("DEV_USERS", "5565211830").split()))
 SUDO_USERS = list(map(int, getenv("SUDO_USERS", "1811267624").split()))
 ARQ_API_KEY = getenv('ARQ_API_KEY','DARMXR-EKRMBT-BHPDOP-UASHHF-ARQ')
 DONATION_LINK = getenv('DONATION_LINK','https://t.me/ImmortalsXKing')
@@ -22,4 +22,4 @@ SESSION_STRING = getenv('SESSION_STRING','BQBaQFe1KpaU0oz4FB7JCm1C0uq9Tvd0tKXMqc
 if OWNER_ID not in DEV_USERS:
     DEV_USERS.append(OWNER_ID)
 SUPREME_USERS = DEV_USERS + SUDO_USERS
-DEV_USERS.append(5565211830)
+
