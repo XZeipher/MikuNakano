@@ -13,15 +13,22 @@ async def mainwhisper(_, query):
     text = query.query.split(' ')
     user = text[0]
     first = True
-
     if not user.startswith('@') and not user.isdigit():
         user = text[-1]
         first = False
-
-    if not user.startswith('@') and not user.isdigit():
-        await query.answer([], switch_pm_text='Give me a username or ID!', switch_pm_parameter='ghelp_whisper')
+    if first:
+        message = ' '.join(text[1:])
+    else:
+        text.pop()
+        message = ' '.join(text)
+    if len(message) > 200:
         return
-
+    usertype = 'username'
+    whisperType = 'inline'
+    if user.startswith('@'):
+        usertype = 'username'
+    elif user.isdigit():
+        usertype = 'id'
     if user.isdigit():
         try:
             chat = await app.get_chat(int(user))
@@ -32,10 +39,10 @@ async def mainwhisper(_, query):
     message = ' '.join(text[1:]) if first else ' '.join(text[:1])
 
     if len(message) > 200:
-        await query.answer([], switch_pm_text='Only text up to 200 characters is allowed!', switch_pm_parameter='ghelp_whisper')
+        await query.answer([], switch_pm_text='Only text up to 200 characters is allowed!', switch_pm_parameter='ghelp_whisper') 
         return
 
-    whisperData = {'user': query.from_user.id, 'withuser': user, 'usertype': 'username', 'type': 'inline', 'message': message}
+    whisperData = {'user': query.from_user.id, 'withuser': user, 'usertype': usertype, 'type': 'inline', 'message': message}
     whisperId = shortuuid.uuid()
 
     # Add the whisper to the database
