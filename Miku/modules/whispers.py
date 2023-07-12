@@ -69,7 +69,7 @@ async def showWhisper(_, callback_query):
     elif userType == 'username' and callback_query.from_user.username and callback_query.from_user.username.lower() == whisper['withuser'].replace('@', '').lower():
         await callback_query.answer(whisper['message'], show_alert=True)
         await Whispers.del_whisper(whisperId)
-        await app.send_message(callback_query.from_user.id, f"{whisper['withuser']} read the Whisper.")
+        await callback_query.edit_message_text(f"{whisper['withuser']} read the Whisper.")
     elif userType == 'id' and callback_query.from_user.id == int(whisper['withuser']):
         user = await app.get_users(int(whisper['withuser']))
         username = user.username or user.first_name
