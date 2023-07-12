@@ -75,7 +75,7 @@ async def showWhisper(_, callback_query):
         username = user.username or user.first_name
         await callback_query.answer(whisper['message'], show_alert=True)
         await Whispers.del_whisper(whisperId)
-        await app.send_message(callback_query.from_user.id, f"{username} read the whisper.")
+        await callback_query.edit_message_text(f"{username} read the whisper.")
     else:
         await callback_query.answer("Not your Whisper!", show_alert=True)
 
