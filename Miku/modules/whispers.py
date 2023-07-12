@@ -37,10 +37,10 @@ async def mainwhisper(_, query):
 
     answers = [
         InlineQueryResultArticle(
-            title=f'🤫 Send a whisper message to {user}!',
+            title=f' Send a whisper message to {user}!',
             description='Only they can see it!',
             input_message_content=InputTextMessageContent('Generating Whisper message...'),
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('🤫 Show Whisper', callback_data=f'whisper_{shortuuid.uuid()}')]])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(' Show Whisper', callback_data=f'whisper_{shortuuid.uuid()}')]])
         )
     ]
     await query.answer(answers)
@@ -48,7 +48,7 @@ async def mainwhisper(_, query):
 @app.on_callback_query()
 async def showwhisper(_, callback_query):
     whisper_id = callback_query.data.split('_')[-1]
-    whisper_data = Whispers.get_whisper(whisper_id)
+    whisper_data = await Whispers.get_whisper(whisper_id)  # Await the call to get_whisper
     if not whisper_data:
         await callback_query.answer("This whisper is not valid anymore!")
         return
@@ -59,23 +59,23 @@ async def showwhisper(_, callback_query):
         await callback_query.answer(whisper_data['message'], show_alert=True)
     elif user_type == 'username' and callback_query.from_user.username and callback_query.from_user.username.lower() == whisper_data['withuser'].replace('@', '').lower():
         await callback_query.answer(whisper_data['message'], show_alert=True)
-        Whispers.del_whisper(whisper_id) 
+        await Whispers.del_whisper(whisper_id)  # Await the call to del_whisper
         await callback_query.edit_message_text(f"**{whisper_data['withuser']} read the Whisper.**")
     elif user_type == 'id' and callback_query.from_user.id == int(whisper_data['withuser']):
         user = await app.get_users(int(whisper_data['withuser']))
         username = user.username or user.first_name
         await callback_query.answer(whisper_data['message'], show_alert=True)
-        Whispers.del_whisper(whisper_id) 
+        await Whispers.del_whisper(whisper_id)  # Await the call to del_whisper
         await callback_query.edit_message_text(f"**{username} read the whisper.**")
     else:
-        await callback_query.answer("No one sent you whisper.", show_alert=True)
+        await callback_query.answer("No one sent you a whisper.", show_alert=True)
 
 
 __help__ = """
 **Whisper Inline Function For Secret Chats.**
 
 **Commands**
-♠ `@MikuNakanoXSupport your message @username OR UserID`
-♠ `@MikuNakanoXSupport @username OR UserID your message`
+ `@MikuNakanoXSupport your message @username OR UserID`
+ `@MikuNakanoXSupport @username OR UserID your message`
 """
 __mod_name__ = "Whispers"
