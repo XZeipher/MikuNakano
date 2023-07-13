@@ -9,8 +9,8 @@ async def _id(client, message):
     message_id = message.id
     reply = message.reply_to_message
 
-    text = f"**• [Message ID]({message.link})** › `{message_id}`\n"
-    text += f"**๏ [{mention_user}](tg://user?id={your_id})** › `{your_id}`\n"
+    text = f"**♥ [Message ID]({message.link})** › `{message_id}`\n"
+    text += f"**♥ [{mention_user}](tg://user?id={your_id})** › `{your_id}`\n"
 
     if not message.command:
         message.command = message.text.split()
