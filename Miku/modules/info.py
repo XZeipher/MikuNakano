@@ -74,7 +74,7 @@ async def _info(_, message):
         text += f"**• Gban Reason :** `{reason}`\n"
 
     if user.status:
-        text += "**• Last Seen :** `{user.status}`\n"
+        text += f"**• Last Seen :** `{user.status}`\n"
 
     if user_id == OWNER_ID:
         text += "\n**Creator Alpha Coder !!!**"
