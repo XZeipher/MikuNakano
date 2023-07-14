@@ -46,7 +46,7 @@ async def _info(_, message):
     text += f"**• Gbanned :** {str(await is_gbanned_user(user_id))}\n"
 
     if message.chat.type != enums.ChatType.PRIVATE:
-        ptext = "**• Status :** `{}`"
+        ptext = "**• Status :** `{}`\n"
 
         if await is_user_afk(user_id):
             text += ptext.format("Afk")
@@ -73,8 +73,8 @@ async def _info(_, message):
     if reason:
         text += f"**• Gban Reason :** `{reason}`\n"
 
-    if user.status == enums.UserStatus.RECENTLY:
-        text += "**• Last Seen :** `Last Seen Recently`\n"
+    if user.status:
+        text += "**• Last Seen :** `{user.status}`\n"
 
     if user_id == OWNER_ID:
         text += "\n**Creator Alpha Coder !!!**"
