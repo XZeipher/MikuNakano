@@ -5,8 +5,6 @@ from pyrogram.raw import *
 from pyrogram import __version__ as pyro_version
 
 CHANNEL = "@mikulogsab"
-req_butt = ""
-log_butt = ""
 REQ = """
 **Your Request Received #{req_id}**
 ┏━━━━━━━━━━━━━━━━━━━
@@ -28,11 +26,11 @@ LOG = """
 
 request_messages = {}
 administrators = []
-#ids = []
+ids = []
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
-    global req_butt, log_butt
+    message_id = message.id
     user = await client.get_users(message.from_user.id)
     if len(message.text.split()) < 2:
         return await message.reply_text("**Wrong format!**")
@@ -42,17 +40,15 @@ async def requests(client, message):
         administrators.clear()
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
-            administrators.append(m)
-        
+            administrators.append(m.id)
+        ids.clear()
+        for i in administrators:
+            userid = i.user.id
+            ids.append(userid)
+
     except:
         return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
-    ids = []
-    ids.clear()
 
-    for item in administrators:
-        user = item.user
-        user_id = user.id
-        ids.append(user_id)
     log_butt = [
         [
             InlineKeyboardButton("Accept", callback_data=f"accept_{message.id}"),
@@ -62,15 +58,16 @@ async def requests(client, message):
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
         ],
     ]
-
     log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
-    req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
     req_butt = [
         [
-            InlineKeyboardButton("Request Log", url=f"{log_message.message.link}")
+            InlineKeyboardButton("Request Log", url=log_message.message.link)
         ],
     ]
-    request_messages[message.id] = {
+
+    req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
+
+    request_messages[message_id] = {
         "log_message": log_message,
         "req_message": req_message
     }
@@ -88,8 +85,8 @@ async def handle_callback(client, callback_query):
     if action == "accept":
         await callback_query.answer("Request accepted.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message.id, text=f"Request #{message_id} has been accepted.")
+        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been accepted.")
     elif action == "reject":
         await callback_query.answer("Request rejected.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message.id, text=f"Request #{message_id} has been rejected.")
+        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been rejected.")
