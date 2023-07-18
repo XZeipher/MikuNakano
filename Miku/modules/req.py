@@ -41,7 +41,7 @@ async def requests(client, message):
         administrators.clear()
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
-            administrators.append(m)
+            administrators.append(m.id)
     except:
         return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
 
@@ -59,7 +59,7 @@ async def requests(client, message):
     req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
     req_butt = [
         [
-            InlineKeyboardButton("Request Log", url=f"https://t.me/{CHANNEL}/{log_message.message.id}")
+            InlineKeyboardButton("Request Log", url=f"{log_message.message.link}")
         ],
     ]
     request_messages[message.id] = {
