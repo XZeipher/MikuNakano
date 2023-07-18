@@ -28,7 +28,7 @@ LOG = """
 
 request_messages = {}
 administrators = []
-ids = []
+#ids = []
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
@@ -43,14 +43,16 @@ async def requests(client, message):
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             administrators.append(m.id)
-        ids.clear()
-        async for i in administrators:
-            userid = i.user.id
-            ids.append(userid)
-
+        
     except:
         return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
+    ids = []
+    ids.clear()
 
+    for item in administrators:
+        user = item.user
+        user_id = user.id
+        ids.append(user_id)
     log_butt = [
         [
             InlineKeyboardButton("Accept", callback_data=f"accept_{message.id}"),
