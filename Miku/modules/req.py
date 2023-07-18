@@ -26,6 +26,7 @@ LOG = """
 """
 
 request_messages = {}
+administrators = []
 
 @app.on_message(filters.group & filters.regex("\\#request"))
 async def requests(client, message):
@@ -35,7 +36,7 @@ async def requests(client, message):
     anime = message.text.split(maxsplit=1)[1]
     try:
         chat = await client.get_chat(CHANNEL)
-        administrators = []
+        administrators.clear()
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             administrators.append(m)
