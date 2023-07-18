@@ -28,6 +28,7 @@ LOG = """
 
 request_messages = {}
 administrators = []
+ids = []
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
@@ -42,6 +43,11 @@ async def requests(client, message):
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             administrators.append(m.id)
+        ids.clear()
+        async for i in administrators:
+            userid = i.user.id
+            ids.append(userid)
+
     except:
         return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
 
@@ -70,7 +76,7 @@ async def requests(client, message):
 @app.on_callback_query()
 async def handle_callback(client, callback_query):
     user_id = callback_query.from_user.id
-    if user_id not in administrators:
+    if user_id not in ids:
         await callback_query.answer("You can't use this action.", show_alert=True)
         return
 
