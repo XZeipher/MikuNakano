@@ -61,7 +61,7 @@ async def requests(client, message):
     log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
     req_butt = [
         [
-            InlineKeyboardButton("Request Log", url=f"https://t.me/{log_message.chat.id[5:]}/{log_message.id}")
+            InlineKeyboardButton("Request Log", url=f"t.me/c/{str(log_message.chat.id)[4:]}/{log_message.id}")
         ],
     ]
 
