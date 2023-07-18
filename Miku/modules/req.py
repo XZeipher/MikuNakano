@@ -66,8 +66,8 @@ async def requests(client, message):
     ]
 
     req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
-
-    xd[message_id] = {
+    id = log_message.id
+    xd[id] = {
         "log_message": log_message
     }
 
@@ -83,9 +83,9 @@ async def handle_callback(client, callback_query):
 
     if action == "accept":
         await callback_query.answer("Request accepted.")
-        await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been accepted.")
-        xd.pop(message_id)
+        await client.edit_message_text(CHANNEL,xd[id], f"Request has been accepted.")
+        xd.pop(id)
     elif action == "reject":
         await callback_query.answer("Request rejected.")
-        await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been rejected.")
-        xd.pop(message_id)
+        await client.edit_message_text(CHANNEL,xd[id], f"Request has been rejected.")
+        xd.pop(id)
