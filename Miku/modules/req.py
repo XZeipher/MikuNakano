@@ -86,24 +86,28 @@ async def handle_callback(client, callback_query):
     if action == "accept":
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
+        mention = xd[first_id]['requested_by']
+        request = xd[first_id]['requested']
         await client.edit_message_text(CHANNEL,log_id,
-            f"ACCEPTED\n"
+            f"**ACCEPTED\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
-            f"┣━➤「Tracking ID」: {msg_id}\n"
-            f"┣━➤「Requested By」: {xd[msg_id]['requested_by']}\n"
-            f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
+            f"┣━➤「Tracking ID」: {first_id}\n"
+            f"┣━➤「Requested By」: {mention}\n"
+            f"┣━➤「Requested」: {request}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
         xd.clear()
     elif action == "reject":
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
+        mention = xd[first_id]['requested_by']
+        request = xd[first_id]['requested']
         await client.edit_message_text(CHANNEL,log_id,
-            f"REJECTED\n"
+            f"**REJECTED\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
-            f"┣━➤「Tracking ID」: {msg_id}\n"
-            f"┣━➤「Requested By」: {xd[msg_id]['requested_by']}\n"
-            f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
+            f"┣━➤「Tracking ID」: {first_id}\n"
+            f"┣━➤「Requested By」: {mention}\n"
+            f"┣━➤「Requested」: {request}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
         xd.clear()
