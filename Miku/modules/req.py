@@ -27,10 +27,12 @@ LOG = """
 xd = {}
 administrators = []
 ids = []
+iddexo = ""
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
     message_id = message.id
+    global iddexo
     user = await client.get_users(message.from_user.id)
     if len(message.text.split()) < 2:
         return await message.reply_text("**Wrong format!**")
@@ -66,8 +68,8 @@ async def requests(client, message):
     ]
 
     req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
-    id = log_message.id
-    xd[id] = {
+    iddexo = log_message.id
+    xd[iddexo] = {
         "log_message": log_message
     }
 
@@ -79,13 +81,13 @@ async def handle_callback(client, callback_query):
         return
 
     data = callback_query.data
-    action, message_id = data.split("_")
+    action,message_id = data.split("_")
 
     if action == "accept":
         await callback_query.answer("Request accepted.")
-        await client.edit_message_text(CHANNEL,xd[id], f"Request has been accepted.")
-        xd.pop(id)
+        await client.edit_message_text(CHANNEL,xd[iddexo], f"Request has been accepted.")
+        xd.pop(iddexo)
     elif action == "reject":
         await callback_query.answer("Request rejected.")
-        await client.edit_message_text(CHANNEL,xd[id], f"Request has been rejected.")
-        xd.pop(id)
+        await client.edit_message_text(CHANNEL,xd[iddexo], f"Request has been rejected.")
+        xd.pop(iddexo)
