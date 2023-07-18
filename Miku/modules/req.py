@@ -45,22 +45,22 @@ async def requests(client, message):
 
     log_butt = [
         [
-            InlineKeyboardButton("Accept", callback_data=f"accept_{message.message_id}"),
-            InlineKeyboardButton("Reject", callback_data=f"reject_{message.message_id}"),
+            InlineKeyboardButton("Accept", callback_data=f"accept_{message.id}"),
+            InlineKeyboardButton("Reject", callback_data=f"reject_{message.id}"),
         ],
         [
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
         ],
     ]
+    
+    log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
+    req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
     req_butt = [
         [
-            InlineKeyboardButton("Request Log", url=f"https://t.me/c/{CHANNEL}/{message.message_id}")
+            InlineKeyboardButton("Request Log", url=f"https://t.me/{CHANNEL}/{log_message.message.id}")
         ],
     ]
-    log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.message_id, tracking_id=message.message_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
-    req_message = await message.reply_text(REQ.format(req_id=message.message_id, tracking_id=message.message_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
-    
-    request_messages[message.message_id] = {
+    request_messages[message.id] = {
         "log_message": log_message,
         "req_message": req_message
     }
@@ -78,8 +78,8 @@ async def handle_callback(client, callback_query):
     if action == "accept":
         await callback_query.answer("Request accepted.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been accepted.")
+        await client.edit_message_text(log_message.chat.id, log_message.message.id, text=f"Request #{message_id} has been accepted.")
     elif action == "reject":
         await callback_query.answer("Request rejected.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been rejected.")
+        await client.edit_message_text(log_message.chat.id, log_message.message.id, text=f"Request #{message_id} has been rejected.")
