@@ -83,11 +83,9 @@ async def handle_callback(client, callback_query):
 
     if action == "accept":
         await callback_query.answer("Request accepted.")
-        log_message = request_messages[int(message_id)]["log_message"]
         await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been accepted.")
         xd.pop(message_id)
     elif action == "reject":
         await callback_query.answer("Request rejected.")
-        log_message = request_messages[int(message_id)]["log_message"]
         await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been rejected.")
         xd.pop(message_id)
