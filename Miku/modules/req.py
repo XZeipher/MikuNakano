@@ -30,6 +30,7 @@ administrators = []
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
+	global req_butt , log_butt
     user = await client.get_users(message.from_user.id)
     if len(message.text.split()) < 2:
         return await message.reply_text("**Wrong format!**")
