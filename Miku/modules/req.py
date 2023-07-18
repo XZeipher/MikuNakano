@@ -46,8 +46,8 @@ async def requests(client, message):
             userid = i.user.id
             ids.append(userid)
 
-    except:
-        return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
+    except Exception as e:
+        return await message.reply_text(e)
 
     log_butt = [
         [
