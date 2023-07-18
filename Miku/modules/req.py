@@ -27,7 +27,7 @@ LOG = """
 
 request_messages = {}
 
-@app.on_message(filters.group & filters.regex("#request"))
+@app.on_message(filters.group & filters.regex("\\#request"))
 async def requests(client, message):
     user = await client.get_users(message.from_user.id)
     if len(message.text) < 3:
