@@ -23,7 +23,30 @@ LOG = """
 ┣━➤「Requested」: `{requested}`
 ┗━━━━━━━━━━━━━━━━━━━
 """
-
+accept = """
+**Request Details**
+┏━━━━━━━━━━━━━━━━━━━
+┣━➤「Tracking ID」: `{}`
+┣━➤「Requested」: {}
+┣━➤「Requested By」: {}
+┣━➤「Status」: accepted 
+┗━━━━━━━━━━━━━━━━━━━"""
+reject = """
+**Request Details** 
+┏━━━━━━━━━━━━━━━━━━━
+┣━➤「Tracking ID」: `{}`
+┣━➤「Requested」: {}
+┣━➤「Requested By」: {}
+┣━➤「Status」: rejected
+┗━━━━━━━━━━━━━━━━━━━"""
+unable = """
+**Request Details** 
+┏━━━━━━━━━━━━━━━━━━━
+┣━➤「Tracking ID」: `{}`
+┣━➤「Requested」: {}
+┣━➤「Requested By」: {}
+┣━➤「Status」: unavailable
+┗━━━━━━━━━━━━━━━━━━━"""
 xd = {}
 administrators = []
 ids = []
@@ -55,6 +78,9 @@ async def requests(client, message):
             InlineKeyboardButton("Reject", callback_data=f"reject_{msg_id}"),
         ],
         [
+            InlineKeyboardButton("Unavailable", callback_data=f"unable_{msg_id}")
+        ],
+        [
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
         ],
     ]
@@ -69,7 +95,8 @@ async def requests(client, message):
     xd[msg_id] = {
         "log_message": log_message,
         "requested": anime,
-        "requested_by": user.mention
+        "requested_by": user.mention,
+        "username": user.username
     }
 
 @app.on_callback_query()
@@ -88,7 +115,8 @@ async def handle_callback(client, callback_query):
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
         request = xd[first_id]['requested']
-        await client.edit_message_text(CHANNEL,log_id,
+        username = xd[first_id]['username']
+        await client.edit_message_text(CHANNEL, log_id,
             f"**ACCEPTED\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
             f"┣━➤「Tracking ID」: {first_id}\n"
@@ -96,13 +124,14 @@ async def handle_callback(client, callback_query):
             f"┣━➤「Requested」: {request}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
+        await client.send_message(username, accept.format(first_id, request, mention))
         xd.clear()
     elif action == "reject":
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
         request = xd[first_id]['requested']
-        await client.edit_message_text(CHANNEL,log_id,
+        await client.edit_message_text(CHANNEL, log_id,
             f"**REJECTED\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
             f"┣━➤「Tracking ID」: {first_id}\n"
@@ -110,4 +139,20 @@ async def handle_callback(client, callback_query):
             f"┣━➤「Requested」: {request}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
+        await client.send_message(username, reject.format(first_id, request, mention))
+        xd.clear()
+    elif action == "unable":
+        first_id = next(iter(xd))
+        log_id = xd[first_id]['log_message'].id
+        mention = xd[first_id]['requested_by']
+        request = xd[first_id]['requested']
+        await client.edit_message_text(CHANNEL, log_id,
+            f"**UNAVAILABLE\n**"
+            f"┏━━━━━━━━━━━━━━━━━━━\n"
+            f"┣━➤「Tracking ID」: {first_id}\n"
+            f"┣━➤「Requested By」: {mention}\n"
+            f"┣━➤「Requested」: {request}\n"
+            f"┗━━━━━━━━━━━━━━━━━━━"
+        )
+        await client.send_message(username, unable.format(first_id, request, mention))
         xd.clear()
