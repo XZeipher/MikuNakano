@@ -24,7 +24,7 @@ LOG = """
 ┗━━━━━━━━━━━━━━━━━━━
 """
 
-request_messages = {}
+xd = {}
 administrators = []
 ids = []
 
@@ -47,7 +47,7 @@ async def requests(client, message):
             ids.append(userid)
 
     except Exception as e:
-        return await message.reply_text(e)
+        return await message.reply_text(str(e))
 
     log_butt = [
         [
@@ -67,9 +67,8 @@ async def requests(client, message):
 
     req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
 
-    request_messages[message_id] = {
-        "log_message": log_message,
-        "req_message": req_message
+    xd[message_id] = {
+        "log_message": log_message
     }
 
 @app.on_callback_query()
@@ -85,8 +84,10 @@ async def handle_callback(client, callback_query):
     if action == "accept":
         await callback_query.answer("Request accepted.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been accepted.")
+        await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been accepted.")
+        xd.pop(message_id)
     elif action == "reject":
         await callback_query.answer("Request rejected.")
         log_message = request_messages[int(message_id)]["log_message"]
-        await client.edit_message_text(log_message.chat.id, log_message.message_id, text=f"Request #{message_id} has been rejected.")
+        await client.edit_message_text(xd[message_id]["log_message"].chat.id,xd[message_id]["log_message"].id, f"Request #{message_id} has been rejected.")
+        xd.pop(message_id)
