@@ -5,8 +5,8 @@ from pyrogram.raw import *
 from pyrogram import __version__ as pyro_version
 
 CHANNEL = "@mikulogsab"
-req_butt = None
-log_butt = None
+req_butt = ""
+log_butt = ""
 REQ = """
 **Your Request Received #{req_id}**
 ┏━━━━━━━━━━━━━━━━━━━
