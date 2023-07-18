@@ -40,7 +40,7 @@ async def requests(client, message):
         administrators.clear()
 
         async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
-            administrators.append(m.id)
+            administrators.append(m)
         ids.clear()
         for i in administrators:
             userid = i.user.id
