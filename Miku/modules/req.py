@@ -4,7 +4,7 @@ from pyrogram.types import *
 from pyrogram.raw import *
 from pyrogram import __version__ as pyro_version
 
-CHANNEL = "@ocean_request_channel"
+CHANNEL = "@mikulogsab"
 REQ = """
 **Your Request Received #{req_id}**
 ┏━━━━━━━━━━━━━━━━━━━
@@ -27,12 +27,10 @@ LOG = """
 xd = {}
 administrators = []
 ids = []
-iddexo = ""
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
-    message_id = message.id
-    global iddexo
+    msg_id = message.id
     user = await client.get_users(message.from_user.id)
     if len(message.text.split()) < 2:
         return await message.reply_text("**Wrong format!**")
@@ -53,24 +51,25 @@ async def requests(client, message):
 
     log_butt = [
         [
-            InlineKeyboardButton("Accept", callback_data=f"accept_{message.id}"),
-            InlineKeyboardButton("Reject", callback_data=f"reject_{message.id}"),
+            InlineKeyboardButton("Accept", callback_data=f"accept_{msg_id}"),
+            InlineKeyboardButton("Reject", callback_data=f"reject_{msg_id}"),
         ],
         [
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
         ],
     ]
-    log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
+    log_message = await client.send_message(CHANNEL, LOG.format(req_id=msg_id, tracking_id=msg_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
     req_butt = [
         [
             InlineKeyboardButton("Request Log", url=f"t.me/c/{str(log_message.chat.id)[4:]}/{log_message.id}")
         ],
     ]
 
-    req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
-    iddexo = log_message.id
-    xd[iddexo] = {
-        "log_message": log_message
+    req_message = await message.reply_text(REQ.format(req_id=msg_id, tracking_id=msg_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
+    xd[msg_id] = {
+        "log_message": log_message,
+        "requested": anime,
+        "requested_by": user.mention
     }
 
 @app.on_callback_query()
@@ -81,13 +80,27 @@ async def handle_callback(client, callback_query):
         return
 
     data = callback_query.data
-    action,message_id = data.split("_")
+    action, msg_id = data.split("_")
 
     if action == "accept":
-        await callback_query.answer("Request accepted.")
-        await client.edit_message_text(CHANNEL,xd[iddexo], f"Request has been accepted.")
-        xd.pop(iddexo)
+        log_message = xd[msg_id]["log_message"]
+        await log_message.edit_text(
+            f"ACCEPTED\n"
+            f"┏━━━━━━━━━━━━━━━━━━━\n"
+            f"┣━➤「Tracking ID」: {mag_id}\n"
+            f"┣━➤「Requested By」: {xd[msg_id]['requested_by']}\n"
+            f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
+            f"┗━━━━━━━━━━━━━━━━━━━"
+        )
+        xd.pop(msg_id)
     elif action == "reject":
-        await callback_query.answer("Request rejected.")
-        await client.edit_message_text(CHANNEL,xd[iddexo], f"Request has been rejected.")
-        xd.pop(iddexo)
+        log_message = xd[msg_id]["log_message"]
+        await log_message.edit_text(
+            f"REJECTED\n"
+            f"┏━━━━━━━━━━━━━━━━━━━\n"
+            f"┣━➤「Tracking ID」: {msg_id}\n"
+            f"┣━➤「Requested By」: {xd[msg_id]['requested_by']}\n"
+            f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
+            f"┗━━━━━━━━━━━━━━━━━━━"
+        )
+        xd.pop(message_id)
