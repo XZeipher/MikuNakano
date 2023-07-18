@@ -77,18 +77,16 @@ async def handle_callback(client, callback_query):
     user_id = callback_query.from_user.id
     if user_id not in ids:
         await callback_query.answer("You can't use this action.", show_alert=True)
+        xd.clear()
         return
 
     data = callback_query.data
     action, msg_id = data.split("_")
 
-    if msg_id not in xd:
-        await callback_query.answer(f"Invalid message ID: {msg_id}", show_alert=True)
-        return
-
     if action == "accept":
-        log_message = xd[msg_id]["log_message"]
-        await log_message.edit_text(
+        first_id = next(iter(xd))
+        log_id = xd[first_id]['log_message'].id
+        await client.edit_message_text(CHANNEL,log_id,
             f"ACCEPTED\n"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
             f"┣━➤「Tracking ID」: {msg_id}\n"
@@ -96,10 +94,11 @@ async def handle_callback(client, callback_query):
             f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
-        xd.pop(msg_id)
+        xd.clear()
     elif action == "reject":
-        log_message = xd[msg_id]["log_message"]
-        await log_message.edit_text(
+        first_id = next(iter(xd))
+        log_id = xd[first_id]['log_message'].id
+        await client.edit_message_text(CHANNEL,log_id,
             f"REJECTED\n"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
             f"┣━➤「Tracking ID」: {msg_id}\n"
@@ -107,4 +106,4 @@ async def handle_callback(client, callback_query):
             f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
-        xd.pop(msg_id)
+        xd.clear()
