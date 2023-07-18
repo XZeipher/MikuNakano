@@ -4,7 +4,7 @@ from pyrogram.types import *
 from pyrogram.raw import *
 from pyrogram import __version__ as pyro_version
 
-CHANNEL = -1001861166161
+CHANNEL = "@mikulogsab"
 
 REQ = """
 **Your Request Received #{req_id}**
@@ -34,20 +34,18 @@ async def requests(client, message):
         return await message.reply_text("**Wrong format!**")
     anime = message.text.split(maxsplit=1)[1]
     try:
-        chat = await client.send(
-            functions.channels.GetFullChannel(channel=CHANNEL)
-        )
+        chat = await client.get_chat(CHANNEL)
         administrators = []
 
-        async for m in client.iter_chat_members(chat.full_chat.id, filter="administrators"):
-            administrators.append(m.user.id)
+        async for m in client.get_chat_members(CHANNEL, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+            administrators.append(m)
     except:
         return await message.reply_text("**Failed Maybe I Am Banned Or Chat Deleted!**")
 
     log_butt = [
         [
-            InlineKeyboardButton("Accept", callback_data=f"accept_{message.message_id}"),
-            InlineKeyboardButton("Reject", callback_data=f"reject_{message.message_id}"),
+            InlineKeyboardButton("Accept", callback_data=f"accept_{message.id}"),
+            InlineKeyboardButton("Reject", callback_data=f"reject_{message.id}"),
         ],
         [
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
@@ -55,13 +53,13 @@ async def requests(client, message):
     ]
     req_butt = [
         [
-            InlineKeyboardButton("Request Log", url=f"https://t.me/c/{chat.full_chat.username}/{message.message_id}")
+            InlineKeyboardButton("Request Log", url=f"https://t.me/c/{CHANNEL}/{message.id}")
         ],
     ]
-    log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.message_id, tracking_id=message.message_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
-    req_message = await message.reply_text(REQ.format(req_id=message.message_id, tracking_id=message.message_id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
+    log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
+    req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
     
-    request_messages[message.message_id] = {
+    request_messages[message.id] = {
         "log_message": log_message,
         "req_message": req_message
     }
