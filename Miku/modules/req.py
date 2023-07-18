@@ -131,6 +131,7 @@ async def handle_callback(client, callback_query):
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
         request = xd[first_id]['requested']
+        username = xd[first_id]['username']
         await client.edit_message_text(CHANNEL, log_id,
             f"**REJECTED\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
@@ -146,6 +147,7 @@ async def handle_callback(client, callback_query):
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
         request = xd[first_id]['requested']
+        username = xd[first_id]['username']
         await client.edit_message_text(CHANNEL, log_id,
             f"**UNAVAILABLE\n**"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
