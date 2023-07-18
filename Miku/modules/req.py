@@ -82,12 +82,16 @@ async def handle_callback(client, callback_query):
     data = callback_query.data
     action, msg_id = data.split("_")
 
+    if msg_id not in xd:
+        await callback_query.answer(f"Invalid message ID: {msg_id}", show_alert=True)
+        return
+
     if action == "accept":
         log_message = xd[msg_id]["log_message"]
         await log_message.edit_text(
             f"ACCEPTED\n"
             f"┏━━━━━━━━━━━━━━━━━━━\n"
-            f"┣━➤「Tracking ID」: {mag_id}\n"
+            f"┣━➤「Tracking ID」: {msg_id}\n"
             f"┣━➤「Requested By」: {xd[msg_id]['requested_by']}\n"
             f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
@@ -103,4 +107,4 @@ async def handle_callback(client, callback_query):
             f"┣━➤「Requested」: {xd[msg_id]['requested']}\n"
             f"┗━━━━━━━━━━━━━━━━━━━"
         )
-        xd.pop(message_id)
+        xd.pop(msg_id)
