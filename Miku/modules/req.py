@@ -4,7 +4,7 @@ from pyrogram.types import *
 from pyrogram.raw import *
 from pyrogram import __version__ as pyro_version
 
-CHANNEL = "@mikulogsab"
+CHANNEL = "@ocean_request_channel"
 REQ = """
 **Your Request Received #{req_id}**
 ┏━━━━━━━━━━━━━━━━━━━
