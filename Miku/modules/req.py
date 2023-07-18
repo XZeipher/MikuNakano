@@ -30,7 +30,7 @@ administrators = []
 
 @app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
-	global req_butt , log_butt
+    global req_butt, log_butt
     user = await client.get_users(message.from_user.id)
     if len(message.text.split()) < 2:
         return await message.reply_text("**Wrong format!**")
@@ -53,7 +53,7 @@ async def requests(client, message):
             InlineKeyboardButton("Requested Message", url=f"{message.link}")
         ],
     ]
-    
+
     log_message = await client.send_message(CHANNEL, LOG.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(log_butt))
     req_message = await message.reply_text(REQ.format(req_id=message.id, tracking_id=message.id, requested_by=user.mention, requested=anime), reply_markup=InlineKeyboardMarkup(req_butt))
     req_butt = [
