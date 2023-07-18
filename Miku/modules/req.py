@@ -30,7 +30,7 @@ request_messages = {}
 @app.on_message(filters.group & filters.regex("#request"))
 async def requests(client, message):
     user = await client.get_users(message.from_user.id)
-    if len(message.text) < 9:
+    if len(message.text) < 3:
         return await message.reply_text("**Wrong format!**")
     anime = message.text.split(maxsplit=1)[1]
     try:
