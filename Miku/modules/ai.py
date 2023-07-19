@@ -32,7 +32,7 @@ async def _sax(app, message):
 
 
 @app.on_message(command(commands=("ask")))
-async def asla(app,message):
+async def asla(app, message):
     text = await message.reply("💭")
     if len(message.command) < 1:
         return await text.edit("**Give me a message too.**")
@@ -40,9 +40,8 @@ async def asla(app,message):
     url = f"https://sugoi-api.vercel.app/chat?msg={msg}"
     async with httpx.AsyncClient(timeout=20) as cli:
         try:
-            resp = cli.get(url)
+            resp = await cli.get(url)  
             js = resp.json()
             await text.edit(js['response'])
         except Exception as e:
             await text.edit(f"An error occurred: {str(e)}")
-
