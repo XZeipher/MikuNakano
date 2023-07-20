@@ -25,7 +25,7 @@ ID:  {}
 Username: {}             
 """
 
-@app.on_message(filters.private)
+@app.on_message(filters.command("start"))
 async def private_handle(client, message):
     user_id = message.from_user.id
     users = await get_served_users()  
