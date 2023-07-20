@@ -99,7 +99,7 @@ async def requests(client, message):
         "username": user.username
     }
 
-@app.on_callback_query()
+@app.on_callback_query(filters.regex(r"^(accept|reject|unable)$"))
 async def handle_callback(client, callback_query):
     user_id = callback_query.from_user.id
     
