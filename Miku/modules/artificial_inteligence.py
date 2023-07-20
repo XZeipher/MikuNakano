@@ -1,6 +1,6 @@
 from Miku import app
 import httpx
-import ast
+#import ast
 from pyrogram import filters
 from .pyro.decorators import control_user, command
 
@@ -60,7 +60,7 @@ async def openai(app, message):
     params = {"model_id": 0, "prompt": msg}
     async with httpx.AsyncClient(timeout=20) as cli:
         try:
-            resp = await ast.literal_eval(str(cli.post(url, params=params).text))
+            resp = await cli.post(url, params=params).json()
             await txt.edit(resp['content'])
         except Exception as e:
-            await txt.edit(f"**Api is Down try** `/ask`")
+            await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
