@@ -102,15 +102,16 @@ async def requests(client, message):
 @app.on_callback_query()
 async def handle_callback(client, callback_query):
     user_id = callback_query.from_user.id
-    if user_id not in ids:
-        await callback_query.answer("You can't use this action.", show_alert=True)
-        xd.clear()
-        return
+    
 
     data = callback_query.data
     action, msg_id = data.split("_")
 
     if action == "accept":
+        if user_id not in ids:
+            await callback_query.answer("You can't use this action.", show_alert=True)
+            xd.clear()
+            return
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
@@ -127,6 +128,10 @@ async def handle_callback(client, callback_query):
         await client.send_message(username, accept.format(first_id, request, mention))
         xd.clear()
     elif action == "reject":
+        if user_id not in ids:
+            await callback_query.answer("You can't use this action.", show_alert=True)
+            xd.clear()
+            return
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
@@ -143,6 +148,10 @@ async def handle_callback(client, callback_query):
         await client.send_message(username, reject.format(first_id, request, mention))
         xd.clear()
     elif action == "unable":
+        if user_id not in ids:
+            await callback_query.answer("You can't use this action.", show_alert=True)
+            xd.clear()
+            return
         first_id = next(iter(xd))
         log_id = xd[first_id]['log_message'].id
         mention = xd[first_id]['requested_by']
