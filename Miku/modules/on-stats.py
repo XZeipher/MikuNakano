@@ -28,7 +28,7 @@ Username: {}
 @app.on_message(filters.private)
 async def private_handle(client, message):
     user_id = message.from_user.id
-    users = await get_served_users(user_id)  
+    users = await get_served_users()  
     try:
         if user_id not in users:
             mention = message.from_user.mention  
@@ -42,7 +42,7 @@ async def private_handle(client, message):
 @app.on_message(filters.group)
 async def group_handle(client, message):  
     chat_id = message.chat.id
-    chats = await get_served_chats(chat_id)  
+    chats = await get_served_chats()  
     try:
         if chat_id not in chats:
             group = message.chat  
