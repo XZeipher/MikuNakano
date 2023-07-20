@@ -1,6 +1,5 @@
 from Miku import app
 import httpx
-#import ast
 from pyrogram import filters
 from .pyro.decorators import control_user, command
 
@@ -56,11 +55,12 @@ async def openai(app, message):
     if len(message.command) < 1:
         return await txt.edit("**Give me a message too.**")
     msg = message.text.split(maxsplit=1)[1]
-    url = "https://openapi-nu.vercel.app/models"
+    url = "https://api.qewertyy.me/models"
     params = {"model_id": 0, "prompt": msg}
     async with httpx.AsyncClient(timeout=20) as cli:
         try:
             resp = await cli.post(url, params=params).json()
             await txt.edit(resp['content'])
         except Exception as e:
+            print(str(e))
             await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
