@@ -51,7 +51,7 @@ async def sugoi(app, message):
 @app.on_message(command(commands=("ask")))
 @control_user()
 async def openai(app, message):
-    txt = await message.reply("")
+    txt = await message.reply("💭")
     if len(message.command) < 1:
         return await txt.edit("**Give me a message too.**")
     msg = message.text.split(maxsplit=1)[1]
@@ -67,8 +67,8 @@ async def openai(app, message):
             
 @app.on_message(command(commands=("bard")))
 @control_user()
-async def bardapi(app , message):
-	txt = await message.reply("")
+async def bardapi(app, message):
+    txt = await message.reply("💭")
     if len(message.command) < 1:
         return await txt.edit("**Give me a message too.**")
     msg = message.text.split(maxsplit=1)[1]
@@ -78,15 +78,15 @@ async def bardapi(app , message):
             resp = await cli.get(url)
             data = resp.json()
             if 'images' in data['detail']:
-            	images = data['detail']['images']
+                images = data['detail']['images']
                 if 'choices' in data and data['choices']:
-                	text = data['choices'][0]['content'][0]
+                    text = data['choices'][0]['content'][0]
                 else:
                     text = "No Text Available!"
+                await txt.delete()
                 await message.reply_photo(images[0], caption=text)
             elif 'choices' in data and data['choices']:
                 text = data['choices'][0]['content'][0]
-                await message.reply_text(text)
+                await txt.edit(text)
             else:
-                print("**Api is Down contact: @MikuNakanoXSupport**")
-         
+                await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
