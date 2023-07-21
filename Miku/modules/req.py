@@ -51,7 +51,7 @@ xd = {}
 administrators = []
 ids = []
 
-@app.on_message(filters.group & filters.command("request") & group=11)
+@app.on_message(filters.group & filters.command("request"))
 async def requests(client, message):
     msg_id = message.id
     user = await client.get_users(message.from_user.id)
