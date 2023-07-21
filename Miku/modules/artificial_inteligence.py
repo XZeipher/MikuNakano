@@ -66,6 +66,7 @@ async def openai(app, message):
             await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
             
 @app.on_message(command(commands=("bard")))
+@control_user()
 async def bardapi(app, message):
     txt = await message.reply("💭")
     if len(message.command) < 1:
@@ -89,3 +90,7 @@ async def bardapi(app, message):
                 await txt.edit(text)
             else:
                 await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
+        except Exception as e:
+            print(str(e))
+            await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
+            
