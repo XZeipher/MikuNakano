@@ -34,7 +34,7 @@ async def _sax(app, message):
 @app.on_message(command(commands=("sugoi")))
 @control_user()
 async def sugoi(app, message):
-    text = await message.reply("💭")
+    text = await message.reply("")
     if len(message.command) < 1:
         return await text.edit("**Give me a message too.**")
     msg = message.text.split(maxsplit=1)[1]
@@ -51,7 +51,7 @@ async def sugoi(app, message):
 @app.on_message(command(commands=("ask")))
 @control_user()
 async def openai(app, message):
-    txt = await message.reply("💭")
+    txt = await message.reply("")
     if len(message.command) < 1:
         return await txt.edit("**Give me a message too.**")
     msg = message.text.split(maxsplit=1)[1]
@@ -64,3 +64,29 @@ async def openai(app, message):
         except Exception as e:
             print(str(e))
             await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
+            
+@app.on_message(command(commands=("bard")))
+@control_user()
+async def bardapi(app , message):
+	txt = await message.reply("")
+    if len(message.command) < 1:
+        return await txt.edit("**Give me a message too.**")
+    msg = message.text.split(maxsplit=1)[1]
+    url = f"https://api.safone.me/bard?message={msg}"
+    async with httpx.AsyncClient(timeout=20) as cli:
+        try:
+            resp = await cli.get(url)
+            data = resp.json()
+            if 'images' in data['detail']:
+            	images = data['detail']['images']
+                if 'choices' in data and data['choices']:
+                	text = data['choices'][0]['content'][0]
+                else:
+                    text = "No Text Available!"
+                await message.reply_photo(images[0], caption=text)
+            elif 'choices' in data and data['choices']:
+                text = data['choices'][0]['content'][0]
+                await message.reply_text(text)
+            else:
+                print("**Api is Down contact: @MikuNakanoXSupport**")
+         
