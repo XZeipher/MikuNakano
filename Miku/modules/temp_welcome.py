@@ -5,7 +5,7 @@ from PIL import Image , ImageDraw , ImageFont
 async def template(name , username , ids):
     temp = Image.open("./Miku/resources/IMG_20230723_121050_314.png")
     name_font = ImageFont.truetype("./Miku/resources/FrescitoRegularPersonalUseRegular-lgmj5.otf",53)
-    username_font = ImageFont.truetype("./Tanji/resources/FrescitoRegularPersonalUseRegular-lgmj5.otf",49)
+    username_font = ImageFont.truetype("./Miku/resources/FrescitoRegularPersonalUseRegular-lgmj5.otf",49)
     id_font = ImageFont.truetype("./Miku/resources/monumentextended-regular.otf",40)
     draw = ImageDraw.Draw(temp)
     draw.text((318 , 407),name,"white",font=name_font)    
