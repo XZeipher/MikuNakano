@@ -65,7 +65,7 @@ UBOT_ID = 0
 arq = ARQ("arq.hamker.dev",config.ARQ_API_KEY, aiohttpsession)
 
 app = Client (
-      "MikuNakanoX",
+      "MikuNakanoXX",
       api_id=config.API_ID,
       api_hash=config.API_HASH,
       bot_token=config.BOT_TOKEN
