@@ -2,7 +2,7 @@ import psycopg2
 from pyrogram import *
 from Miku import app, BOT_ID
 from Miku.modules.pyro.status import user_admin, bot_admin, bot_can_ban
-from pyrogram.enums import ChatMemberStatus
+from pyrogram.enums import *
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, ChatPermissions
 from pyrogram.errors import BadRequest
 
