@@ -10,7 +10,7 @@ from .pyro.decorators import control_user,command
 
 
 
-@app.on_message(filters.command("afk") | filters.regex(["brb" , "Brb"]))
+@app.on_message(command(commands=("afk")) | command(commands=("Brb"),prefixes = ("")))
 @control_user()
 async def active_afk(_, message: Message):
     if message.sender_chat:
