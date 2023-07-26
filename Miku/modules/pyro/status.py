@@ -66,7 +66,7 @@ async def user_has_permission(chat_title : str, chat_id: int, user_id: int, perm
 
     if not have_permission:
         if bot:
-            txt = f"**{BOT_NAME} Doesn't Have The Permission:\n__{permission}__\nIn {chat_title}. Please Give Me The Permission To Perform This Action.**"
+            txt = f"**{BOT_NAME} Doesn'tDoes The Permission:\n__{permission}__\nIn {chat_title}. Please Give Me The Permission To Perform This Action.**"
         else:
             txt = f"**You Don't Have The Permission:\n{permission}\nɪɴ {chat_title}.So I Won't Be Able To Perform This Action.**"
         return have_permission, txt
@@ -93,7 +93,7 @@ def bot_can_ban(func):
         BOT = await app.get_chat_member(message.chat.id,BOT_ID)
                  
         if not BOT.privileges.can_restrict_members:                        
-            await message.reply_text(f"**{BOT_NAME} Doesn't Have Permission To Restrict In {message.chat.title}. Check And Give Me Rights💕**")
+            await message.reply_text(f"**{BOT_NAME} Has No Permission To Restrict In {message.chat.title}. Check And Give Me Rights💕**")
             return 
         return await func(app,message,*args,**kwargs)
     return can_restrict
@@ -104,7 +104,7 @@ def bot_can_change_info(func):
         BOT = await app.get_chat_member(message.chat.id,BOT_ID)
 
         if not BOT.privileges.can_change_info:                         
-            await message.reply_text(f"**{BOT_NAME} Doesn't Have Permission To Change Info In {message.chat.title}. Check And Give Me Rights💕**")
+            await message.reply_text(f"**{BOT_NAME} Has Permission To Change Info In {message.chat.title}. Check And Give Me Rights💕**")
             return 
         return await func(app,message,*args,**kwargs)
     return can_change_info
@@ -116,7 +116,7 @@ def bot_can_promote(func):
         BOT = await app.get_chat_member(message.chat.id,BOT_ID)
 
         if not BOT.privileges.can_promote_members:                         
-            await message.reply_text(f"**{BOT_NAME} Doesn't Have Permission To Promote Users In {message.chat.title}. Check And Give Me Rights💕**")
+            await message.reply_text(f"**{BOT_NAME} Has No Permission To Promote Users In {message.chat.title}. Check And Give Me Rights💕**")
             return 
         return await func(app,message,*args,**kwargs)
     return can_promote
@@ -128,7 +128,7 @@ def bot_can_pin(func):
         BOT = await app.get_chat_member(message.chat.id,BOT_ID)
 
         if not BOT.privileges.can_pin_messages:                         
-            await message.reply_text(f"**{BOT_NAME} Doesn't Have Permission To Pin Messages In {message.chat.title}. Check And Give Me Rights💕**")
+            await message.reply_text(f"**{BOT_NAME} Has No Permission To Pin Messages In {message.chat.title}. Check And Give Me Rights💕**")
             return 
         return await func(app,message,*args,**kwargs)
     return can_pin
@@ -139,7 +139,7 @@ def bot_can_del(func):
         BOT = await app.get_chat_member(message.chat.id,BOT_ID)
 
         if not BOT.privileges.can_delete_messages:                         
-            await message.reply_text(f"**{BOT_NAME} Doesn't Have Permission To Delete Messages In {message.chat.title}. Check And Give Me Rights💕**")
+            await message.reply_text(f"**{BOT_NAME} Has No Permission To Delete Messages In {message.chat.title}. Check And Give Me Rights💕**")
             return 
         return await func(app,message,*args,**kwargs)
     return can_delete
