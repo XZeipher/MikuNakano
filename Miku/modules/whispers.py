@@ -49,10 +49,10 @@ async def mainwhisper(_, query):
 
     answers = [
         InlineQueryResultArticle(
-            title=f' Send a whisper message to {user}!',
+            title=f'\U0001F510 Send a whisper message to {user}!',
             description='Only they can see it!',
-            input_message_content=InputTextMessageContent(f' A Whisper Message For {user}\nOnly they can see it!'),
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(' Show Whisper', callback_data=f'whisper_{whisperId}')]])
+            input_message_content=InputTextMessageContent(f'\U0001F510 A Whisper Message For {user}\nOnly they can see it!'),
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('\U0001F92B Show Whisper', callback_data=f'whisper_{whisperId}')]])
         )
     ]
 
