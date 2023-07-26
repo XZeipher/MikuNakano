@@ -16,7 +16,7 @@ from Miku.modules.mongo.lang_db import *
 
 DISABLE_COMMANDS = []
 COMMANDS_LIST = []
-ERROR_LOG = "ErrorMiku"
+ERROR_LOG = "MikuLog"
 
 def language(func):
     @wraps(func)
@@ -52,9 +52,9 @@ def control_user(max_messages: int = 3, interval: float = 1.5):
                 elapsed_time = current_time - last_message_times[user_id]
                 if elapsed_time < interval:
                     if not alert:
-                        return await update.reply("Please refrain from spamming.")
+                        return await update.reply("**Please refrain from spamming.**")
                     else:
-                        return await update.answer("Slow down...")
+                        return await update.answer("**Slow down...**")
 
                 last_message_times[user_id] = current_time
                 message_counts[user_id] += 1
