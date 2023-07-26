@@ -7,7 +7,7 @@ from Miku.modules.pyro.status import user_admin
 from .mongo.actions_db import *
 from .pyro.decorators import control_user,command
 
-@app.on_message(command(commands=["addaction","rmaction"]))
+@app.on_message(filters.command(["addaction","rmaction"]))
 @control_user()
 @user_admin
 async def _mm(_, message):
