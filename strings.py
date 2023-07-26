@@ -30,26 +30,26 @@ Click on below buttons to access commands of {BOT_NAME}.**
 
 START_BUTTONS = [
     [
-        InlineKeyboardButton(text="**Commands ⚙️**", callback_data="help_back"),
-        InlineKeyboardButton(text="**Support 💕**", url=f"t.me/{SUPPORT_CHAT}")
+        InlineKeyboardButton(text="Commands ⚙️", callback_data="help_back"),
+        InlineKeyboardButton(text="Support 💕", url=f"t.me/{SUPPORT_CHAT}")
     ], 
     [
-       InlineKeyboardButton("**System Stats 🖥**",callback_data="Friday_st")
+       InlineKeyboardButton("System Stats 🖥",callback_data="Friday_st")
     ],
     [
         InlineKeyboardButton(
-            text="**Add Me To Your Groups.**",
+            text="➕ Add Me To Your Groups ➕",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],     
 ]
 GRP_START = [
     [
-        InlineKeyboardButton(text="**Updates 💌**", url=f"t.me/{UPDATES_CHANNEL}"),
-        InlineKeyboardButton(text="**Support 💕**", url=f"t.me/{SUPPORT_CHAT}")
+        InlineKeyboardButton(text="Updates 💌", url=f"t.me/{UPDATES_CHANNEL}"),
+        InlineKeyboardButton(text="Support 💕", url=f"t.me/{SUPPORT_CHAT}")
     ], 
     [
-       InlineKeyboardButton("**System Stats 🖥**",callback_data="Friday_st")
+       InlineKeyboardButton("System Stats 🖥",callback_data="Friday_st")
     ],
 ]
 BACK_BTN = [[InlineKeyboardButton("🔙",callback_data="friday_back")]]
