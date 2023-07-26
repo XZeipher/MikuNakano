@@ -169,7 +169,7 @@ async def help_button(_,query):
                 text,
                 parse_mode=ParseMode.MARKDOWN,                
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="**Back 🔙**", callback_data="help_back")]]
+                    [[InlineKeyboardButton(text="Back 🔙", callback_data="help_back")]]
                 ),
             )
 
@@ -221,7 +221,7 @@ async def get_help(_, message):
                     [
                         [
                             InlineKeyboardButton(
-                                text="**Help 🆘**",
+                                text="Help 🆘",
                                 url=f"https://t.me/{BOT_USERNAME}?start=ghelp_{module}"
                             )
                         ]
@@ -236,7 +236,7 @@ async def get_help(_, message):
                 [
                     [
                         InlineKeyboardButton(
-                            text="**Private 💻**",
+                            text="Private 💻",
                             url="https://t.me/{}?start=help".format(
                                 BOT_USERNAME
                             ),
