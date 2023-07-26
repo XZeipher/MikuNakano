@@ -10,7 +10,7 @@ from config import SUDO_USERS as DRAGONS,DEV_USERS
 from typing import Tuple,Optional
 
 DOWN_PATH = "./Miku/resources/"
-LOG_CHANNEL = -1001813613591
+LOG_CHANNEL = "@MikuLog"
 
 
 def rand_key():
