@@ -17,6 +17,7 @@ from pyrogram.errors import BadRequest,Unauthorized
 from pyrogram import filters,idle
 from Miku.utils.misc import paginate_modules
 from Miku import *
+from Miku.modules.mongo.users_db import add_served_user
 from fuzzywuzzy import process
 from rich.table import Table
 from pyrogram.enums import ParseMode,ChatType
@@ -110,6 +111,7 @@ async def group_start(_, message):
     chat_id = message.chat.id 
     args = message.text.split()
     if message.chat.type == ChatType.PRIVATE :
+        await add_served_user(message.from_user.id)
         if len(args) >= 2:
             if args[1].lower() == "help":
                 await send_help(_,chat_id,strings.HELP_STRINGS) 
