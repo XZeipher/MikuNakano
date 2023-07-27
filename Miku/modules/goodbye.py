@@ -2,7 +2,6 @@ from Miku import app
 from pyrogram import filters
 import uuid
 import math
-import os
 from PIL import Image, ImageDraw, ImageFont
 from unidecode import unidecode
 import asyncio
@@ -58,4 +57,5 @@ async def _left_mem(client, message):
 
     
     await client.send_animation(message.chat.id, x, caption=f"**Goodbye {message.left_chat_member.mention}. Never come back again!**")
+    import os
     os.remove(x)
