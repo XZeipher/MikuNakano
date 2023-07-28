@@ -137,8 +137,8 @@ async def nsfw_scan_command(_, message):
 
 
 @app.on_message(filters.command(["antinsfw", f"antinsfw@{bn}"]) & ~filters.private)
-@user_admin()
-@bot_can_del()
+@user_admin
+@bot_can_del
 async def nsfw_enable_disable(_, message):
     if len(message.command) != 2:
         await message.reply_text("**Usage:** `/antinsfw [on/off]`")
