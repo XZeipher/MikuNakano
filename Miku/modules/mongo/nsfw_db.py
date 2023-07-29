@@ -5,11 +5,12 @@ from Miku import db
 
 nsfwdb = db.nsfw
 
+
 async def is_nsfw_on(chat_id: int) -> bool:
     chat = nsfwdb.find_one({"chat_id": chat_id})
     if not chat:
-        return True
-    return False
+        return False
+    return True
 
 async def nsfw_on(chat_id: int):
     is_nsfw = is_nsfw_on(chat_id)
