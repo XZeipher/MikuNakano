@@ -111,4 +111,4 @@ async def init():
 
     
     
-loop.run_until_complete(init()) 
+loop.run_until_complete(await init()) 
