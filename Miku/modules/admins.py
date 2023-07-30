@@ -35,7 +35,7 @@ DEMOTE = ChatPrivileges(
     
 
     
-@app.on_message(filters.command("bots"))
+@Client.on_message(filters.command("bots"))
 @control_user()                  
 @user_admin
 async def _botlist(_, message):       
@@ -48,7 +48,7 @@ async def _botlist(_, message):
     await repl.edit(f"{header}\n\n")
 
         
-@app.on_message(filters.command(["promote","fullpromote"]))
+@Client.on_message(filters.command(["promote","fullpromote"]))
 @control_user()
 @user_admin
 @bot_admin                  
@@ -118,7 +118,7 @@ async def _promote(_, message):
         return await message.reply_text(e)
             
 
-@app.on_message(filters.command("demote"))
+@Client.on_message(filters.command("demote"))
 @control_user()
 @user_admin
 @bot_admin  
@@ -152,7 +152,7 @@ async def _demote(_, message):
         await message.reply_text(f"**{excp.message}.**")           
 
 
-@app.on_message(filters.command("invitelink"))
+@Client.on_message(filters.command("invitelink"))
 @control_user()                  
 @user_admin
 @bot_admin
@@ -178,7 +178,7 @@ async def _invitelink(_,message):
 
 
                                
-@app.on_message(filters.command(["setgtitle","setgdesc","title"]))
+@Client.on_message(filters.command(["setgtitle","setgdesc","title"]))
 @control_user()
 @user_admin
 @bot_admin
@@ -242,7 +242,7 @@ async def g_title_desc(_,message):
      
     
                                    
-@app.on_message(filters.command(["setgpic","delgpic"]))
+@Client.on_message(filters.command(["setgpic","delgpic"]))
 @control_user()
 @user_admin
 @bot_admin
@@ -284,7 +284,7 @@ async def g_pic(_,message):
         
 
 
-@app.on_message(filters.command(["adminlist","admins"]))
+@Client.on_message(filters.command(["adminlist","admins"]))
 @control_user()                  
 async def _adminlist(_, message):  
     if message.chat.type == enums.ChatType.PRIVATE:
