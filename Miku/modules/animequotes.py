@@ -1,7 +1,7 @@
 import requests
 import random
 from Miku import app
-from pyrogram import filters 
+from pyrogram import filters , Client
 from pyrogram.types import InlineKeyboardButton, CallbackQuery, InlineKeyboardMarkup 
 from .pyro.decorators import control_user,command
 
@@ -74,7 +74,7 @@ QUOTES_IMG = (
       
       )    
 
-@app.on_message(command(commands=("quote")))
+@Client.on_message(command(commands=("quote")))
 @control_user()
 async def quote(_, message):
     url = "https://animechan.vercel.app/api/random"
@@ -97,7 +97,7 @@ reply_markup=InlineKeyboardMarkup(
         ],
         ]))                                                
 
-@app.on_callback_query(filters.regex("change_quote"))
+@Client.on_callback_query(filters.regex("change_quote"))
 @control_user()
 async def change_quote(_,CallbackQuery):
     query = CallbackQuery.message     
@@ -121,7 +121,7 @@ reply_markup=InlineKeyboardMarkup(
         ],
         ]))    
 
-@app.on_message(command(commands=("animequotes")))
+@Client.on_message(command(commands=("animequotes")))
 @control_user()
 async def anime_quote(_,msg):
     await msg.reply_photo(random.choice(QUOTES_IMG),
@@ -132,7 +132,7 @@ async def anime_quote(_,msg):
         ],
         ]))  
 
-@app.on_callback_query(filters.regex("anime_quote"))
+@Client.on_callback_query(filters.regex("anime_quote"))
 @control_user()
 async def anime_quote(_,CallbackQuery):
     query = CallbackQuery.message         
