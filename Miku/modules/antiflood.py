@@ -1,6 +1,6 @@
 from Miku import app,BOT_ID
 from config import SUPREME_USERS , SUPREME_USERS as CHAD
-from pyrogram import filters, enums 
+from pyrogram import filters, enums , Client
 from pyrogram.errors import BadRequest 
 from Miku.modules.pyro.status import (
     user_admin,
@@ -16,7 +16,7 @@ from .pyro.decorators import control_user,command
 from .pyro.misc import remove_markdown
 from Miku.utils.filter_groups import flood_watcher
 
-@app.on_message(command(commands=("setflood")))
+@Client.on_message(command(commands=("setflood")))
 @control_user()
 @user_admin
 @bot_admin
@@ -47,7 +47,7 @@ async def _setflood(_, message):
         return await message.reply_text("**Not Valid Integer.**")
         
             
-@app.on_message(command(commands=("setfloodmode")))
+@Client.on_message(command(commands=("setfloodmode")))
 @control_user()
 @user_admin
 @bot_admin
@@ -58,7 +58,7 @@ async def _setfloodmode(_, message):
     ])
     return await message.reply_text("**Choose An AntiFlood Mode.**",reply_markup=btn)     
  
-@app.on_message(command(commands=("flood"))) 
+@Client.on_message(command(commands=("flood"))) 
 @control_user()
 @user_admin
 async def _flood(_, message):
@@ -89,7 +89,7 @@ async def _flood(_, message):
     btn = InlineKeyboardMarkup([[InlineKeyboardButton("❌ Close",callback_data="admin_close")]])
     return await message.reply_text(msg, reply_markup=btn)       
        
-@app.on_callback_query(filters.regex(pattern=r"^(floodkick|floodmute|floodban)$"))
+@Client.on_callback_query(filters.regex(pattern=r"^(floodkick|floodmute|floodban)$"))
 @control_user()
 async def _anticq(_, query):
     chat_id = query.message.chat.id  
@@ -114,7 +114,7 @@ async def _anticq(_, query):
     await set_antiflood_mode(chat_id,id)             
     return await query.message.edit_text(f"**Flood type set to - {type}**")    
 
-@app.on_callback_query(filters.regex(pattern=r"^(floodtmute|floodtban)$"))
+@Client.on_callback_query(filters.regex(pattern=r"^(floodtmute|floodtban)$"))
 @control_user()
 async def _anticqm(_, query):
     chat_id = query.message.chat.id  
@@ -134,7 +134,7 @@ async def _anticqm(_, query):
     btn = InlineKeyboardMarkup([[InlineKeyboardButton("5 Minutes", callback_data =f"valtype_5m_id_{mid}"), InlineKeyboardButton("6 Hours",callback_data =f"valtype_6h_id_{mid}")],[InlineKeyboardButton("3 Days",callback_data =f"valtype_3d_id_{mid}"),InlineKeyboardButton("1 Week",callback_data =f"valtype_1w_id_{mid}")],[InlineKeyboardButton("Cancel", callback_data="admin_close")]])
     return await query.message.edit_text("**Choose Time**", reply_markup=btn) 
 
-@app.on_callback_query(filters.regex(pattern=r"valtype_(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"valtype_(.*)"))
 @control_user()
 async def _timecq(_, query):   
     chat_id = query.message.chat.id
@@ -229,7 +229,7 @@ def reset_flood(chat_id, user_id=0):
             DB[chat_id][user] = 0
 
 
-@app.on_message(
+@Client.on_message(
     ~filters.service & ~filters.me & ~filters.private & ~filters.channel & ~filters.bot,
     group=flood_watcher,
 )
