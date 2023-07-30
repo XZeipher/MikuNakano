@@ -1,4 +1,4 @@
-from pyrogram import filters,enums
+from pyrogram import filters,enums,Client
 from Miku import app
 from config import SUPREME_USERS
 from Miku.modules.pyro.status import user_admin
@@ -8,7 +8,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Miku.modules.mongo.approve_db import *
 from .pyro.decorators import control_user,command
 
-@app.on_message(command(commands=("approve")))
+@Client.on_message(command(commands=("approve")))
 @control_user()
 @user_admin
 async def _approve(_, message):
@@ -27,7 +27,7 @@ async def _approve(_, message):
     return await message.reply_text(f"**{member.user.mention} Has Been Approved {message.chat.title}!**")              
 
 
-@app.on_message(command(commands=("disapprove")))
+@Client.on_message(command(commands=("disapprove")))
 @control_user()
 @user_admin
 async def _approve(_, message):
@@ -45,7 +45,7 @@ async def _approve(_, message):
     await disapprove_user(chat_id, user_id)
     await message.reply_text(f"**{member.user.mention} Is No Longer Approved In {message.chat.title}**")              
 
-@app.on_message(command(commands=("approved")))
+@Client.on_message(command(commands=("approved")))
 @control_user()
 @user_admin
 async def _approvedlist(_, message):
@@ -62,7 +62,7 @@ async def _approvedlist(_, message):
             pass
     await message.reply_text(text)   
 
-@app.on_message(command(commands=("approval")))
+@Client.on_message(command(commands=("approval")))
 @control_user()
 @user_admin
 async def _approval(_, message):
@@ -81,7 +81,7 @@ async def _approval(_, message):
     
     return await message.reply_text(f"**{m.user.mention} Isn't An Approved User.**") 
 
-@app.on_message(filters.command("disapproveall") & filters.group)
+@Client.on_message(filters.command("disapproveall") & filters.group)
 @control_user()                  
 async def _disappall(_, message):
     user_id = message.from_user.id
@@ -95,7 +95,7 @@ async def _disappall(_, message):
     btn = InlineKeyboardMarkup([[InlineKeyboardButton("DisApprove-All", callback_data="unaproveall")],[InlineKeyboardButton("❌ Close",callback_data="admin_close")]])
     await message.reply_text("Are You Sure?",reply_markup=btn)
 
-@app.on_callback_query(filters.regex("unaproveall"))
+@Client.on_callback_query(filters.regex("unaproveall"))
 @control_user()                  
 async def _unappall(_, query):
     user_id = query.from_user.id
