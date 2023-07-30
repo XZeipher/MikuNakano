@@ -1,9 +1,9 @@
 from Miku import app
 import httpx
-from pyrogram import filters
+from pyrogram import filters , Client
 from .pyro.decorators import control_user, command
 
-@app.on_message(command(commands=("chat")))
+@Client.on_message(command(commands=("chat")))
 @control_user()
 async def _sax(app, message):
     txt = await message.reply("**writing....**")
