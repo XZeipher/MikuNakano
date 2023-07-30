@@ -105,7 +105,7 @@ async def send_help(app,chat, text, keyboard=None):
     )
     return (text, keyboard)
 
-@Client.on_message(filters.command("start"))
+@app.on_message(filters.command("start"))
 async def group_start(_, message):    
     print(MODULES)
     chat_id = message.chat.id 
@@ -151,7 +151,7 @@ async def group_start(_, message):
             )
                    
              
-@Client.on_callback_query(filters.regex(r"help_(.*?)"))
+@app.on_callback_query(filters.regex(r"help_(.*?)"))
 async def help_button(_,query):    
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     prev_match = re.match(r"help_prev\((.+?)\)", query.data)
@@ -208,7 +208,7 @@ async def help_button(_,query):
     except BadRequest:
         pass
 
-@Client.on_message(filters.command("help"))
+@app.on_message(filters.command("help"))
 async def get_help(_, message):
     chat_id = message.chat.id
     args = message.text.split(None,1)
@@ -272,7 +272,7 @@ async def get_help(_, message):
 
                               
                      
-@Client.on_message(filters.command("donate"))  
+@app.on_message(filters.command("donate"))  
 async def donate(_, message):
     if message.chat.type == ChatType.PRIVATE:
         if message.from_user.id == config.OWNER_ID:
