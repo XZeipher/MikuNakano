@@ -71,6 +71,12 @@ app = Client (
       bot_token=config.BOT_TOKEN,
       plugins=dict(root="Miku/modules")
       )
+ALPHA = Client (
+      "MikuNakano",
+      api_id=config.API_ID,
+      api_hash=config.API_HASH,
+      bot_token=config.BOT_TOKEN
+)
 ubot = Client(
       "UserBot",
       api_id=config.API_ID,
@@ -84,6 +90,7 @@ async def init():
     LOG.print("Loading Sudo Users...")
     
     await app.start()
+    await ALPHA.start()
     await ubot.start()
     x =  db.sudo.find().to_list(length=None)
     for i in await x :
