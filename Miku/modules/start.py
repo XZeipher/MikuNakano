@@ -1,4 +1,4 @@
-from Miku import *
+
 from Miku.__main__ import *
 from pyrogram import *
 import strings
