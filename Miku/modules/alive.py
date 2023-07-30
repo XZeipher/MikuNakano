@@ -42,12 +42,12 @@ btn = [
     ],
 ]
 
-@app.on_message(command(commands=("alive")))
-@app.on_message(filters.regex("awake"))
+@Client.on_message(command(commands=("alive")))
+@Client.on_message(filters.regex("awake"))
 @control_user()
 async def restart(_, message):
     mention = (await _.get_users(int(OWNER_ID))).mention
-    await message.delete()
+    
     accha = await message.reply("⚡")
     await asyncio.sleep(1)
     await accha.edit("**Awakening...**")
