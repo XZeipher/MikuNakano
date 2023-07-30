@@ -31,7 +31,7 @@ async def _sax(app, message):
             await txt.edit(f"**Api is Down try** `/ask`")
 
 
-@app.on_message(command(commands=("sugoi")))
+@Client.on_message(command(commands=("sugoi")))
 @control_user()
 async def sugoi(app, message):
     text = await message.reply("")
@@ -48,7 +48,7 @@ async def sugoi(app, message):
             await text.edit(f"**Api is Down try** `/ask`")
 
 
-@app.on_message(command(commands=("ask")))
+@Client.on_message(command(commands=("ask")))
 @control_user()
 async def openai(app, message):
     txt = await message.reply("💭")
@@ -65,7 +65,7 @@ async def openai(app, message):
             print(str(e))
             await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
             
-@app.on_message(command(commands=("bard")))
+@Client.on_message(command(commands=("bard")))
 @control_user()
 async def bardapi(app, message):
     txt = await message.reply("💭")
@@ -94,3 +94,17 @@ async def bardapi(app, message):
             print(str(e))
             await txt.edit("**Api is Down contact: @MikuNakanoXSupport**")
             
+
+__help__ = """
+**Artificial Intelligence.**
+
+**Commands**
+ 
+♠ `/chat <text>`: chatGPT Safone.
+♠ `/bard <text>`: Google Bard Ai.
+♠ `/sugoi <text>`: Sugoi Ai.
+♠ `/ask <text>`: OpenAi chatGPT.
+
+"""
+
+__mod_name__ = "ChatGPT"
