@@ -1,13 +1,13 @@
 from Miku import app,BOT_ID,BOT_NAME
 from config import SUPPORT_CHAT
-from pyrogram import filters
+from pyrogram import filters , Client
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup 
 from Miku.modules.pyro.status import user_admin
 from .mongo.actions_db import *
 from .pyro.decorators import control_user,command
 
-@app.on_message(filters.command(["addaction","rmaction"]))
+@Client.on_message(filters.command(["addaction","rmaction"]))
 @control_user()
 @user_admin
 async def _mm(_, message):
@@ -27,7 +27,7 @@ async def _mm(_, message):
 
 btn = InlineKeyboardMarkup([[InlineKeyboardButton("Close ❌",callback_data="admin_close")]])
         
-@app.on_chat_member_updated()
+@Client.on_chat_member_updated()
 async def _cmu(_,cmu):
     chat_id = cmu.chat.id
     old_user = cmu.old_chat_member
