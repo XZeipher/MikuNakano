@@ -49,38 +49,16 @@ PM_PHOTO = (
       "https://telegra.ph//file/b388f473ddfb9cc727bb1.jpg",
 )
 
-loop = asyncio.get_event_loop() 
-uptime = get_readable_time((time.time() - StartTime))
-IMPORTED = {}
-HELPABLE = {}
-MODULES = {}
-async def main():
-    global IMPORTED, HELPABLE, MODULES
-    for module_name in ALL_MODULES:
-        imported_module = importlib.import_module("Miku.modules." + module_name)
-        try:
-            MODULES[unidecode(imported_module.__mod_name__).lower()] = imported_module.__help__
-        except Exception as e:
-            print(e)
-        if hasattr(imported_module, "__help__") and imported_module.__help__:
-            HELPABLE[imported_module.__mod_name__.lower()] = imported_module
-        if hasattr(imported_module, "get_help") and imported_module.get_help:
-            HELPABLE[imported_module.__mod_name__.lower()] = imported_module
-    header = Table(show_header=True, header_style="bold yellow")
-    header.add_column(strings.LOG_MSG)
-    LOG.print(header)
-    await asyncio.sleep(2)
-    LOG.print("Access Modules:- ".format(len(ALL_MODULES)) + "\n")
-    for all_module in ALL_MODULES:
-        LOG.print(f"Successfully Imported {all_module}.py")
 
-    print()
-    LOG.print(f"{BOT_NAME} Started. ")
+
+if __name__ == "__main__" :
+	app.run()
     try:
         await app.send_photo(f"@{config.SUPPORT_CHAT}",
                              photo=random.choice(MIKU_N_IMG),
-                             caption=strings.SUPPORT_SEND_MSG.format(platform.python_version(), pyrover, uptime)
+                             caption=strings.SUPPORT_SEND_MSG.format(platform.python_version(), pyrover, "i don't know")
                              )
+        LOG.print(f"{BOT_NAME} Started. ")
     except Exception as e:
         LOG.print(f"{e}")
         LOG.print(f"Bot isn't able to send message to @{config.SUPPORT_CHAT} !")
@@ -89,13 +67,3 @@ async def main():
     except Exception as u:
         LOG.print(f"{u}")
         LOG.print(f"Userbot isn't able to send message to @{config.SUPPORT_CHAT} !")
-    await idle()
-
-      
-    
-           
-         
-if __name__ == "__main__" :
-    uvloop.install()
-    loop.run_until_complete(main())
-    LOG.print("Stopped Client.") 
