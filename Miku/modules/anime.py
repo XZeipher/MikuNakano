@@ -5,7 +5,7 @@ import datetime
 import textwrap
 import requests
 import json
-from pyrogram import filters 
+from pyrogram import filters , Client
 from Miku import app
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery , Message 
 from pyrogram.enums import ParseMode 
@@ -140,7 +140,7 @@ anime_query = '''
 
 
 
-@app.on_message(filters.command("anime"))
+@Client.on_message(filters.command("anime"))
 async def _anime(_, message):
     if len(message.command) < 2 :
         await message.reply_video('https://telegra.ph/file/d60afdfa00eab309abb47.mp4', '**Format : /anime < anime name >**')
@@ -221,7 +221,7 @@ async def _anime(_, message):
            parse_mode=ParseMode.MARKDOWN,
            reply_markup=InlineKeyboardMarkup(buttons))
 
-@app.on_message(filters.command("manga"))
+@Client.on_message(filters.command("manga"))
 async def _manga(_, message):
     if len(message.command) < 2 :
         await message.reply_video("https://telegra.ph/file/bd2f8bb3a01bed38db873.mp4" , "**Format : /manga < manga name >**")
@@ -283,7 +283,7 @@ async def _manga(_, message):
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(buttons))
 
-@app.on_message(filters.command("character"))
+@Client.on_message(filters.command("character"))
 async def _character(_, message):
     if len(message.command) < 2 :
         await message.reply_video('https://telegra.ph/file/659343204f218f8ec2441.mp4','Format : /character < character name >')
@@ -317,7 +317,7 @@ async def _character(_, message):
             await message.reply_text(
                 msg.replace('<b>', '</b>'), reply_markup=InlineKeyboardMarkup(buttons), parse_mode=ParseMode.MARKDOWN) 
 
-@app.on_message(filters.command("airing"))
+@Client.on_message(filters.command("airing"))
 async def _airing(_, message):
     if len(message.command) < 2 :
         await message.reply_text('**Usage:** `/airing <anime name>`')
