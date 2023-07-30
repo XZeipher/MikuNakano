@@ -1,6 +1,6 @@
 import time
 from Miku import app ,BOT_USERNAME
-from pyrogram import filters 
+from pyrogram import filters , Client
 from Miku import db, get_readable_time
 from pyrogram.types import Message
 from Miku.modules.mongo.afk_db import is_afk,add_afk, remove_afk
@@ -10,7 +10,7 @@ from .pyro.decorators import control_user,command
 
 
 
-@app.on_message(command(commands=("afk")) | command(commands=("Brb"),prefixes = ("")))
+@Client.on_message(command(commands=("afk")) | command(commands=("Brb"),prefixes = ("")))
 @control_user()
 async def active_afk(_, message: Message):
     if message.sender_chat:
