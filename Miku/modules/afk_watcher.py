@@ -1,7 +1,7 @@
 import re
 import time
 
-from pyrogram import filters
+from pyrogram import filters , Client
 from pyrogram.types import Message
 
 from Miku import app,BOT_USERNAME,get_readable_time
@@ -10,7 +10,7 @@ from pyrogram.enums import MessageEntityType
 from Miku.utils.filter_groups import afk_watcher
 
 un = None
-@app.on_message(
+@Client.on_message(
      ~filters.me & ~filters.bot & ~filters.via_bot,
     group=afk_watcher,
 )
