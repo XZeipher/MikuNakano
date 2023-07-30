@@ -64,9 +64,7 @@ async def main():
             print(e)
         if hasattr(imported_module, "__help__") and imported_module.__help__:
             HELPABLE[imported_module.__mod_name__.lower()] = imported_module
-        if hasattr(imported_module, "get_help") and imported_module.get_help:
-            HELPABLE[imported_module.__mod_name__.lower()] = imported_module
-
+        
     header = Table(show_header=True, header_style="bold yellow")
     header.add_column(strings.LOG_MSG)
     LOG.print(header)
