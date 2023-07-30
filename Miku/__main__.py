@@ -54,7 +54,7 @@ PM_PHOTO = (
 if __name__ == "__main__" :
     app.run()
     try:
-        await app.send_photo(f"@{config.SUPPORT_CHAT}",
+        app.send_photo(f"@{config.SUPPORT_CHAT}",
                              photo=random.choice(MIKU_N_IMG),
                              caption=strings.SUPPORT_SEND_MSG.format(platform.python_version(), pyrover, "i don't know")
                              )
@@ -63,7 +63,7 @@ if __name__ == "__main__" :
         LOG.print(f"{e}")
         LOG.print(f"Bot isn't able to send message to @{config.SUPPORT_CHAT} !")
     try:
-        await ubot.send_message(f"@{config.SUPPORT_CHAT}", "**Userbot Started.**")
+        ubot.send_message(f"@{config.SUPPORT_CHAT}", "**Userbot Started.**")
     except Exception as u:
         LOG.print(f"{u}")
         LOG.print(f"Userbot isn't able to send message to @{config.SUPPORT_CHAT} !")
