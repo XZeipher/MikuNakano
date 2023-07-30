@@ -52,7 +52,7 @@ PM_PHOTO = (
 
 
 if __name__ == "__main__" :
-	app.run()
+    app.run()
     try:
         await app.send_photo(f"@{config.SUPPORT_CHAT}",
                              photo=random.choice(MIKU_N_IMG),
