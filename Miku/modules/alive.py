@@ -2,7 +2,7 @@ import asyncio
 import random
 from sys import version_info
 from pyrogram import __version__ as pver
-from pyrogram import filters
+from pyrogram import filters , Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Miku import BOT_NAME, BOT_USERNAME, app
 from config import SUPPORT_CHAT, UPDATES_CHANNEL, OWNER_ID
