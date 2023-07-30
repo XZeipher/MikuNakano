@@ -1,11 +1,32 @@
-
-from Miku.__main__ import *
-from pyrogram import *
-import strings
+import os
+import asyncio
+import re
+import time
+import uvloop
+import platform
+import random 
 import config
+import strings
+import importlib
+from pyrogram.types import (
+    InlineKeyboardButton, 
+    InlineKeyboardMarkup,
+    CallbackQuery)
 
-
-
+from pyrogram.errors import BadRequest,Unauthorized 
+from pyrogram import filters,idle , Client
+from Miku.utils.misc import paginate_modules
+from Miku import *
+from Miku.modules.mongo.users_db import add_served_user
+from fuzzywuzzy import process
+from rich.table import Table
+from pyrogram.enums import ParseMode,ChatType
+from pyrogram import __version__ as pyrover
+from Miku.modules import ALL_MODULES
+from Miku.modules.rules import send_rules
+from unidecode import unidecode
+from Miku import StartTime , get_readable_time
+loop = asyncio.get_event_loop() 
 MIKU_IMG = (
       "https://telegra.ph/file/624831b44a6e36370ec70.jpg",
       "https://telegra.ph/file/b9c7fb4d2dc481104fe49.jpg",
@@ -28,6 +49,26 @@ PM_PHOTO = (
       "https://telegra.ph//file/88976abda0d0af9d4a517.jpg",
       "https://telegra.ph//file/b388f473ddfb9cc727bb1.jpg",
 )
+uptime = get_readable_time((time.time() - StartTime))
+IMPORTED = {}
+HELPABLE = {}
+MODULES = {}
+async def main():
+    global IMPORTED, HELPABLE, MODULES
+    for module_name in ALL_MODULES:
+        imported_module = importlib.import_module("Miku.modules." + module_name)
+        try:
+            MODULES[unidecode(imported_module.__mod_name__).lower()] = imported_module.__help__
+        except Exception as e:
+            print(e)
+        if hasattr(imported_module, "__help__") and imported_module.__help__:
+            HELPABLE[imported_module.__mod_name__.lower()] = imported_module
+        if hasattr(imported_module, "get_help") and imported_module.get_help:
+            HELPABLE[imported_module.__mod_name__.lower()] = imported_module
+    for all_module in ALL_MODULES:
+        LOG.print(f"Successfully Imported {all_module}.py")
+      
+loop.run_until_complete(main())
 
 async def send_help(app,chat, text, keyboard=None):
     if not keyboard:
@@ -43,6 +84,7 @@ async def send_help(app,chat, text, keyboard=None):
 
 @Client.on_message(filters.command("start"))
 async def group_start(_, message):    
+    print(MODULES)
     chat_id = message.chat.id 
     args = message.text.split()
     if message.chat.type == ChatType.PRIVATE :
@@ -223,17 +265,5 @@ async def donate(_, message):
                 await app.send_message(message.from_user.id,text=f"[Here Is The Donation Link]({config.DONATION_LINK})")
             except Unauthorized:                
                 await message.reply_text("**Contact Me In PM To Get Donation Information First!**")                                                                                               
-
-
-__help__ = """
-**Helpable Mod**
-
-**Commands**
-
-♠ `/help`: get help of commands.
-
-♠ `/donate` : donate money to my master.
-
-"""
-
-__mod_name__ = "Help"          
+                                                                    
+         
