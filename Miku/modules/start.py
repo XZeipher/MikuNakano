@@ -223,4 +223,17 @@ async def donate(_, message):
                 await app.send_message(message.from_user.id,text=f"[Here Is The Donation Link]({config.DONATION_LINK})")
             except Unauthorized:                
                 await message.reply_text("**Contact Me In PM To Get Donation Information First!**")                                                                                               
-                                                         
+
+
+__help__ = """
+**Helpable Mod**
+
+**Commands**
+
+♠ `/help`: get help of commands.
+
+♠ `/donate` : donate money to my master.
+
+"""
+
+__mod_name__ = "Help"          
