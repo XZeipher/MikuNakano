@@ -1,13 +1,13 @@
 import time 
 import asyncio
 from Miku import app,get_readable_time
-from pyrogram import filters, enums 
+from pyrogram import filters, enums , Client
 from Miku.modules.pyro.status import user_admin
 from pyrogram.errors import FloodWait 
 
 SPAM_CHATS = []
 
-@app.on_message(filters.command(["tagall", "all"]) | filters.command("@all", "") & filters.group)
+@Client.on_message(filters.command(["tagall", "all"]) | filters.command("@all", "") & filters.group)
 @user_admin
 async def tag_all_users(_,message): 
     replied = message.reply_to_message  
@@ -63,7 +63,7 @@ async def tag_all_users(_,message):
            
 
 
-@app.on_message(filters.command("cancel") & filters.group)
+@Client.on_message(filters.command("cancel") & filters.group)
 @user_admin
 async def cancelcmd(_, message):
     chat_id = message.chat.id
