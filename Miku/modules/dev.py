@@ -5,14 +5,14 @@ from os import remove
 from os import system as execute
 from Miku import app,BOT_NAME
 from config import *
-from pyrogram import filters,enums
+from pyrogram import filters,enums,Client
 from contextlib import suppress
 from pyrogram.errors import BadRequest ,Unauthorized
 from Miku.utils.pastebin import paste
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-@app.on_message(filters.command(["leave","dleave"]) & filters.user(DEV_USERS))
+@Client.on_message(filters.command(["leave","dleave"]) & filters.user(DEV_USERS))
 async def _leave(_, message):
     if len(message.command) < 2:
         return await message.reply_text("**Provide ID To Leave.**")
@@ -38,7 +38,7 @@ async def _leave(_, message):
             return await app.send_message(user_id,"ʙᴇᴇᴘ ʙᴏᴏᴘ, I ʟᴇғᴛ ᴛʜᴀᴛ sᴏᴜᴘ!. ᴀʟsᴏ ᴅᴇʟᴇᴛᴇᴅ ᴛʜᴇ ᴅɪᴀʟᴏɢs.")
 
 
-@app.on_message(filters.command("restart") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("restart") & filters.user(DEV_USERS))
 async def _restart(_, message):
     text = await message.reply("**Restarting....**")
     await text.delete()
@@ -57,7 +57,7 @@ def update_repo(path : str, git_token : str, git_username : str, repo_name : str
     except Exception as e:
         return e
         
-@app.on_message(filters.command(["gitpull", "update"]) & filters.user(DEV_USERS))
+@Client.on_message(filters.command(["gitpull", "update"]) & filters.user(DEV_USERS))
 async def _gitpull(_, message):
    # m = subprocess.check_output(["git", "pull"]).decode("UTF-8")
    # if str(m[0]) != "A":
@@ -68,7 +68,7 @@ async def _gitpull(_, message):
   #  else:
   #      await message.reply_text(f"**» {BOT_NAME} ɪs ᴀʟʀᴇᴀᴅʏ ᴜᴩ-ᴛᴏ-ᴅᴀᴛᴇ !**")
 
-@app.on_message(filters.command("logs") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("logs") & filters.user(DEV_USERS))
 async def _logs(_, message):
     x = subprocess.getoutput("tail log.txt")
     link = await paste(x)
@@ -78,12 +78,12 @@ async def _logs(_, message):
                            InlineKeyboardButton("Send", callback_data="send_logs")
                        ]]))        
 
-@app.on_callback_query(filters.regex("send_logs"))
+@Client.on_callback_query(filters.regex("send_logs"))
 async def semdd(_, query):
     await query.message.edit("**Sent Logs as file**")
     await _.send_document(query.message.chat.id, "log.txt")
 
-@app.on_message(filters.command("backup") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("backup") & filters.user(DEV_USERS))
 async def backup(_, message):
     if message.chat.type != enums.ChatType.PRIVATE:
         return await message.reply("**This Command Can Only Be Used In PM.**")
