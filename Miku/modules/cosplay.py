@@ -1,6 +1,6 @@
 import httpx
 from Miku import app, BOT_USERNAME
-from pyrogram import filters, enums
+from pyrogram import filters, enums, Client
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Miku.modules.pyro.chat_actions import send_action
