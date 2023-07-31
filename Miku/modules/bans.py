@@ -1,7 +1,7 @@
 import time , os
 from Miku import app,BOT_ID,MENTION_BOT
 from config import SUPREME_USERS as CHAD
-from pyrogram import filters, enums
+from pyrogram import filters, enums , Client
 from Miku.modules.pyro.status import (
     bot_admin,
     bot_can_ban,
@@ -40,7 +40,7 @@ async def until_date(message : Message, time_val):
       
     return until
 
-@app.on_message(filters.command(["kickme","banme"]) & filters.group)
+@Client.on_message(filters.command(["kickme","banme"]) & filters.group)
 @bot_admin
 @bot_can_ban
 async def _kickme(_, message):
@@ -65,7 +65,7 @@ async def _kickme(_, message):
             await message.reply_text(error)
        
          
-@app.on_message(filters.command(["ban","sban","dban"]) & filters.group)
+@Client.on_message(filters.command(["ban","sban","dban"]) & filters.group)
 @bot_admin
 @bot_can_ban
 @user_admin
@@ -107,7 +107,7 @@ async def _ban(_, message):
         await message.reply_text(f"**Banned !\nUser: {mention}\nAdmin: {message.from_user.mention if message.from_user else 'Anon'}**",reply_markup=unban_btn)    
     
             
-@app.on_message(filters.command("tban") & filters.group)
+@Client.on_message(filters.command("tban") & filters.group)
 @bot_admin
 @user_admin
 @bot_can_ban
@@ -154,7 +154,7 @@ async def _tban(_, message):
     """,reply_markup=unban_btn)
          
  
-@app.on_callback_query(filters.regex(pattern=r"unbanUser_(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"unbanUser_(.*)"))
 async def _unbamcb(_,query):
     user_id = query.from_user.id
     chat_id = query.message.chat.id
@@ -165,7 +165,7 @@ async def _unbamcb(_,query):
         await _.unban_chat_member(chat_id,int(id[1]))
         await query.message.edit_text(f"**UnBanned Successfully Now They Can Join.**")
                
-@app.on_message(filters.command("tmute") & filters.group)
+@Client.on_message(filters.command("tmute") & filters.group)
 @bot_admin
 @user_admin
 @bot_can_ban
@@ -210,7 +210,7 @@ async def _tmute(_, message):
 **Mute Time:** `{time_val}`    
     """,reply_markup=unban_btn)
 
-@app.on_callback_query(filters.regex(pattern=r"unmuteUser_(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"unmuteUser_(.*)"))
 async def _unbamcb(_,query):
     user_id = query.from_user.id
     chat_id = query.message.chat.id
@@ -224,7 +224,7 @@ async def _unbamcb(_,query):
         except:
             await _.answer_callback_query(query.id,text="User Isn't Muted.",show_alert=True)      
 
-@app.on_message(filters.command("unban") & filters.group)
+@Client.on_message(filters.command("unban") & filters.group)
 @bot_admin
 @bot_can_ban
 @user_admin
@@ -253,7 +253,7 @@ async def _unban(_, message):
         except BadRequest as ok:
             await message.reply_text(ok)
         
-@app.on_message(filters.command(["kick","dkick","skick","punch"]) & filters.group)
+@Client.on_message(filters.command(["kick","dkick","skick","punch"]) & filters.group)
 @bot_admin
 @bot_can_ban
 @user_admin
@@ -308,7 +308,7 @@ async def _kick(_, message):
         except BadRequest as err :
             await message.reply_text(err)        
      
-@app.on_message(filters.command(["mute","dmute","smute"]) & filters.group)
+@Client.on_message(filters.command(["mute","dmute","smute"]) & filters.group)
 @bot_admin
 @bot_can_ban
 @user_admin
@@ -371,7 +371,7 @@ async def _kick(_, message):
                 await message.reply_text(err)        
      
     
-@app.on_message(filters.command("unmute") & filters.group)
+@Client.on_message(filters.command("unmute") & filters.group)
 @bot_admin
 @bot_can_ban
 @user_admin
@@ -402,7 +402,7 @@ async def _unmute(_, message):
     
 
 
-@app.on_message(filters.command("users") & filters.group)
+@Client.on_message(filters.command("users") & filters.group)
 @user_admin
 async def _list(_, message):
     msg = await message.reply("**Importing Data....**")
