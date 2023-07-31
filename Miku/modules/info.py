@@ -1,7 +1,7 @@
 import os
 from Miku import app, db, BOT_ID, ubot
 from config import OWNER_ID, SUPREME_USERS, SUPREME_USERS as CHAD, DEV_USERS
-from pyrogram import filters, enums
+from pyrogram import filters, enums , Client as v
 from Miku.modules.pyro.extracting_id import extract_user_id
 from Miku.modules.mongo.afk_db import is_user_afk
 from pyrogram.errors import BadRequest
@@ -11,7 +11,7 @@ from Miku.modules.mongo.gbans_db import is_gbanned_user, get_gban_reason
 
 btn = InlineKeyboardMarkup([[InlineKeyboardButton("➕ Add Me To Your Group ➕", url="https://t.me/MikuNakanoXBot?startgroup=true")]])
 
-@app.on_message(filters.command("info") & filters.private)
+@v.on_message(filters.command("info") & filters.private)
 async def _info(_, message):
     user_id = await extract_user_id(message)
     if not user_id:
@@ -93,7 +93,7 @@ async def _info(_, message):
         await _.send_message(message.chat.id, text, reply_markup=btn)
 
     await msg.delete()
-@app.on_message(filters.command("info") & filters.group,group=69)
+@v.on_message(filters.command("info") & filters.group,group=69)
 async def _info(_, message):
     user_id = await extract_user_id(message)
     if not user_id:
@@ -176,7 +176,7 @@ async def _info(_, message):
 
     await msg.delete()
 
-@app.on_message(filters.command("ginfo"))
+@v.on_message(filters.command("ginfo"))
 async def _ginfo(_, message):
     if len(message.command) < 2:
         return await message.reply_text("**Give me Chat ID or Username to fetch info!**")
@@ -213,14 +213,14 @@ async def _ginfo(_, message):
 
     await message.reply_text(text, reply_markup=btn)
 
-@app.on_message(filters.command("gifid"))
+@v.on_message(filters.command("gifid"))
 async def _ginfo(_, message):
     replied = message.reply_to_message
     if replied and replied.animation:
         return await message.reply_text(f"**• ID :** `{replied.animation.file_id}`")
     return await message.reply_text("**Reply To Gif**")
 
-@app.on_message(filters.command("setme") & filters.group)
+@v.on_message(filters.command("setme") & filters.group)
 async def _setme(_, message):
     user_id = message.from_user.id
     replied = message.reply_to_message
@@ -237,7 +237,7 @@ async def _setme(_, message):
     await set_me(user_id, info)
     return await message.reply_text("**Info Updated!**")
 
-@app.on_message(filters.command("me"))
+@v.on_message(filters.command("me"))
 async def _me(_, message):
     user_id = await extract_user_id(message)
     if not user_id:
@@ -248,7 +248,7 @@ async def _me(_, message):
         return await message.reply_text(f"**{mention} hasn't set an info about themselves!**")
     return await message.reply_text(f"**{mention} :**\n`{info}`")
 
-@app.on_message(filters.command("setbio") & filters.group)
+@v.on_message(filters.command("setbio") & filters.group)
 async def _setme(_, message):
     user_id = message.from_user.id
     replied = message.reply_to_message
@@ -265,7 +265,7 @@ async def _setme(_, message):
     await set_bio(user_id, bio)
     return await message.reply_text("**Info Updated!**")
 
-@app.on_message(filters.command("bio"))
+@v.on_message(filters.command("bio"))
 async def _me(_, message):
     user_id = await extract_user_id(message)
     if not user_id:
