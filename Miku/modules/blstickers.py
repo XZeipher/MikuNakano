@@ -1,13 +1,13 @@
 from Miku import app
 from config import SUPREME_USERS as CHAD
-from pyrogram import filters,enums
+from pyrogram import filters,enums,Client
 from Miku.modules.pyro.status import user_admin,bot_admin
 from Miku.modules.mongo.approve_db import approved_users,isApproved
 from Miku.modules.mongo.blacklistSticker_db import *
 from Miku.utils.filter_groups import blacklist_sticker_watcher
 
 
-@app.on_message(filters.command("addblsticker") & filters.group)
+@Client.on_message(filters.command("addblsticker") & filters.group)
 @user_admin
 @bot_admin
 async def _addstick(_, message):
@@ -26,7 +26,7 @@ async def _addstick(_, message):
     return await message.reply_text("**Added In Blacklist.**")  
         
     
-@app.on_message(filters.command("unblsticker") & filters.group)
+@Client.on_message(filters.command("unblsticker") & filters.group)
 @user_admin
 async def _unaddstick(_, message):
     chat_id = message.chat.id
@@ -43,7 +43,7 @@ async def _unaddstick(_, message):
         return await message.reply_text("**Removed Sticker From Blacklist.**")
     return await message.reply_text("**This Sticker Isn't Blacklisted.**")
     
-@app.on_message(filters.sticker & filters.group, group=blacklist_sticker_watcher)
+@Client.on_message(filters.sticker & filters.group, group=blacklist_sticker_watcher)
 async def _delstick(_, message):
     chat_id = message.chat.id
     user = message.from_user
