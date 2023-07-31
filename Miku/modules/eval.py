@@ -8,7 +8,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import RPCError
 import subprocess
 from datetime import datetime
-from pyrogram import filters, enums
+from pyrogram import filters, enums, Client
 
 
 async def aexec(code, client, message):
@@ -18,7 +18,7 @@ async def aexec(code, client, message):
     )
     return await locals()["__aexec"](client, message)
 
-@app.on_message(filters.command(["run","eval"]))
+@Client.on_message(filters.command(["run","eval"]))
 async def eval(client, message):
     if message.from_user.id not in DEV_USERS:
         return
