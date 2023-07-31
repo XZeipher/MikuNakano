@@ -1,12 +1,12 @@
 from Miku import app,BOT_USERNAME
-from pyrogram import filters 
+from pyrogram import filters , Client
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 from pyrogram.errors import BadRequest 
 from Miku.modules.pyro.status import user_admin,user_can_change_info 
 from Miku.modules.mongo.rules_db import *
 
 
-@app.on_message(filters.command("setrules") & filters.group)
+@Client.on_message(filters.command("setrules") & filters.group)
 @user_admin
 @user_can_change_info
 async def _setrules(_, message):
@@ -21,7 +21,7 @@ async def _setrules(_, message):
     await message.reply_text("**Successfully Set Rules Of This Group.**")
 
 
-@app.on_message(filters.command("rmrules") & filters.group)
+@Client.on_message(filters.command("rmrules") & filters.group)
 @user_admin
 @user_can_change_info
 async def _rmrules(_, message):
@@ -32,7 +32,7 @@ async def _rmrules(_, message):
     await clear_rules(chat_id)
     return await message.reply_text("**Removed Group Rules Successfully.**")
     
-@app.on_message(filters.command("rules") & filters.group)
+@Client.on_message(filters.command("rules") & filters.group)
 async def _getrules(_, message):
     chat_id = message.chat.id
     check = await is_rules(chat_id) 
