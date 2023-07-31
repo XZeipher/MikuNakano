@@ -1,7 +1,7 @@
 import asyncio
 from Miku import app
 from config import DEV_USERS
-from pyrogram import filters
+from pyrogram import filters,Client
 from Miku.modules.mongo.chats_db import *
 from Miku.modules.mongo.users_db import *
 from pyrogram.errors import FloodWait 
@@ -10,7 +10,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 USER = []
 
-@app.on_message(filters.command(["bcast", "broadcast"]))
+@Client.on_message(filters.command(["bcast", "broadcast"]))
 async def _bcast(app, message):
     replied = message.reply_to_message
     user_id = message.from_user.id
@@ -122,7 +122,7 @@ async def _bcast(app, message):
     except:
         pass
         
-@app.on_callback_query(filters.regex(pattern=r"cancelbcast_(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"cancelbcast_(.*)"))
 async def _cancelbcast(_, query):
     user_id = query.from_user.id
     if user_id != int(query.data.split("_")[1]):
