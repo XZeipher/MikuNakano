@@ -1,5 +1,5 @@
 from Miku import app
-from pyrogram import filters 
+from pyrogram import filters  , Client
 from Miku.modules.pyro.status import (
     bot_admin,
     user_admin,
@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup , Callback
 from pyrogram import Client,enums
 from pyrogram.handlers import CallbackQueryHandler
 
-@app.on_message(filters.command("pin") & ~filters.private)
+@Client.on_message(filters.command("pin") & ~filters.private)
 @bot_admin
 @user_admin
 @bot_can_pin
@@ -25,7 +25,7 @@ async def _pin(_, message):
     except Exception as er:
         await message.reply_text(er)
 
-@app.on_message(filters.command("pinned") & ~filters.private)
+@Client.on_message(filters.command("pinned") & ~filters.private)
 @bot_admin
 @user_admin
 @bot_can_pin
@@ -40,7 +40,7 @@ async def _pin(_, message):
         await message.reply_text(er)
 
 
-@app.on_message(filters.command(["unpin","unpinall"]) & ~filters.private)
+@Client.on_message(filters.command(["unpin","unpinall"]) & ~filters.private)
 @bot_admin
 @user_admin
 @bot_can_pin
@@ -60,7 +60,7 @@ async def _unpinmsg(_, message):
         await message.reply_text("**Unpinned all messages!**", reply_markup=
         InlineKeyboardMarkup([[InlineKeyboardButton("❌ ᴄʟᴏsᴇ", callback_data="admin_close")]]))
 
-@app.on_callback_query(filters.regex(pattern=r"unpin_(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"unpin_(.*)"))
 async def unpin_btn(app : Client, query : CallbackQuery):
     user_id = query.from_user.id
     chat_id = query.message.chat.id
