@@ -1,13 +1,13 @@
 from Miku import app
 from config import SUDO_USERS,DEV_USERS,SUPREME_USERS
-from pyrogram import filters 
+from pyrogram import filters ,Client
 from Miku.modules.pyro.extracting_id import extract_user_id
 from Miku.modules.mongo.sudo_db import *
 from Miku.modules.pyro.extracting_id import extract_user_id
 
 
 
-@app.on_message(filters.command("addmoon") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("addmoon") & filters.user(DEV_USERS))
 async def _addsudo(_, message):
     
     user_id = await extract_user_id(message)
@@ -25,7 +25,7 @@ async def _addsudo(_, message):
         SUPREME_USERS.append(user_id)
     return await message.reply_text("**Added In Moon Users.**")
 
-@app.on_message(filters.command("rmmoon") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("rmmoon") & filters.user(DEV_USERS))
 async def _rmsudo(_, message):
     user_id = await extract_user_id(message)
     if not user_id:
@@ -41,7 +41,7 @@ async def _rmsudo(_, message):
 
 
 
-@app.on_message(filters.command("moonlist"))
+@Client.on_message(filters.command("moonlist"))
 async def _rmsudo(_, message):
     if message.from_user.id not in SUPREME_USERS:
         return 
@@ -56,7 +56,7 @@ async def _rmsudo(_, message):
             print(e)
     await message.reply_text(msg)
 
-@app.on_message(filters.command("sunlist"))
+@Client.on_message(filters.command("sunlist"))
 async def _devlist(_, message):
     if message.from_user.id not in SUPREME_USERS:
         return 
