@@ -1,7 +1,7 @@
 from Miku import app
-from pyrogram import filters 
+from pyrogram import filters , Client
 
-@app.on_message(filters.command("id"))
+@Client.on_message(filters.command("id"))
 async def _id(client, message):
     chat = message.chat
     your_id = message.from_user.id
