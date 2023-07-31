@@ -15,7 +15,7 @@ BUTTONS = [
 ]
 
 
-@app.on_message(filters.command("cosplay") , group=-69)
+@Client.on_message(filters.command("cosplay") , group=-69)
 @send_action(enums.ChatAction.UPLOAD_PHOTO)
 async def _cosplay(_, message):
     async with httpx.AsyncClient() as client:
@@ -24,7 +24,7 @@ async def _cosplay(_, message):
         await message.reply_photo(pic)
 
 
-@app.on_message(filters.command("ncosplay") , group=-69)
+@Client.on_message(filters.command("ncosplay") , group=-69)
 @send_action(enums.ChatAction.UPLOAD_PHOTO)
 async def _lewd(_, message):
     if message.chat.type != ChatType.PRIVATE:
