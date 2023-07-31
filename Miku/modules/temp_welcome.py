@@ -23,9 +23,9 @@ async def template(pic , name , ids , stats):
     pfp = await circle(pfp,(139,139))
     temp.paste(pfp, (592, 117, 592 + pfp.width, 117 + pfp.height), pfp)
     draw = ImageDraw.Draw(temp)
-    draw.text((186 , 337),name,"white",font=NAME)   
-    draw.text((127 , 394),str(ids),"white",font=NAME)
-    draw.text((208 , 448),stats,"white",font=NAME)   
+    draw.text((186 , 337),name,"white",font=fonts)   
+    draw.text((127 , 394),str(ids),"white",font=fonts)
+    draw.text((208 , 448),stats,"white",font=fonts)   
     temp.save(f"./Miku/resources/temp{ids}.png")
     return f"./Miku/resources/temp{ids}.png"
     
