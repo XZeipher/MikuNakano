@@ -1,4 +1,4 @@
-from pyrogram import filters,enums
+from pyrogram import filters,enums,Client
 from Miku import app,db
 from config import SUPREME_USERS,SUPREME_USERS as CHAD
 from Miku.modules.mongo.approve_db import approved_users , isApproved
@@ -6,7 +6,7 @@ from Miku.modules.pyro.status import user_admin,user_can_del
 from Miku.modules.mongo.blacklist_db import *
 from Miku.utils.filter_groups import blacklist_watcher
 
-@app.on_message(filters.command('addblacklist') & filters.group)
+@Client.on_message(filters.command('addblacklist') & filters.group)
 @user_admin
 @user_can_del
 async def _addblacklist(_, message):
@@ -21,7 +21,7 @@ async def _addblacklist(_, message):
         return await message.reply_text("**Blacklisted : {}.**".format(word))
     return await message.reply_text("**{} Is Already Blacklisted.**".format(word))
 
-@app.on_message(filters.command('rmblacklist') & filters.group)
+@Client.on_message(filters.command('rmblacklist') & filters.group)
 @user_admin
 @user_can_del
 async def _addblacklist(_, message):
@@ -38,7 +38,7 @@ async def _addblacklist(_, message):
     return await message.reply_text("**{} Isn't Blacklisted.**".format(word))
 
 
-@app.on_message(filters.command("blacklists") & filters.group)
+@Client.on_message(filters.command("blacklists") & filters.group)
 @user_admin
 async def _get_blackisted(_, message):
     chat_id = message.chat.id
@@ -52,7 +52,7 @@ async def _get_blackisted(_, message):
     return await message.reply_text(msg)
 
 
-@app.on_message(filters.command("unblacklistall") & filters.group)
+@Client.on_message(filters.command("unblacklistall") & filters.group)
 async def _get_blackisted(_, message):
     chat_id = message.chat.id
     chat_title = message.chat.title
@@ -67,7 +67,7 @@ async def _get_blackisted(_, message):
        
     
 
-@app.on_message(filters.group, group=blacklist_watcher)
+@Client.on_message(filters.group, group=blacklist_watcher)
 async def _delstick(_, message):
     chat_id = message.chat.id
     list1 = await get_blacklist(chat_id)
