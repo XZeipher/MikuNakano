@@ -3,7 +3,7 @@
 # Credits :- @TheStark
 
 from Miku import app
-from pyrogram import filters
+from pyrogram import filters , Client
 import uuid
 import math
 import os
@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from unidecode import unidecode
 
 
-@app.on_message(filters.left_chat_member)
+@Client.on_message(filters.left_chat_member)
 async def _left_mem(client, message):
     first_name = unidecode(message.left_chat_member.first_name)
     user_id = message.left_chat_member.id
@@ -42,7 +42,7 @@ async def _left_mem(client, message):
 
     for i in range(len(stark)):
         draw = ImageDraw.Draw(stark[i])
-        s4 = (s1 - len(text[i // s3]) * 5, s2)
+        s4 = (s1 - len(text[i // s3]) * 10, s2)
         draw.text(s4, text[i // s3], font=font, anchor=None)
     
     x = f"welcome{uuid.uuid4()}.gif"
