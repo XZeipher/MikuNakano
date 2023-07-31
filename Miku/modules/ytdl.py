@@ -1,9 +1,9 @@
 from pytube import YouTube
-from pyrogram import filters
+from pyrogram import filters , Client
 import os
 from Miku import app
 
-@app.on_message(filters.command("ytdl"))
+@Client.on_message(filters.command("ytdl"))
 async def download_youtube_video(client, message):
     video_url = message.text.split("/ytdl")[1]
     x = await message.reply_text("**Processing...**")
