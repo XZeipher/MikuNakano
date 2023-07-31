@@ -1,4 +1,4 @@
-from pyrogram import filters
+from pyrogram import filters , Client
 from Miku import app
 from config import SUPPORT_CHAT
 from Miku.modules.mongo.users_db import *
@@ -25,7 +25,7 @@ ID:  {}
 Username: {}             
 """
 
-@app.on_message(filters.command("start"))
+@Client.on_message(filters.command("start"))
 async def private_handle(client, message):
     user_id = message.from_user.id
     users = await get_served_users()  
@@ -39,7 +39,7 @@ async def private_handle(client, message):
     except Exception as e:
         await client.send_message(LOG, str(e))  
 
-@app.on_message(filters.group)
+@Client.on_message(filters.group)
 async def group_handle(client, message):  
     chat_id = message.chat.id
     chats = await get_served_chats()  
