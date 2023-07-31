@@ -2,7 +2,7 @@ import time
 import asyncio
 from Miku import app,BOT_ID,get_readable_time
 from config import SUPREME_USERS
-from pyrogram import filters
+from pyrogram import filters,Client
 from io import BytesIO
 from Miku.modules.pyro.extracting_id import get_id_reason_or_rank,extract_user_id
 from Miku.modules.mongo.chats_db import get_served_chats
@@ -10,7 +10,7 @@ from pyrogram.errors import Unauthorized, FloodWait
 from Miku.modules.mongo.gbans_db import *
 
 
-@app.on_message(filters.command("gban"))
+@Client.on_message(filters.command("gban"))
 async def _gban(_, message):
     if message.from_user.id not in SUPREME_USERS:
         return await message.reply_text("**You Don't Have Access To This Command.**")
@@ -45,7 +45,7 @@ async def _gban(_, message):
     await msg.edit(f"**♠ Global Ban ♠\n• Banned : {user.mention}\n• Chats :** `{number_of_chats}`")
     
     
-@app.on_message(filters.command("ungban"))
+@Client.on_message(filters.command("ungban"))
 async def _ungban(_, message):
     if message.from_user.id not in SUPREME_USERS:
         return await message.reply_text("**You Don't Have Access To This Command.**")
@@ -71,7 +71,7 @@ async def _ungban(_, message):
     ungban_time = get_readable_time((time.time() - start_time))
     await message.reply_text(f"**Removed Global Ban From User ID :** `{user_id}`")
     
-@app.on_message(filters.command("gbanlist"))
+@Client.on_message(filters.command("gbanlist"))
 async def _gbanlist(_, message):
     if message.from_user.id not in SUPREME_USERS:
         return await message.reply_text("**You Don't Have Access To This Command.**")
