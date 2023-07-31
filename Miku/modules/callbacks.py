@@ -4,7 +4,9 @@ import random
 import psutil
 import strings
 import platform
-from pyrogram import filters , __version__ as pyro , Client , enums 
+from pyrogram import filters , __version__ as pyro , Client , enums , Client
+from Miku.modules.mongo.users_db import get_served_users
+from Miku.modules.mongo.chats_db import get_served_chats
 from Miku import app,StartTime,BOT_NAME,get_readable_time,BOT_USERNAME
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery 
 from .pyro.decorators import control_user
@@ -13,6 +15,8 @@ STATS_MSG="""
 ────「 Miku Nakano 遠ゲ 」────
 
 • Uptime : {}
+• Users : {}
+• Chats : {}
 • Bot : {} MB
 • Ram : {}%
 • Disk : {}%
@@ -20,7 +24,7 @@ STATS_MSG="""
 • Server : {}
 """
 
-@app.on_callback_query(filters.regex("friday_back"))
+@Client.on_callback_query(filters.regex("friday_back"))
 @control_user()
 async def Friday(_, callback_query : CallbackQuery):
     query= callback_query.message
@@ -29,24 +33,26 @@ async def Friday(_, callback_query : CallbackQuery):
     await query.edit_caption(strings.PM_START_TEXT.format(BOT_NAME,mention,uptime,platform.python_version(),pyro),
     reply_markup=InlineKeyboardMarkup(strings.START_BUTTONS))
 
-@app.on_callback_query(filters.regex("Friday_st"))
+@Client.on_callback_query(filters.regex("Friday_st"))
 @control_user()
 async def Fridays(client, callback_query : CallbackQuery):    
     uptime= get_readable_time((time.time() - StartTime))   
     ram = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
+    users = len(await get_served_users())
+    chats = len(await get_served_chats())
     process = psutil.Process(os.getpid())
     processor = platform.processor()
     server = platform.system()
     mb= round(process.memory_info()[0] / 1024 ** 2)
     await client.answer_callback_query(
     callback_query.id,
-    text=STATS_MSG.format(uptime,mb,ram,disk,processor,server),
+    text=STATS_MSG.format(uptime,users,chats,mb,ram,disk,processor,server),
     show_alert=True
 )
 
 
-@app.on_callback_query(filters.regex("admin_close"))
+@Client.on_callback_query(filters.regex("admin_close"))
 @control_user()
 async def _close(client : Client, query: CallbackQuery):
     chat_id = query.message.chat.id
