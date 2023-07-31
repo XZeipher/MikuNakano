@@ -1,11 +1,11 @@
 import requests 
 from Miku import app
 from config import SUPPORT_CHAT
-from pyrogram import filters,enums
+from pyrogram import filters,enums,Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup 
 
 
-@app.on_message(filters.command(["git","github"]))
+@Client.on_message(filters.command(["git","github"]))
 async def _github(_, message):
     if len(message.command) < 2:
         return await message.reply_text("**Provide Me Your Git Username.**")
