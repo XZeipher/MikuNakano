@@ -30,7 +30,7 @@ async def template(pic , name , ids , stats):
     return f"./Miku/resources/temp{ids}.png"
     
     
-@app.on_message(filters.new_chat_members & filters.group,group=11)
+@Client.on_message(filters.new_chat_members & filters.group,group=11)
 async def _weem(_, message):    
     chat_id = message.chat.id   
     count = await _.get_chat_members_count(chat_id) 
