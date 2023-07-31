@@ -3,14 +3,14 @@ from Miku import app
 from Miku.modules.mongo.filters_db import *
 from Miku.modules.pyro.filters_func import GetFIlterMessage,get_text_reason,SendFilterMessage
 from Miku.modules.pyro.status import user_admin
-from pyrogram import filters
+from pyrogram import filters, Client
 from Miku.utils.filter_groups import filter_watcher
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup)
 
 
-@app.on_message(filters.command("filter") & filters.group)
+@Client.on_message(filters.command("filter") & filters.group)
 async def _filter(client, message):
     
     chat_id = message.chat.id 
@@ -41,7 +41,7 @@ async def _filter(client, message):
 
 
 
-@app.on_message(filters.all & filters.group, group=filter_watcher)
+@Client.on_message(filters.all & filters.group, group=filter_watcher)
 async def FilterCheckker(client, message):
     if not message.text:
         return
@@ -73,7 +73,7 @@ async def FilterCheckker(client, message):
                 text=text,
                 data_type=data_type
             )
-@app.on_message(filters.command('filters') & filters.group)
+@Client.on_message(filters.command('filters') & filters.group)
 async def _filters(client, message):
     chat_id = message.chat.id
     chat_title = message.chat.title 
@@ -97,7 +97,7 @@ async def _filters(client, message):
     )
 
 
-@app.on_message(filters.command('removeallfilters') & filters.group)
+@Client.on_message(filters.command('removeallfilters') & filters.group)
 async def stopall(client, message):
     chat_id = message.chat.id
     chat_title = message.chat.title 
@@ -118,7 +118,7 @@ async def stopall(client, message):
     )
 
 
-@app.on_callback_query(filters.regex("^custfilters_"))
+@Client.on_callback_query(filters.regex("^custfilters_"))
 async def stopall_callback(client, callback_query: CallbackQuery):  
     chat_id = callback_query.message.chat.id 
     query_data = callback_query.data.split('_')[1]  
@@ -137,7 +137,7 @@ async def stopall_callback(client, callback_query: CallbackQuery):
             text='**Canceled.**'
         )
 
-@app.on_message(filters.command('stop') & filters.group)
+@Client.on_message(filters.command('stop') & filters.group)
 @user_admin
 async def stop(client, message):
     chat_id = message.chat.id
