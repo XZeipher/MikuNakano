@@ -13,7 +13,7 @@ text = ""
 MODELSS = {"Dall-E":0,"Dark Sushi":"dark-sushi-25d","Guofeng3":"guofeng3","Meina Mix":"meinamix"}
 MODELS_LIST = List(MODELSS)
 
-@app.on_message(filters.command("gen") & filters.group)
+@Client.on_message(filters.command("gen") & filters.group)
 async def generate(client, message):
     global text
     text = await get_text(message)
@@ -25,7 +25,7 @@ async def generate(client, message):
     await message.reply_text("**Select a model.**", reply_markup=keyboard)
 
 
-@app.on_callback_query(filters.regex(pattern=r"^gen.(.*)"))
+@Client.on_callback_query(filters.regex(pattern=r"^gen.(.*)"))
 async def generatebtns(client, query):
     global text
     data = query.data.split('.')
