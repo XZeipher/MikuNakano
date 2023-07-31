@@ -1,5 +1,5 @@
 from Miku import app,BOT_USERNAME
-from pyrogram import filters
+from pyrogram import filters , Client
 from Miku.modules.mongo.notes_db import *
 from Miku.modules.pyro.notes_func import GetNoteMessage, exceNoteMessageSender, privateNote_and_admin_checker
 from Miku.modules.pyro.status import user_admin
@@ -7,7 +7,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup , Message 
 from pyrogram.enums import ChatMemberStatus
 
 
-@app.on_message(filters.command("save") & filters.group)
+@Client.on_message(filters.command("save") & filters.group)
 @user_admin
 async def _save(client, message):
     chat_id = message.chat.id
@@ -27,7 +27,7 @@ async def _save(client, message):
 
 
 
-@app.on_message(filters.command("get") & filters.group)
+@Client.on_message(filters.command("get") & filters.group)
 async def _getnote(client, message):
     chat_id = message.chat.id
     if not len(message.command) >= 2:
@@ -38,7 +38,7 @@ async def _getnote(client, message):
     await send_note(message, note_name)
     
 
-@app.on_message(filters.regex(pattern=(r"^#[^\s]+")) & filters.group)
+@Client.on_message(filters.regex(pattern=(r"^#[^\s]+")) & filters.group)
 async def regex_get_note(client, message):
     chat_id = message.chat.id
     if message.from_user:
@@ -50,7 +50,7 @@ async def regex_get_note(client, message):
 PRIVATE_NOTES_TRUE = ['on', 'true', 'yes', 'y']
 PRIVATE_NOTES_FALSE = ['off', 'false', 'no', 'n']
 
-@app.on_message(filters.command("privatenotes") & filters.group)
+@Client.on_message(filters.command("privatenotes") & filters.group)
 @user_admin
 async def PrivateNote(client, message):
     chat_id = message.chat.id
@@ -89,7 +89,7 @@ async def PrivateNote(client, message):
                 quote=True
             )
             
-@app.on_message(filters.command("clear") & filters.group)
+@Client.on_message(filters.command("clear") & filters.group)
 @user_admin
 async def Clear_Note(client, message):
     chat_id = message.chat.id 
@@ -118,7 +118,7 @@ async def Clear_Note(client, message):
         )
 
 
-@app.on_message(filters.command("clearall") & filters.group)
+@Client.on_message(filters.command("clearall") & filters.group)
 async def ClearAll_Note(client, message):
     owner_id = message.from_user.id
     chat_id = message.chat.id 
@@ -147,7 +147,7 @@ async def ClearAll_Note(client, message):
         quote=True
     )
 
-@app.on_callback_query(filters.regex("^clearallnotes_"))
+@Client.on_callback_query(filters.regex("^clearallnotes_"))
 async def ClearAllCallback(client, callback_query: CallbackQuery):
     query_data = callback_query.data.split('_')[1]
     owner_id = int(callback_query.data.split('_')[2])
@@ -171,7 +171,7 @@ async def ClearAllCallback(client, callback_query: CallbackQuery):
             "**You Need to Be Admin First!**"
         )
                          
-@app.on_message(filters.command(['notes', 'saved']) & filters.group)
+@Client.on_message(filters.command(['notes', 'saved']) & filters.group)
 async def Notes(client, message):
     
     chat_id = message.chat.id
