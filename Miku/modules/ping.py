@@ -3,12 +3,12 @@ import asyncio
 from typing import List
 from Miku import app,get_readable_time,StartTime
 from config import DEV_USERS
-from pyrogram import filters
+from pyrogram import filters , Client
 from httpx import AsyncClient
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup 
 
 
-@app.on_message(filters.command("ping"))
+@Client.on_message(filters.command("ping"))
 async def _ping(_, message):
     start = time.time()
     msg = await message.reply("⚡")
@@ -53,7 +53,7 @@ async def ping_func(to_ping: List[str]) -> List[str]:
     return ping_result
 
 
-@app.on_message(filters.command("pingall") & filters.user(DEV_USERS))
+@Client.on_message(filters.command("pingall") & filters.user(DEV_USERS))
 async def _pingall(_, message):
     to_ping = ["Kaizoku", "Kayo", "Telegram", "Jikan"]
     pinged_list = await ping_func(to_ping)
