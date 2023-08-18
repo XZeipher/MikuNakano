@@ -55,8 +55,8 @@ hstspreload
 html-telegraph-poster
 html2text
 httpcore[http2]
-httplib2==0.20.2
-httpx==0.13.3
+httplib2
+httpx
 humanize
 hyperframe
 hyperlink
