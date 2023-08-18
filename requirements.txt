@@ -2,7 +2,7 @@ aiofiles
 Flask==2.2.2
 gunicorn==20.1.0
 shortuuid
-httpcore
+httpcore[http2]
 aiohttp
 async-timeout
 python-Levenshtein
