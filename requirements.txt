@@ -54,7 +54,7 @@ hpack
 hstspreload
 html-telegraph-poster
 html2text
-httpcore[http2]
+#httpcore[http2]
 httplib2
 httpx
 humanize
