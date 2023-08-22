@@ -2,7 +2,7 @@ from pyrogram import Client,filters
 from Miku import ubot
 import httpx
 
-ub_yext = f"""
+ub_yext ="""
 /eval 
 import requests
 b = requests.post("http://api.qewertyy.me/models/inference/task",data={}).json()
