@@ -19,5 +19,7 @@ async def send_task(text):
 
 @Client.on_message(filters.command("draw"))
 async def draw(_, message):
+    msg = await message.reply_text("**Wait 20 seconds...**")
     text = message.text.split(maxsplit=1)[1]
     await send_task(text)
+    await msg.edit_text("**Done**")
