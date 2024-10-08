@@ -23,7 +23,7 @@ LOGGER = logging.getLogger("MIKU")
 LOG = Console()
 StartTime = time.time()
 loop = asyncio.get_event_loop()
-aiohttpsession = ClientSession()
+aiohttpsession = None
 mongo = MongoClient(config.MONGO_DB_URL)
 db = mongo.Miku
 
@@ -85,10 +85,10 @@ ubot = Client(
       in_memory=True
       )
 async def init():
-    global BOT_NAME,BOT_USERNAME,BOT_ID,MENTION_BOT
+    global BOT_NAME,BOT_USERNAME,BOT_ID,MENTION_BOT,aiohttpsession
     LOG.print("Starting Miku...")
     LOG.print("Loading Sudo Users...")
-    
+    aiohttpsession = ClientSession()
     await app.start()
     await ALPHA.start()
     await ubot.start()
