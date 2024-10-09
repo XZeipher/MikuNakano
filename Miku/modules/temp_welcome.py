@@ -37,7 +37,10 @@ async def _weem(_, message):
     for m in message.new_chat_members:
         name = m.first_name 
         mention = m.mention 
-        user_id = m.id       
+        user_id = m.id
+        if user_id == 7788597504:
+            await _.send_photo(chat_id,"https://i.imgur.com/aWOgW6R.jpeg",caption="**God Like Entity Joined!!!**")
+            break
         try:
             user_photo = m.photo.big_file_id
             pic = await _.download_media(m.photo.big_file_id,file_name =f"pp{user_id}.png")
@@ -50,3 +53,4 @@ async def _weem(_, message):
         welpic = await template(pic , name , user_id , stats)
         await _.send_photo(chat_id,welpic,caption=f"**{mention} Welcome Kid!**")
         os.remove(welpic)
+    return
